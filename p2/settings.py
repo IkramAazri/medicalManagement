@@ -24,7 +24,7 @@ SECRET_KEY = 'troxrbd9&%$8s3%%fbtnjxp19wsbyy7029-2xh&=5!*za8z=l^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -36,6 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'crispy_forms',
+    'bootstrap4',
+    'django_cleanup'
+
 ]
 
 MIDDLEWARE = [
@@ -74,8 +78,12 @@ WSGI_APPLICATION = 'p2.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'test',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': 3306
     }
 }
 
@@ -117,9 +125,28 @@ STATIC_URL = '/assets/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'p2/assets'),)
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'C:/Users/fujitsu/PycharmProjects/p2/p2/media'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
+
+THIRD_PARTY_APPS = [
+    'crispy_forms',
+
+]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

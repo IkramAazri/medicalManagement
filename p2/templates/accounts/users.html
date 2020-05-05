@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+
+ <div class="container-fluid">
+        <div class="row">
+             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Registered Users</h1>
+                </div>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <p class="bg-success" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr><th scope="col">picture</th>
+                      <th scope="col">Username</th>
+                      <th scope="col">Last login</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Date joined</th>
+                        <th scope="col">delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td><img src="{{user.profile.profile_image.url}}" class="rounded float-left" height="50px" width="70px"></td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.last_login }}</td>
+                            <td>
+                                {% if user.is_active %}
+                                    <a   href="{% url 'deactivate_user' user_id=user.id %}" class="btn btn-sm btn-danger">Deactivate</a>
+                                    {% else %}
+                                    <a href="{% url 'activate_user' user_id=user.id %}" class="btn btn-sm btn-success">Activate</a>
+                                {% endif %}
+                            </td>
+                            <td>{{ user.date_joined }}</td>
+                         <td> <a  href="{% url 'delete_user' user_id=user.id %}" class="btn btn-sm btn-danger">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </main>
+        </div>
+    </div>
+
+</body>
+</html>
