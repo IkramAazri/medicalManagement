@@ -9,11 +9,20 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .forms import UserForm, ProfileForm
+from .forms import UserForm, ProfileForm, TerrainForm
 from django.contrib.auth.models import User
 from .models import Profile
 from django.contrib import messages
 from django.views.generic import TemplateView, CreateView
+
+
+def terrain(request):
+    form = TerrainForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+    context = { "form": form }
+    return render(request,"accounts/terrain.html",context)
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):

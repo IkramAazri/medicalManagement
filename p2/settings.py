@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'accounts',
     'crispy_forms',
     'bootstrap4',
-    'django_cleanup'
+    'django_cleanup',
+    'multiselectfield',
 
 ]
 

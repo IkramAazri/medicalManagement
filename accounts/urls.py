@@ -24,6 +24,7 @@ urlpatterns = [
     path('activate/user/<int:user_id>', views.user_activate, name='activate_user'),
     path('deactivate/user/<int:user_id>', views.user_deactivate, name='deactivate_user'),
     path('delete/user/<int:user_id>', views.delete_profile, name='delete_user'),
+    path('antecedant/',views.showAntecedant, name='antecdant'),
 ]
 
 from django.conf import settings

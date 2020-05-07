@@ -1,10 +1,24 @@
 from django.db import models
-
 # Create your models here.
 from django.contrib.auth.models import User
 
 
+class Terrain(models.Model):
+    antcd = models.ForeignKey(Antecedent, on_delete=models.SET_NULL(),related_name='+')
 
+
+class HabitudeToxique(models.Model):
+    alcool = models.BooleanField(default=False)
+    drogue = models.BooleanField(default=False)
+    tabac = models.BooleanField(default=False)
+
+
+class Traitement(models.Model):
+    traitement = models.CharField(max_length=12, blank=True)
+
+
+class Antecedent(models.Model):
+    name = models.CharField(max_length=12, blank=True)
 
 
 class Profile(models.Model):
