@@ -9,20 +9,45 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .forms import UserForm, ProfileForm, TerrainForm
+from .forms import UserForm, ProfileForm, TerrainForm, PatientForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Terrain, Patient
 from django.contrib import messages
 from django.views.generic import TemplateView, CreateView
 
 
+def patient(request):
+    if request.method == "POST":
+        form = PatientForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            return redirect('terrain')
+    else:
+        form = PatientForm()
+    return render(request, "accounts/dossier.html", {"form": form})
+
+
 def terrain(request):
-    form = TerrainForm(request.POST or None)
+    if request.method == "POST":
+        form = TerrainForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+    else:
+        form = TerrainForm()
+    return render(request, "accounts/terrain.html", {"form": form})
+
+
+
+def TerrainUpdate(request, terrain_id):
+    terrain = get_object_or_404(Terrain, terrain_id=id)
+    form = TerrainForm(data=request.POST or None, instance=terrain)
     if form.is_valid():
-        instance = form.save(commit=False)
-        instance.save()
-    context = { "form": form }
-    return render(request,"accounts/terrain.html",context)
+        form.save()
+        messages.success(request, 'Your terrain is updated successfully!')
+        redirect('terrain')
+    return render_to_response('accounts/terrain.html', {}, RequestContext(request))
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -61,7 +86,7 @@ class ProfileUpdateView(LoginRequiredMixin, TemplateView):
 
 def index(request):
     context = {'segment': 'index'}
-    return render(request, "index.html", context)
+    return render(request, "home.html", context)
 
 
 def pages(request):

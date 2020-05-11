@@ -10,13 +10,18 @@
 
 </head>
 <body>
+{% load crispy_forms_tags %}
 <div class="container-fluid">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
         <h1 class="h3 mb-0 text-gray-800">Terrain</h1>
     </div>
-
+{% if messages %}
+          {% for message in messages %}
+          <div class="bg-success" {{ message.tags }}>{{ message }}</div>
+          {% endfor %}
+        {% endif %}
     <!-- Main Content Here -->
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
@@ -29,8 +34,11 @@
                         </div>
                         <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
-
+                            <div>
+                            <h4 class="mos-rtl">Section 1</h4>
+                            {{form | crispy}}
                             <button type="submit" class="btn btn-success btn-block">save</button>
+                            </div>
                         </form>
                         <hr>
                         <div class="text-center">

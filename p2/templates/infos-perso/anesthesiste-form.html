@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block anesthesisteForm %}
+<title>Patient</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<style type="text/css">
+<style>
+        label,h2
+        {
+        font-weight:bold;
+        color:#538b8f;
+        }
+        .btn-info{
+        background-color:#538b8f;
+        border:#538b8f;
+        }
+         .form-group .form-check-input li{
+        display:inline-block;
+         }
+
+</style>
+{% endblock anesthesisteForm %}
+
+{% block anesthesisteFormBody %}
+{% include "navbar.html" %}
+<div class="card" style="width: 600px;margin-left:200px;margin-bottom:-10px;">
+    <img src="/assets/images/patient.png" class="card-img-top" alt="..." style="height:250px;">
+    <div class="card-body">
+        <h2 class="text-center mb-3">Ajouter un anesthesiste</h2>
+        <fieldset>
+            <form method="POST">
+
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col" style="">
+                        {% for message in messages %}
+                        {% if message.tags == "success" %}
+                        <p id="messages" style="color:green; text-align:center;font-size:25px;">{{message}}</p>
+                        {% endif %}
+                        {% if message.tags == "warning" %}
+                        <p id="message" style="color:red;">{{message}}</p>
+                        {% endif %}
+
+
+                        {% endfor %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group ">
+                                    <label for="uname1">Nom</label>
+                                    {{ form.nom }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group ">
+                                    <label for="uname1">Prénom</label>
+                                    {{ form.prenom }}
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" class="btn btn-outline-info btn-lg btn-block mt-5">Ajouter
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </fieldset>
+
+    </div>
+</div>
+
+
+{% endblock anesthesisteFormBody %}
+
+
+
+

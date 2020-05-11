@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block consultation %}
+{% include "navbar.html" %}
+
+<title>Consultation</title>
+<link rel="stylesheet" href="/assets/css/styles.css">
+
+	<form method="POST">
+        {% csrf_token %}
+
+<div class="wrapper">
+  <div class="wrapper_left">
+    <ul>
+      <li data-li="pd" class="active">
+        <p>Patient/Dossier</p>
+      </li>
+      <li data-li="terrain">
+        <p>Terrain</p>
+      </li>
+      <li data-li="exploration">
+        <p>Exploration</p>
+      </li>
+      <li data-li="elem"style="font-size:11.5px;">
+        <p>Eléments cliniques</p>
+      </li>
+      <li data-li="decision">
+        <p>Décision</p>
+      </li>
+      <div >
+        <button type="submit" class="myButton">Sauvegarder</button>
+      </div>
+    </ul>
+  </div>
+  <div class="wrapper_right">
+    <div class="title">
+     Consultation
+    </div>
+    <div class="container">
+      <div class="item pd">
+        <div class="item_info">
+
+          <p>Patient/Dossier</p>
+        </div>
+          <!--        form-->
+      </div>
+        <div class="item terrain" style="display: none;">
+        <div class="item_info">
+
+          <p>Terrain</p>
+        </div>
+          <!--        form-->
+      </div>
+      <div class="item exploration" style="display: none;">
+        <div class="item_info">
+
+          <p>Exploration</p>
+        </div>
+          <!--        form-->
+      </div>
+      <div class="item elem" style="display: none;">
+        <div class="item_info">
+
+          <p>Eléments cliniques</p>
+        </div>
+          <!--        form-->
+      </div>
+      <div class="item decision" style="display: none;">
+        <div class="item_info">
+          <p>Décision</p>
+        </div>
+        <!--        form-->
+      </div>
+
+    </div>
+  </div>
+</div>
+</form>
+	<script src="assets/js/scripts.js"></script>
+{% endblock consultation %}

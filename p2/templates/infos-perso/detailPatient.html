@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+<body>
+<style>
+    p{ color:#7993bd;
+    }
+    h4{
+    margin-top;100px;}
+    .card-text small.text-muted{
+     color:#2e876e important;
+    }
+    p.card-text.text-muted {
+     font-size:16px;}
+    p.card-text{
+
+    }
+
+</style>
+{% block detailPatient %}
+{% include "navbar.html" %}
+
+<div class="card mb-3" style="max-width: 800px;margin-left:100px; margin-top :100px;">
+    <div class="row no-gutters">
+        <div class="col-md-7">
+            <img src="/assets/images/detail.png" class="card-img" style="height :660px;">
+        </div>
+        <div class="col-md-5">
+            <div class="card-body" style="text-align:center;">
+                <h5 class="card-title mb-3" style="color:#5c5b59;font-size:20px;text-align:center;">Informations du
+                    patient <p style="color:#2e876e">"{{patient.nom}} {{patient.prenom}}"</p></h5>
+                <p class="card-text"><u>N° dossier :</u></p>
+                <p class="card-text"><small class="text-muted" style="color:#2e876e !important;font-size:16px;">{{patient.dossier}}</small>
+                </p>
+                <p class="card-text"><u>Sexe :</u></p>
+                <p class="card-text"><small class="text-muted" style="color:#2e876e !important;font-size:16px;">{{patient.sexe}}</small>
+                </p>
+                <p class="card-text"><u>Date de Naissance :</u></p>
+                <p class="card-text"><small class="text-muted" style="color:#2e876e !important;font-size:16px;">{{patient.dateNaissance}}</small>
+                </p>
+                <p class="card-text"><u>Adresse :</u></p>
+                <p class="card-text"><small class="text-muted" style="color:#2e876e !important;font-size:16px;">{{patient.adresse}}</small>
+                </p>
+                <p class="card-text"><u>Ville :</u></p>
+                <p class="card-text"><small class="text-muted" style="color:#2e876e !important;font-size:16px;">{{patient.ville}}</small>
+                </p>
+                <p class="card-text"><u>Téléphone :</u></p>
+                <p class="card-text"><small class="text-muted" style="color:#2e876e !important;font-size:16px;">{{patient.telephone}}</small>
+                </p>
+                <p class="card-text"><u>Profession :</u></p>
+                <p class="card-text"><small class="text-muted" style="color:#2e876e !important;font-size:16px;">{{patient.profession}}</small>
+                </p>
+                <p class="card-text"><u>Sécurité sociale :</u></p>
+                <p class="card-text"><small class="text-muted" style="color:#2e876e !important;font-size:16px;">{{patient.securiteSocial}}</small>
+                </p>
+                <p class="card-text"><u>Médecin traitant :</u></p>
+                <p class="card-text"><small class="text-muted" style="color:#2e876e !important;font-size:16px;">{{patient.medecin}}</small>
+                </p>
+                <p class="card-text"><u>Chirurgien :</u></p>
+                <p class="card-text"><small class="text-muted" style="color:#2e876e !important;font-size:16px;">{{patient.chirurgien}}</small>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock detailPatient %}
