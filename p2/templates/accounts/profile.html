@@ -1,22 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="/assets/css/profil.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+{% extends "base.html" %}
 
-</head>
-
-<body>
+{% block profileBody %}
+{% include "navbar.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
 <div class="container-fluid">
 
         <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
-        <h1 class="h3 mb-0 text-gray-800">Profile</h1>
-        </div>
+
+        <h1 class="h3 mb-0 text-gray-800 align-left" style="margin-top: 50px">Profile</h1>
+
     {% if messages %}
           {% for message in messages %}
           <div class="bg-success" {{ message.tags }}>{{ message }}</div>
@@ -45,5 +38,4 @@
 
 
     </div>
-</body>
-</html>
+{% endblock profileBody %}

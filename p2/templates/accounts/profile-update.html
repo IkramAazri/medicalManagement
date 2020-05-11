@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="/assets/css/profil.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-</head>
-<body>
+{% extends "base.html" %}
+{% block profileUpdateBody %}
+{% include "navbar.html" %}
 {% load crispy_forms_tags %}
  <div class="container-fluid">
 
@@ -17,12 +10,12 @@
         </div>
 
         <!-- Main Content Here -->
-        <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card o-hidden border-0 shadow-lg my-5 ">
           <div class="card-body p-0">
             <div class="row">
               <div class="col-lg-3"></div>
-              <div class="col-lg-6">
-                <div class="p-5">
+              <div class="col-lg-6 ">
+                <div class="p-5 ">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Update Your Profile!</h1>
                   </div>
@@ -45,5 +38,4 @@
 
 
     </div>
-</body>
-</html>
+{% endblock profileUpdateBody %}
