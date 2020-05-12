@@ -3,9 +3,10 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from medicalStaff.filters import PatientFilter
-from medicalStaff.forms import PatientForm, DossierMedicalForm, InfirmierForm, MedecinForm, ChirurgienForm,AnesthesisteForm, PlanForm
+from medicalStaff.forms import PatientForm, InfirmierForm, MedecinForm, \
+    ChirurgienForm, AnesthesisteForm, ConsultationForm
 from medicalStaff.models import Patient, Infirmier, Chirurgien, Anesthesiste
-from medicalStaff.models import DossierMedical
+#from medicalStaff.models import DossierMedical
 from medicalStaff.models import Medecin
 
 
@@ -102,14 +103,12 @@ def create_chirurgien(request):
     return render(request, 'infos-perso/chirurgien-form.html', {'form': form})
 
 
-
 def create_consultation(request):
-    form = PlanForm(request.POST or None)
+    form = ConsultationForm(request.POST or None)
     if form.is_valid():
-       form.save()
-       form.save()
-    return render(request, 'infos-perso/consultation-form.html', {'form':form})
-
+        form.save()
+        form.save()
+    return render(request, 'infos-perso/consultation-form.html', {'form': form})
 
 
 def create_patient(request):
@@ -117,32 +116,36 @@ def create_patient(request):
     # medecins = Medecin.objects.all()
     # context = {'dossiers': dossiers, 'medecins': medecins}
     # print("dos")
-    form = PatientForm(request.POST, request.FILES)
-    form1 = DossierMedicalForm(request.POST or None)
-    context = {'form': form, 'form1': form1}
-    if form1.is_valid():
-        numero = request.POST.get('numero')
-        print(numero)
-        qs = DossierMedical.objects.filter(numero=numero)
-        if qs.exists():
-            messages.warning(request, 'Numéro du dossier existe déjà!')
-            return redirect('create_patients')
-        else:
-            form1.save()
-            messages.success(request, 'Numéro du dossier ajouté!')
+    """"" form = PatientForm(request.POST, request.FILES)
+     form1 = DossierMedicalForm(request.POST or None)
+     context = {'form': form, 'form1': form1}
+     if form1.is_valid():
+         numero = request.POST.get('numero')
+         print(numero)
+         qs = DossierMedical.objects.filter(numero=numero)
+         if qs.exists():
+             messages.warning(request, 'Numéro du dossier existe déjà!')
+             return redirect('create_patients')
+         else:
+             form1.save()
+             messages.success(request, 'Numéro du dossier ajouté!')
+     if form.is_valid():
+         numero = request.POST.get('dossier')
+         print(numero)
+         qs1 = Patient.objects.filter(dossier_id=numero)
+         if qs1.exists():
+             messages.error(request, 'numero existe!')
+             return redirect('create_patients')
+         else:
+             form.save()
+
+         return redirect('list_patients')
+     return render(request, 'infos-perso/patient-form.html', context)
+ """
+    form = PatientForm(request.POST or None)
     if form.is_valid():
-        numero = request.POST.get('dossier')
-        print(numero)
-        qs1 = Patient.objects.filter(dossier_id=numero)
-        if qs1.exists():
-            messages.error(request, 'numero existe!')
-            return redirect('create_patients')
-        else:
-            form.save()
-
-        return redirect('list_patients')
-    return render(request, 'infos-perso/patient-form.html', context)
-
+        form.save()
+    return render(request, 'infos-perso/patient-form.html', {'form': form})
 
 # def add_patient(request):
 #     nom = request.POST.get("nom")
@@ -259,5 +262,4 @@ def delete_chirurgien(request, id):
 def detail_patient(request, id):
     patient = Patient.objects.get(id=id)
     return render(request, 'infos-perso/detailPatient.html', {'patient': patient})
-
 

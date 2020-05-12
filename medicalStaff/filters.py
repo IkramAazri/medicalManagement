@@ -5,5 +5,5 @@ from .models import *
 class PatientFilter(django_filters.FilterSet):
         class Meta:
            model = Patient
-           fields = ['nom','prenom','dossier']
+           fields = ['nom','prenom',]
 

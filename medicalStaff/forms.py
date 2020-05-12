@@ -1,13 +1,13 @@
 from django import forms
 
-from medicalStaff.models import Patient, Medecin, Chirurgien, SecuriteSocial, DossierMedical, Infirmier, Anesthesiste, \
-    Plan
+from medicalStaff.models import Patient, Medecin, Chirurgien, SecuriteSocial, Infirmier, Anesthesiste, \
+     Consultation, Antecedent, Traitement,GroupeSanguin
 
 
 class PatientForm(forms.ModelForm):
     class Meta:
         model = Patient
-        fields = ['dossier', 'prenom', 'nom', 'sexe', 'adresse', 'profession', 'telephone', 'securiteSocial', 'ville',
+        fields = ['prenom', 'nom', 'sexe', 'adresse', 'profession', 'telephone', 'securiteSocial', 'ville',
                   'medecin', 'chirurgien', 'dateNaissance', 'image']
 
     nom = forms.CharField(widget=forms.TextInput(
@@ -109,28 +109,8 @@ class PatientForm(forms.ModelForm):
             }
         ))
 
-    dossier = forms.ModelChoiceField(
-        queryset=DossierMedical.objects.all(),
-        widget=forms.Select(
-            attrs={
-                'id': 'exampleFormControlSelect3',
-                'class': 'form-control ',
-            }
-        ))
 
 
-class DossierMedicalForm(forms.ModelForm):
-    class Meta:
-        model = DossierMedical
-        fields = ['numero']
-
-    numero = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'class': 'form-control input-lg',
-            'placeholder': 'numero',
-
-        }
-    ))
 
 
 class InfirmierForm(forms.ModelForm):
@@ -236,12 +216,97 @@ class AnesthesisteForm(forms.ModelForm):
         }
     ))
 
-
-class PlanForm(forms.ModelForm):
+class ConsultationForm(forms.ModelForm):
     class Meta:
-        model = Plan
-        fields = '__all__'
+        model = Consultation
+        fields = [
+            "numero", "patient", "antecedant", "traitement", "alcool", "drogue", "tabac", "Maladie",
+            "groupeSanguin","TDM","IRM","RADIO","ECHO","espaceClinique","avisMedical","ordonnance",
+            "dateDebutCertificat","dateFinCertificat","nbrJour",
 
+        ]
+    numero = forms.CharField(widget=forms.TextInput(
+            attrs={
+                'class': 'form-control input-lg',
+                'placeholder': 'numero de dossier',
 
+            }
+        ))
+    patient = forms.ModelChoiceField(
+        queryset=Patient.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'id': 'exampleFormControlSelect3',
+                'class': 'form-control ',
+            }
+        ))
+    antecedant = forms.ModelChoiceField(
+        queryset=Antecedent.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'id': 'exampleFormControlSelect3',
+                'class': 'form-control ',
+            }
+        ))
+    traitement = forms.ModelChoiceField(
+        queryset=Traitement.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'id': 'exampleFormControlSelect3',
+                'class': 'form-control ',
+            }
+        ))
 
+    Maladie = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control input-lg',
+            'placeholder': 'autre maladie ...',
 
+        }
+    ))
+    groupeSanguin = forms.ModelChoiceField(
+        queryset=GroupeSanguin.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'id': 'exampleFormControlSelect3',
+                'class': 'form-control ',
+            }
+        ))
+    espaceClinique = forms.CharField(
+        widget=forms.Textarea(
+             attrs={
+            'rows': 5, 'cols': 37,'placeholder':'Entrer une observation clinique du patient',
+        }
+    ))
+    avisMedical=forms.CharField(
+        widget=forms.Textarea(
+             attrs={
+            'rows': 5, 'cols': 37,'placeholder':'Entrer votre avis ',
+        }
+    ))
+    ordonnance=forms.CharField(
+        widget=forms.Textarea(
+             attrs={
+            'rows': 13, 'cols': 35,'placeholder':'Entrer ordonnance ',
+        }
+    ))
+    dateDebutCertificat= forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control ',
+                'type': 'date',
+            }
+        ))
+    dateFinCertificat=forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control ',
+                'type': 'date',
+            }
+        ))
+    nbrJour=forms.IntegerField(
+        required=False, max_value=10, min_value=0,
+        widget=forms.NumberInput(
+            attrs={'id': 'form_homework'
+                   }
+        ))

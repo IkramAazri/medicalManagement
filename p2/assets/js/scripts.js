@@ -21,8 +21,18 @@ for (var i = 0; i < li_elements.length; i++) {
       document.querySelector("." + li_value).style.display = "block";
     } else if (li_value == "decision") {
       document.querySelector("." + li_value).style.display = "block";
+      document.getElementById(accountDiv.style.display="none");
+      document.getElementById(profileDiv.style.display="none");
+      document.getElementById(hintsDiv.style.display="none");
     } else {
       console.log("");
     }
   });
 }
+    function toggle_visibility(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+    }

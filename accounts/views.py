@@ -5,49 +5,26 @@ from .forms import CreateUserForm
 from django.template import loader
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib import auth
 
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .forms import UserForm, ProfileForm, TerrainForm, PatientForm
+from .forms import UserForm, ProfileForm
 from django.contrib.auth.models import User
-from .models import Profile, Terrain, Patient
+from .models import Profile
 from django.contrib import messages
 from django.views.generic import TemplateView, CreateView
 
 
-def patient(request):
-    if request.method == "POST":
-        form = PatientForm(request.POST)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            return redirect('terrain')
-    else:
-        form = PatientForm()
-    return render(request, "accounts/dossier.html", {"form": form})
-
-
-def terrain(request):
-    if request.method == "POST":
-        form = TerrainForm(request.POST)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-    else:
-        form = TerrainForm()
-    return render(request, "accounts/terrain.html", {"form": form})
-
-
-
-def TerrainUpdate(request, terrain_id):
-    terrain = get_object_or_404(Terrain, terrain_id=id)
-    form = TerrainForm(data=request.POST or None, instance=terrain)
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'Your terrain is updated successfully!')
-        redirect('terrain')
-    return render_to_response('accounts/terrain.html', {}, RequestContext(request))
+#def TerrainUpdate(request, terrain_id):
+ #   terrain = get_object_or_404(Terrain, terrain_id=id)
+  #  form = TerrainForm(data=request.POST or None, instance=terrain)
+  #  if form.is_valid():
+    #    form.save()
+      #  messages.success(request, 'Your terrain is updated successfully!')
+      #  redirect('terrain')
+    #return render_to_response('accounts/terrain.html', {}, RequestContext(request))
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -170,3 +147,7 @@ def delete_profile(request, user_id):
     user.delete()
     messages.success(request, "The user is deleted")
     return redirect('system_users')
+
+def logoutView(request):
+    auth.logout(request)
+    return render(request,'accounts/logout.html')

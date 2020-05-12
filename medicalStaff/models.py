@@ -1,14 +1,6 @@
 from django.db import models
 
 
-class DossierMedical(models.Model):
-    numero = models.CharField(max_length=50)
-    nom = models.CharField(max_length=50, null=True)
-
-    def __str__(self):
-        return self.numero
-
-
 class Infirmier(models.Model):
     nom = models.CharField(max_length=50, null=True)
     prenom = models.CharField(max_length=50, null=True)
@@ -16,30 +8,28 @@ class Infirmier(models.Model):
 
 
 class Medecin(models.Model):
-    nom = models.CharField(max_length=50,null=True)
-    prenom = models.CharField(max_length=50,null=True)
-    specialite = models.CharField(max_length=50,null=True)
+    nom = models.CharField(max_length=50, null=True)
+    prenom = models.CharField(max_length=50, null=True)
+    specialite = models.CharField(max_length=50, null=True)
 
     def __str__(self):
         return 'Dr.' + self.nom
 
 
 class Chirurgien(models.Model):
-    nom = models.CharField(max_length=50,null=True)
-    prenom = models.CharField(max_length=50,null=True)
+    nom = models.CharField(max_length=50, null=True)
+    prenom = models.CharField(max_length=50, null=True)
 
     def __str__(self):
-        return 'Dr.'+self.nom
+        return 'Dr.' + self.nom
 
 
 class Anesthesiste(models.Model):
-    nom = models.CharField(max_length=50,null=True)
-    prenom = models.CharField(max_length=50,null=True)
+    nom = models.CharField(max_length=50, null=True)
+    prenom = models.CharField(max_length=50, null=True)
 
     def __str__(self):
         return self.nom
-
-
 
 
 SEXE_CHOICES = (
@@ -56,11 +46,6 @@ class SecuriteSocial(models.Model):
 
 
 class Patient(models.Model):
-    dossier = models.OneToOneField(
-        DossierMedical,
-        on_delete=models.CASCADE,
-        null=True,
-    )
     nom = models.CharField(max_length=50)
     prenom = models.CharField(max_length=50)
     sexe = models.CharField(choices=SEXE_CHOICES, max_length=128, null=True)
@@ -75,21 +60,47 @@ class Patient(models.Model):
     chirurgien = models.ForeignKey(Chirurgien, on_delete=models.CASCADE, db_constraint=True, null=True,
                                    related_name='chirurgien')
     ville = models.CharField(max_length=50)
-    image = models.ImageField(null=True,blank=True,default='default.png')
+    image = models.ImageField(null=True, blank=True, default='default.png')
 
     def __str__(self):
-        return self.nom
+        return u'{0} {1}'.format(self.nom,self.prenom)
 
 
-class Profile(models.Model):
-    name = models.CharField('profile name', max_length=10)
+class Traitement(models.Model):
+        traitement = models.CharField(max_length=12, blank=True)
 
-    def __unicode__(self):
-        return self.name
+        def __str__(self):
+            return u'{0}'.format(self.traitement)
 
-class Plan(models.Model):
-    name = models.CharField('plan name', max_length=10)
-    profile = models.ForeignKey(Profile, related_name='profiles', on_delete=models.CASCADE)
+class Antecedent(models.Model):
+        name = models.CharField(max_length=12, blank=True)
 
-    def __unicode__(self):
-        return self.name
+        def __str__(self):
+            return u'{0}'.format(self.name)
+
+class GroupeSanguin(models.Model):
+    sang=models.CharField(max_length=12, blank=True)
+
+    def __str__(self):
+            return u'{0}'.format(self.sang)
+
+class Consultation(models.Model):
+    antecedant = models.ForeignKey(Antecedent, on_delete=models.CASCADE)
+    traitement = models.ForeignKey(Traitement, on_delete=models.CASCADE, null=True)
+    alcool = models.BooleanField(default=False)
+    drogue = models.BooleanField(default=False)
+    tabac = models.BooleanField(default=False)
+    Maladie = models.CharField(max_length=12, blank=True)
+    patient=models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
+    numero=models.CharField(max_length=12,blank=True)
+    groupeSanguin=models.ForeignKey(GroupeSanguin, on_delete=models.CASCADE, null=True)
+    TDM = models.BooleanField(default=False)
+    IRM = models.BooleanField(default=False)
+    RADIO = models.BooleanField(default=False)
+    ECHO=models.BooleanField(default=False)
+    espaceClinique=models.CharField(max_length=300, blank=True)
+    avisMedical=models.CharField(max_length=300, blank=True)
+    ordonnance=models.CharField(max_length=300, blank=True)
+    dateDebutCertificat=models.DateField(auto_now=False, null=True, blank=True)
+    dateFinCertificat=models.DateField(auto_now=False, null=True, blank=True)
+    nbrJour=models.IntegerField(blank=True, null=True)

@@ -28,6 +28,11 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0), -5px -5px 30px 7px rgba(0,0,0,0.1);
   border-radius: 40px;
   object-fit: cover;
 }
+.card_image img{
+opacity: 0.4;
+height:100%;
+border-radius: 40px;
+}
 
 .card .card_title {
   color:black;

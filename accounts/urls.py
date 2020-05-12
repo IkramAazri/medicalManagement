@@ -1,7 +1,6 @@
 from django.urls import path,re_path
 from django.contrib.auth import views as auth_views
 from . import views
-from django.contrib.auth.views import LogoutView
 from django.views.generic import TemplateView
 from .views import ProfileUpdateView, ProfileView
 
@@ -10,7 +9,7 @@ urlpatterns = [
     re_path(r'^.*\.html', views.pages, name='pages'),
     path('register/', views.registerPage, name="register"),
     path('login/', views.loginPage, name="login"),
-    path('logout/', LogoutView.as_view(), name="logout"),
+    path('logout/', views.logoutView, name="logout"),
 
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="accounts/password_reset.html"), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="accounts/password_reset_sent.html"), name="password_reset_done"),
@@ -24,8 +23,7 @@ urlpatterns = [
     path('activate/user/<int:user_id>', views.user_activate, name='activate_user'),
     path('deactivate/user/<int:user_id>', views.user_deactivate, name='deactivate_user'),
     path('delete/user/<int:user_id>', views.delete_profile, name='delete_user'),
-    path('terrain/', views.terrain, name='terrain'),
-    path('dossier/', views.patient, name='dossier'),
+
 
 ]
 
