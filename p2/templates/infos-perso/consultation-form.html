@@ -4,6 +4,8 @@
 
 <title>Consultation</title>
 <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
 {% load crispy_forms_tags %}
 	<form method="POST">
         {% csrf_token %}
@@ -58,6 +60,11 @@
                             {{form.patient}}
                         </div>
                           </div>
+                                <div class="col-md-2 icon" style="margin-top:38px;margin-left:-10px;">
+                            <a href="{% url 'create_patients' %}"><i class="material-icons"
+                                                                             title="Ajouter patient"style="color:red;">add_circle</i></a>
+
+                        </div>
                             </div>
       </div>
         <div class="item terrain" style="display: none;">
