@@ -5,9 +5,11 @@ from django.http import HttpResponse
 from medicalStaff.filters import PatientFilter
 from medicalStaff.forms import PatientForm, InfirmierForm, MedecinForm, \
     ChirurgienForm, AnesthesisteForm, ConsultationForm
-from medicalStaff.models import Patient, Infirmier, Chirurgien, Anesthesiste
-#from medicalStaff.models import DossierMedical
+from medicalStaff.models import Patient, Infirmier, Chirurgien, Anesthesiste, Consultation
+# from medicalStaff.models import DossierMedical
 from medicalStaff.models import Medecin
+from django.views.generic import View
+from .utils import render_to_pdf
 
 
 def list_patients(request):
@@ -16,6 +18,12 @@ def list_patients(request):
     patients = myFilter.qs
     context = {'patients': patients, 'myFilter': myFilter}
     return render(request, 'infos-perso/patients.html', context)
+
+
+def list_consultations(request):
+    consultations = Consultation.objects.all()
+    context = {'consultations': consultations}
+    return render(request, 'infos-perso/consultation.html', context)
 
 
 def list_infirmiers(request):
@@ -147,6 +155,7 @@ def create_patient(request):
         form.save()
     return render(request, 'infos-perso/patient-form.html', {'form': form})
 
+
 # def add_patient(request):
 #     nom = request.POST.get("nom")
 #     prenom = request.POST.get("prenom")
@@ -167,10 +176,7 @@ def create_patient(request):
 def update_patient(request, id):
     patient = Patient.objects.get(id=id)
     form = PatientForm(request.POST or None, instance=patient)
-    form1 = DossierMedicalForm(request.POST or None)
-    context = {'form': form, 'form1': form1, 'patient': patient}
-    if form1.is_valid():
-        form1.save()
+    context = {'form': form, 'patient': patient}
     if request.method == 'POST':
         form = PatientForm(request.POST, request.FILES, instance=patient)
         if form.is_valid():
@@ -263,3 +269,31 @@ def detail_patient(request, id):
     patient = Patient.objects.get(id=id)
     return render(request, 'infos-perso/detailPatient.html', {'patient': patient})
 
+
+from django.utils import timezone
+
+
+class GeneratePdf(View):
+    def get(self, request,id):
+        consultations=Consultation.objects.get(id=id)
+        today = timezone.now()
+        params = {
+            'today': today,
+            'consultations':consultations,
+            'request': request,
+        }
+        pdf = render_to_pdf('pdf/invoice.html', params)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+
+class OrdonnancePdf(View):
+    def get(self, request,id):
+        consultations=Consultation.objects.get(id=id)
+        today = timezone.now()
+        params = {
+            'today': today,
+            'consultations':consultations,
+            'request': request,
+        }
+        pdf = render_to_pdf('pdf/ordonnance.html', params)
+        return HttpResponse(pdf, content_type='application/pdf')

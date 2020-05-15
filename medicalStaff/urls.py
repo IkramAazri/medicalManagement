@@ -1,8 +1,10 @@
 from django.urls import path
 
 from . import views
+from .views import *
 
 urlpatterns = [
+    path('list_consultation', views.list_consultations, name='list_consultation'),
     path('list_patient', views.list_patients, name='list_patients'),
     path('new', views.create_patient, name='create_patients'),
     path('deletePatient/<int:id>/', views.delete_patient, name='delete_patients'),
@@ -29,6 +31,9 @@ urlpatterns = [
     path('deleteAnesthesiste/<int:id>/', views.delete_anesthesiste, name='delete_anesthesiste'),
     path('list_anesthesiste', views.list_anesthesiste, name='list_anesthesiste'),
 
-    path('create_consultation',views.create_consultation,name='create_consultation'),
+    path('create_consultation', views.create_consultation, name='create_consultation'),
+
+    path('pdf/<int:id>/', GeneratePdf.as_view(),name="pdf"),
+    path('pdfOrdonnance/<int:id>/', OrdonnancePdf.as_view(),name="pdfOrdonnance"),
 
 ]
