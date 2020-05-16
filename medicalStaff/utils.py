@@ -14,6 +14,8 @@ def render_to_pdf(template_src, context_dict={}):
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
+
+
 def fetch_resources(uri, rel):
-   path = join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))
-   return path
+    path = join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))
+    return path

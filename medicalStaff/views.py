@@ -282,7 +282,7 @@ class GeneratePdf(View):
             'consultations':consultations,
             'request': request,
         }
-        pdf = render_to_pdf('pdf/invoice.html', params)
+        pdf = render_to_pdf('pdf/fiche.html', params)
         return HttpResponse(pdf, content_type='application/pdf')
 
 
@@ -297,3 +297,4 @@ class OrdonnancePdf(View):
         }
         pdf = render_to_pdf('pdf/ordonnance.html', params)
         return HttpResponse(pdf, content_type='application/pdf')
+

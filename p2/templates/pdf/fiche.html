@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Fiche</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style type="text/css">
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+
+        .list-group {
+            display: block;
+            width: 100%;
+            list-style: none;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        div{
+          font-size: 1.3em;
+            margin-top: 0px;
+        }
+
+
+    </style>
+</head>
+{% load static %}
+<body>
+
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+          <h1 style="font-size: 0.5em;">  <label for="" style="color: white">****************************************************************
+              *******************************************************************</label> Date du fiche :{{ today | date:"d/m/Y" }}</h1>
+            <img src="/assets/logo.png" alt="">
+        </div>
+        <div class="list-group">
+            <h1 style="font-size: 1em;background-color: #f6c23e;padding-left: 17px;padding-top:14px "><u>Patient </u></h1>
+        </div>
+        </div>
+</div>
+
+
+    <div><strong>numero du dossier : </strong>{{ consultations.numero }}<label for="" style="color: white">************************************************************
+    </label><strong>nom : </strong>{{ consultations.patient.nom }}</div>
+    <div ><strong>prenom: </strong>{{ consultations.patient.prenom }}<label for="" style="color: white">********************************************************************
+    </label><strong>sexe: </strong>{{ consultations.patient.sexe }}</div>
+    <div><strong>date du naissance : </strong>{{ consultations.patient.dateNaissance }}<label for="" style="color: white">*************************************************
+    </label><strong>adresse : </strong>{{ consultations.patient.adresse }}</div>
+    <div><strong>telephone: </strong>{{ consultations.patient.telephone }}<label for="" style="color: white">*************************************************************
+    </label><strong>profession: </strong>{{ consultations.patient.profession }}</div>
+    <div><strong>ville: </strong>{{ consultations.patient.ville }}<label for="" style="color: white">***************************************************************************
+    </label><strong>securite social: </strong>{{ consultations.patient.securiteSocial }}</div>
+    <div><strong>medecin traitant: </strong>{{ consultations.patient.medecin }}<label for="" style="color: white">************************************************************
+    </label><strong>chirurgien traitant: </strong>{{ consultations.patient.chirurgien }}</div>
+
+<div class="list-group">
+            <h1 style="font-size: 1.6em;background-color: #f6c23e;padding-left: 17px;padding-top:14px "><u>Consultation </u></h1>
+        </div>
+<div><strong>antecedant: </strong>{{ consultations.antecedant }}<label for="" style="color: white">*****************************************************************
+</label><strong>traitement: </strong>{{ consultations.traitement }}</div>
+    <div><strong>habitude toxique: </strong>{% if consultations.alcool %}
+        alcool
+{% endif %}
+{% if consultations.drogue %}
+    drogue
+{% endif %}
+{% if consultations.tabac %}
+    tabac.
+{% endif %}
+<label for="" style="color: white">**********************************************************
+    </label><strong>element du dossier Clinique: </strong>{{ consultations.espaceClinique }}
+<div><strong>avis medical: </strong>{{ consultations.avisMedical }}</div>
+
+</body>
+</html>
