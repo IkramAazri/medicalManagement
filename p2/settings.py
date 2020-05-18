@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'medicalStaff',
+    'appointment',
     'django_filters',
     'crispy_forms',
     'bootstrap4',

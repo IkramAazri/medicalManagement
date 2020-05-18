@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Certificat</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style type="text/css">
+        @page {
+            size: A4;
+            margin: 1cm;
+            border: #0b2e13, 2px;
+            padding: 25px;
+        }
+        </style>
+
+</head>
+<body>
+<h1 align="center" style="font-size: 2.7em">Centre Hospitalier Universitaire Mohammed VI</h1>
+<h2 align="center"  style="font-size: 2.0em">Département de traumatologie Clinique et Biologique</h2>
+<h3 align="center" style="font-size: 1.8em">Service Traumatologique</h3>
+
+
+<h1>fax:05 24 24 88 89</h1>
+
+<hr>
+<h1 align="center" style="color: #0c5460;font-size: 2.7"><u>Certificat Médical</u></h1>
+<p style="font-size: 2em">
+    Je, soussigné __<strong>{{ consultations.patient.medecin }}</strong>__, docteur en médecine,spécialité ___<strong>{{ consultations.patient.medecin.specialite }}</strong>__
+certifie que examen de Ms/Mme__<strong>{{ consultations.patient.nom }} {{ consultations.patient.prenom }}</strong>___
+    <br>
+Date de naissance : __<strong>{{ consultations.patient.dateNaissance }}</strong>__
+__________________________________________________________ <br>
+    _________________________________________________________ <br>
+    _____________________________________
+</p>
+<br>
+<p style="font-size: 2em">Certificat établi du : __<strong>{{ consultations.dateDebutCertificat}}</strong>__ à :__<strong>{{ consultations.dateFinCertificat}}</strong>__</p>
+<p style="font-size: 2em">Nombre de jour(s) : __<strong>{{ consultations.nbrJour}}</strong> jour (s)__</p>
+<br>
+<br>
+<p style="font-size: 2em">Date : __<strong>{{ today | date:"d/m/Y" }}</strong>__ Signature du médecin : __________________</p>
+    <br>
+    <br>
+    <br>
+    <br>
+<p align="right" style="font-size: 2em"><string>Tampon du médecin :</string></p>
+
+</body>
+</html>

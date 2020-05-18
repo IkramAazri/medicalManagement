@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+     {% load static %}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <title>Title</title>
     <style type="text/css">
         @page {
             size: A5;
-            margin: 1cm;
+            margin: 0.5cm;
+            border: #0b2e13,1px;
+            padding: 25px;
         }
+
+
         body{
             font-size: 2.1em;
         }
@@ -17,16 +21,19 @@
     </style>
 </head>
 <body>
+<logo styl class="logo bg-white">
+        <img src='assets/logo.png' />
+        </logo>
 <div><strong>Docteur: </strong>{{ consultations.patient.medecin }}</div>
-<label for="">Medecin de consultation</label><br>
+<label for=""><strong>Spécialité:</strong>{{ consultations.patient.medecin.specialite }}</label><br>
 <label for="">Adresse:Hopital Chu</label><br>
 <label for="">rue 4930 Daoudiat</label>
 <label for="">Marrakech </label>
 <br>
 <br>
 
-<div><label for="" style="color: white">********************  </label><strong>A Ms/Mme: </strong>{{ consultations.patient.nom }} {{ consultations.patient.prenom }}</div>
-<div><label for="" style="color: white">********************  </label><strong>Date : </strong>{{ today | date:"d/m/Y" }}</div>
+<div align="right"><strong> Ms/Mme: </strong>{{ consultations.patient.nom }} {{ consultations.patient.prenom }}</div>
+<div align="right" ><strong>Date : </strong>{{ today | date:"d/m/Y" }}</div>
 
 <h1 style="text-align: center;color: #0c5460"><u>Ordonnance</u></h1>
 <div>
@@ -36,9 +43,8 @@
 <br>
 <br>
 <br>
-<br>
-<br>
-   <div><label for="" style="color: white">**********************************</label><strong>Cachet et signature: </strong></div>
+
+   <div align="right"><strong>Cachet et signature: </strong></div>
 
 </body>
 

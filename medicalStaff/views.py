@@ -298,3 +298,16 @@ class OrdonnancePdf(View):
         pdf = render_to_pdf('pdf/ordonnance.html', params)
         return HttpResponse(pdf, content_type='application/pdf')
 
+
+class CertificatPdf(View):
+    def get(self, request,id):
+        consultations=Consultation.objects.get(id=id)
+        today = timezone.now()
+        params = {
+            'today': today,
+            'consultations':consultations,
+            'request': request,
+        }
+        pdf = render_to_pdf('pdf/certificat.html', params)
+        return HttpResponse(pdf, content_type='application/pdf')
+

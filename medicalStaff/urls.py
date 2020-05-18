@@ -35,5 +35,6 @@ urlpatterns = [
 
     path('pdf/<int:id>/', GeneratePdf.as_view(),name="pdf"),
     path('pdfOrdonnance/<int:id>/', OrdonnancePdf.as_view(),name="pdfOrdonnance"),
+    path('pdfCertificat/<int:id>/', CertificatPdf.as_view(),name="pdfCertificat"),
 
 ]

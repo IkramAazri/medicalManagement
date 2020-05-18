@@ -250,13 +250,15 @@ display: block;
             <tr>
 
                 <th id="c1">Numero dossier</th>
-                <th id="c2">Prenom</th>
-                <th id="c7">Nom</th>
-
-
+                <th id="c2">Patient</th>
+                <th id="c8">photo</th>
                 <th id="c4">Médecin consultant</th>
+
                 <th id="c5">Chirurgien</th>
+                <th id="c3">Ordonnance</th>
+                <th id="c7">Certificat</th>
                 <th id="c6">Actions</th>
+
 
             </thead>
             <tbody>
@@ -264,17 +266,21 @@ display: block;
             {% for consultation in consultations %}
             <tr>
                 <td>{{consultation.numero}}</td>
-                <td>{{consultation.patient.prenom}}</td>
+                <td>{{consultation.patient.prenom}} {{consultation.patient.nom}}</td>
                 <td><img src="/assets/images/{{consultation.patient.image}}"></td>
                 <td>{{consultation.patient.medecin}}</td>
                 <td>{{consultation.patient.chirurgien}}</td>
+                <td><a href="{% url 'pdfOrdonnance' consultation.id %}"><i class="material-icons fa-print" title="imprimer ordonnance">print</i></a>
+                </td>
+                <td><a href="{% url 'pdfCertificat' consultation.id %}"><i class="material-icons fa-print" title="imprimer certificat">print</i></a>
+                </td>
 
 
                 <td>
                     <a href="#"><i class="material-icons edit" title="Modifier">edit</i></a>
                     <a href="#"><i class="material-icons delete" title="Supprimer">delete</i></a>
                     <a href="#"><i class="material-icons search" title="Détail">visibility</i></a>
-                    <a href="{% url 'pdf' consultation.id %}"><i class="material-icons fa-print" title="print">print</i></a>
+                    <a href="{% url 'pdf' consultation.id %}"><i class="material-icons fa-print" title="imprimer fiche">print</i></a>
 
                 </td>
 
