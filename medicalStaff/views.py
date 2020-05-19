@@ -2,12 +2,17 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.views import View
+
 from medicalStaff.filters import PatientFilter
 from medicalStaff.forms import PatientForm, InfirmierForm, MedecinForm, \
-    ChirurgienForm, AnesthesisteForm, ConsultationForm
-from medicalStaff.models import Patient, Infirmier, Chirurgien, Anesthesiste
-#from medicalStaff.models import DossierMedical
+    ChirurgienForm, AnesthesisteForm, ConsultationForm, InterventionForm, HospitalisationForm
+from medicalStaff.models import Patient, Infirmier, Chirurgien, Anesthesiste, Consultation
+# from medicalStaff.models import DossierMedical
 from medicalStaff.models import Medecin
+from django.utils import timezone
+
+from medicalStaff.utils import render_to_pdf
 
 
 def list_patients(request):
@@ -107,8 +112,8 @@ def create_consultation(request):
     form = ConsultationForm(request.POST or None)
     if form.is_valid():
         form.save()
-        form.save()
-    return render(request, 'infos-perso/consultation-form.html', {'form': form})
+        form = ConsultationForm()
+    return render(request, 'dossier-medical/consultation-form.html', {'form': form})
 
 
 def create_patient(request):
@@ -146,6 +151,7 @@ def create_patient(request):
     if form.is_valid():
         form.save()
     return render(request, 'infos-perso/patient-form.html', {'form': form})
+
 
 # def add_patient(request):
 #     nom = request.POST.get("nom")
@@ -263,3 +269,63 @@ def detail_patient(request, id):
     patient = Patient.objects.get(id=id)
     return render(request, 'infos-perso/detailPatient.html', {'patient': patient})
 
+
+def create_intervention(request):
+    form = InterventionForm(request.POST, request.FILES)
+    if form.is_valid():
+        form.save()
+        form = InterventionForm()
+    return render(request, 'dossier-medical/intervention-form.html', {'form': form})
+
+
+def create_hospitalisation(request):
+    form = HospitalisationForm(request.POST, request.FILES)
+    if form.is_valid():
+        form.save()
+        form = HospitalisationForm()
+    return render(request, 'dossier-medical/hospitalisation-form.html', {'form': form})
+
+
+def list_consultations(request):
+    consultations = Consultation.objects.all()
+    context = {'consultations': consultations}
+    return render(request, 'dossier-medical/consultation.html', context)
+
+
+class GeneratePdf(View):
+    def get(self, request, id):
+        consultations = Consultation.objects.get(id=id)
+        today = timezone.now()
+        params = {
+            'today': today,
+            'consultations': consultations,
+            'request': request,
+        }
+        pdf = render_to_pdf('pdf/fiche.html', params)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+
+class OrdonnancePdf(View):
+    def get(self, request, id):
+        consultations = Consultation.objects.get(id=id)
+        today = timezone.now()
+        params = {
+            'today': today,
+            'consultations': consultations,
+            'request': request,
+        }
+        pdf = render_to_pdf('pdf/ordonnance.html', params)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+
+class CertificatPdf(View):
+    def get(self, request, id):
+        consultations = Consultation.objects.get(id=id)
+        today = timezone.now()
+        params = {
+            'today': today,
+            'consultations': consultations,
+            'request': request,
+        }
+        pdf = render_to_pdf('pdf/certificat.html', params)
+        return HttpResponse(pdf, content_type='application/pdf')

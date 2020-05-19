@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block hospitalisation %}
+{% include "navbar.html" %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
+      rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/hospitalisation.css">
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="card">
+        <div class="card-header">
+            Détails de l'hospitalistion
+        </div>
+        <div class="card-body ">
+            {% csrf_token %}
+            <div class="row ">
+                <div class="col">
+                <div class="form-group ">
+                    <label for="uname1">N° Dossier médical</label>
+                    {{ form.numero }}
+                </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname1">Date de l'hospitalisation</label>
+                        {{ form.date }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname2">Lieu de l'hospitalisation</label>
+                        {{ form.lieu }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                <div class="form-group ">
+                    <label for="uname1">Type l'hospitalisation</label>
+                    {{ form.type }}
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                <div class="form-group ">
+                    <label for="uname1">Lit</label>
+                    {{ form.lit }}
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                <div class="form-group ">
+                    <label for="uname1">Date de sortie</label>
+                    {{ form.dateSortie }}
+                </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <button type="submit" class="btn btn-info btn-lg">Sauvegarder</button>
+
+
+</form>
+
+{% endblock hospitalisation %}

@@ -134,37 +134,41 @@
             <div class="logo">
                 <a href="{% url 'home' %}">
                     {% load static %}
-                    <img src="{% static 'logo.png' %}" />
+                    <img src="{% static 'logo1.png' %}" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li class="active has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Statistiques</a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="index.html">Patients</a>
-                                </li>
-                                <li>
-                                    <a href="index2.html">Consultations</a>
-                                </li>
-                                <li>
-                                    <a href="index3.html">Interventions</a>
-                                </li>
-                                <li>
-                                    <a href="index4.html">Hospitalisations</a>
-                                </li>
-                            </ul>
+                            <a href="{% url 'accueil' %}">
+                                <i class="fas fa-home"></i>Accueil</a>
+<!--                            <ul class="list-unstyled navbar__sub-list js-sub-list">-->
+<!--                                <li>-->
+<!--                                    <a href="index.html">Patients</a>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <a href="index2.html">Consultations</a>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <a href="index3.html">Interventions</a>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <a href="index4.html">Hospitalisations</a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
                         </li>
                         <li>
-                            <a href="">
-                                <i class="fas fa-chart-bar"></i>Consultation</a>
+                            <a href="{% url 'list_consultation' %}">
+                                <i class="fas fa-stethoscope"></i>Consultation</a>
                         </li>
                         <li>
-                            <a href="table.html">
-                                <i class="fas fa-table"></i>Tables</a>
+                            <a href="{% url 'create_intervention' %}">
+                                <i class="fas fa-syringe"></i>Intervention</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'create_hospitalisation' %}">
+                                <i class="far fa-hospital"></i>Hospitalisation</a>
                         </li>
                         <li>
                             <a href="{% url 'list_patients' %}">
@@ -408,11 +412,11 @@
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
                                                     <a href="profile">
-                                                        <i class="zmdi zmdi-account"></i>Account</a>
+                                                        <i class="zmdi zmdi-account"></i>Votre profil</a>
                                                 </div>
                                                 <div class="account-dropdown__item">
                                                     <a href="#">
-                                                        <i class="zmdi zmdi-settings"></i>Setting</a>
+                                                        <i class="zmdi zmdi-settings"></i>Paramètres</a>
                                                 </div>
                                                 <div class="account-dropdown__item">
                                                     <a href="#">
@@ -421,7 +425,7 @@
                                             </div>
                                             <div class="account-dropdown__footer">
                                                 <a href="{% url 'logout' %}">
-                                                    <i class="zmdi zmdi-power"></i>Logout</a>
+                                                    <i class="zmdi zmdi-power"></i>Déconnexion</a>
                                             </div>
                                         </div>
                                     </div>

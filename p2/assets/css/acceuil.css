@@ -1,0 +1,132 @@
+
+body {
+background-image:url(/assets/images/accueil.png);
+background-size: 1330px 500px;
+ font-family: "Poppins", sans-serif;
+
+	}
+	hr{
+	width:230px;
+	background-color:#79d1b5;
+
+	}
+	.profil img{
+	margin-top:-90px;
+	float:right;
+    width:40px;
+	height:50px;
+	border-radius: 50%;
+	margin-right:30px;
+	}
+	.username{
+	margin-top:-40px;
+	float:right;
+	color: #333;
+    text-transform: capitalize;
+    font-weight: 500;
+    margin-right:15px;
+
+	}
+
+	.logout .icon{
+	margin-top:-10px;
+	float:right;
+	margin-right:40px;
+     color:red;
+	}
+
+	.img-responsive{
+	height:90px;
+	margin-left:90px;
+	}
+.card {
+ margin-top: 50px;
+  width: 340px;
+  height: 150px;
+  border-radius: 40px !important;
+box-shadow: 5px 5px 30px 7px rgba(0,0,0,0), -5px -5px 30px 7px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.card .card_image {
+  width: inherit;
+  height: inherit;
+border-radius: 40px;
+}
+
+.card .card_image a img {
+  width: inherit;
+  height: inherit;
+border-radius: 40px;
+  object-fit: cover;
+}
+.card_image img{
+opacity: 0.4;
+height:100%;
+width:100%;
+border-radius: 40px;
+
+}
+
+.card .card_title {
+  color:black;
+  text-align: center;
+
+
+  font-weight: bold;
+  font-size: 30px;
+  margin-top: -100px;
+  height: 40px;
+
+}
+
+.card:hover {
+ z-index: 1;
+  transform: scale(1.3);
+  box-shadow: 0px 0px 30px 10px #d9dbda,
+    0px 0px 30px 10px #d9dbda;
+}
+
+.title-white {
+  color: black;
+}
+
+.title-black {
+  color: black;
+}
+
+@media all and (max-width: 500px) {
+  .card-list {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+    border-radius: 40px;
+  }
+}
+.card_image img{
+
+  border-radius: 40px;
+}
+
+.modal{
+margin-top: 140px !important;
+border-radius: 40px;
+}
+.modal-header{
+background-image:url(/assets/images/accueil.png);
+			background-size:cover;
+
+}
+.modal-dialog{
+border-radius: 40px;
+}
+footer{
+padding-bottom:100px;
+}
+h1{
+color:red;
+}
+.title{
+color:#306e5f;
+font-weight:bold;
+}

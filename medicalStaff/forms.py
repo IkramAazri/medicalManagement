@@ -1,7 +1,7 @@
 from django import forms
 
 from medicalStaff.models import Patient, Medecin, Chirurgien, SecuriteSocial, Infirmier, Anesthesiste, \
-     Consultation, Antecedent, Traitement,GroupeSanguin
+    Consultation, Antecedent, Traitement, GroupeSanguin, DossierMedical, Intervention, Hospitalisation
 
 
 class PatientForm(forms.ModelForm):
@@ -110,9 +110,6 @@ class PatientForm(forms.ModelForm):
         ))
 
 
-
-
-
 class InfirmierForm(forms.ModelForm):
     class Meta:
         model = Infirmier
@@ -216,22 +213,24 @@ class AnesthesisteForm(forms.ModelForm):
         }
     ))
 
+
 class ConsultationForm(forms.ModelForm):
     class Meta:
         model = Consultation
         fields = [
             "numero", "patient", "antecedant", "traitement", "alcool", "drogue", "tabac", "Maladie",
-            "groupeSanguin","TDM","IRM","RADIO","ECHO","espaceClinique","avisMedical","ordonnance",
-            "dateDebutCertificat","dateFinCertificat","nbrJour",
+            "groupeSanguin", "TDM", "IRM", "RADIO", "ECHO", "espaceClinique", "avisMedical", "ordonnance",
+            "dateDebutCertificat", "dateFinCertificat", "nbrJour",
 
         ]
-    numero = forms.CharField(widget=forms.TextInput(
-            attrs={
-                'class': 'form-control input-lg',
-                'placeholder': 'numero de dossier',
 
-            }
-        ))
+    numero = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control input-lg',
+            'placeholder': 'numero de dossier',
+
+        }
+    ))
     patient = forms.ModelChoiceField(
         queryset=Patient.objects.all(),
         widget=forms.Select(
@@ -274,39 +273,257 @@ class ConsultationForm(forms.ModelForm):
         ))
     espaceClinique = forms.CharField(
         widget=forms.Textarea(
-             attrs={
-            'rows': 5, 'cols': 37,'placeholder':'Entrer une observation clinique du patient',
-        }
-    ))
-    avisMedical=forms.CharField(
+            attrs={
+                'rows': 5, 'cols': 37, 'placeholder': 'Entrer une observation clinique du patient',
+            }
+        ))
+    avisMedical = forms.CharField(
         widget=forms.Textarea(
-             attrs={
-            'rows': 5, 'cols': 37,'placeholder':'Entrer votre avis ',
-        }
-    ))
-    ordonnance=forms.CharField(
+            attrs={
+                'rows': 5, 'cols': 37, 'placeholder': 'Entrer votre avis ',
+            }
+        ))
+    ordonnance = forms.CharField(
         widget=forms.Textarea(
-             attrs={
-            'rows': 13, 'cols': 35,'placeholder':'Entrer ordonnance ',
-        }
-    ))
-    dateDebutCertificat= forms.DateField(
+            attrs={
+                'rows': 13, 'cols': 35, 'placeholder': 'Entrer ordonnance ',
+            }
+        ))
+    dateDebutCertificat = forms.DateField(
         widget=forms.DateInput(
             attrs={
                 'class': 'form-control ',
                 'type': 'date',
             }
         ))
-    dateFinCertificat=forms.DateField(
+    dateFinCertificat = forms.DateField(
         widget=forms.DateInput(
             attrs={
                 'class': 'form-control ',
                 'type': 'date',
             }
         ))
-    nbrJour=forms.IntegerField(
+    nbrJour = forms.IntegerField(
         required=False, max_value=10, min_value=0,
         widget=forms.NumberInput(
             attrs={'id': 'form_homework'
                    }
         ))
+
+
+class InterventionForm(forms.ModelForm):
+    class Meta:
+        model = Intervention
+        fields = ['numero', 'dateIntervention', 'resultat', 'heureIntervention', 'dureeIntervention',
+                  'lieuIntervention', 'typeIntervention', 'modeIntervention', 'medecin', 'infirmier', 'chirurgien',
+                  'anesthesiste', 'anesthesie', 'complication', 'compteRendu', 'technique']
+
+    numero = forms.ModelChoiceField(
+        queryset=Consultation.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'id': 'exampleFormControlSelect3',
+                'class': 'form-control ',
+            }
+        ))
+
+    dateIntervention = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control ',
+                'type': 'date',
+            }
+        ))
+
+    heureIntervention = forms.TimeField(
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control ',
+                'type': 'time',
+            }
+        ))
+
+    dureeIntervention = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control input-lg',
+            'placeholder': "Durée d'intervention",
+
+        }
+    ))
+
+    lieuIntervention = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control input-lg',
+            'placeholder': "Lieu d'intervention",
+
+        }
+    ))
+    TYPES = (
+        ('Première', 'Première'),
+        ('Retouche', 'Retouche'),
+        ('Reprise', 'Reprise')
+
+    )
+    typeIntervention = forms.ChoiceField(
+        choices=TYPES,
+        widget=forms.Select(
+            attrs={
+
+                'id': 'exampleFormControlSelect2',
+                'class': 'form-control ',
+            }
+        ))
+    MODES = (
+        ('Programmée', 'Programmée'),
+        ('urgente', 'urgente')
+
+    )
+    modeIntervention = forms.ChoiceField(
+        choices=MODES,
+        widget=forms.Select(
+            attrs={
+
+                'id': 'exampleFormControlSelect2',
+                'class': 'form-control ',
+            }
+        ))
+    RESULTAT = (
+        ('Satisfaction', 'Satisfaction'),
+        ('Insuffisance', 'Insuffisance'),
+        ('Echec', 'Echec'),
+        ('Décés', 'Décés')
+
+    )
+    resultat = forms.ChoiceField(
+        choices=RESULTAT,
+        widget=forms.Select(
+            attrs={
+
+                'id': 'exampleFormControlSelect2',
+                'class': 'form-control ',
+            }
+        ))
+    ANESTHESIE = (
+        ('Loale', 'Locale'),
+        ('Générale', 'Générale'),
+
+    )
+    anesthesie = forms.ChoiceField(
+        choices=ANESTHESIE,
+        widget=forms.Select(
+            attrs={
+
+                'id': 'exampleFormControlSelect2',
+                'class': 'form-control ',
+            }
+        ))
+    medecin = forms.ModelChoiceField(
+        queryset=Medecin.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'id': 'exampleFormControlSelect3',
+                'class': 'form-control ',
+            }
+        ))
+    chirurgien = forms.ModelChoiceField(
+        queryset=Chirurgien.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'id': 'exampleFormControlSelect3',
+                'class': 'form-control ',
+            }
+        ))
+    anesthesiste = forms.ModelChoiceField(
+        queryset=Anesthesiste.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'id': 'exampleFormControlSelect3',
+                'class': 'form-control ',
+            }
+        ))
+    infirmier = forms.ModelChoiceField(
+        queryset=Infirmier.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'id': 'exampleFormControlSelect3',
+                'class': 'form-control ',
+            }
+        ))
+    technique = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control input-lg',
+            'placeholder': "Technique",
+
+        }
+    ))
+    complication = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control input-lg',
+            'placeholder': "Complication",
+
+        }
+    ))
+
+
+class HospitalisationForm(forms.ModelForm):
+    class Meta:
+        model = Hospitalisation
+        fields = ['numero', 'date', 'type', 'dateSortie', 'lieu','lit']
+
+    lit = forms.IntegerField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control input-lg',
+            'placeholder': "numéro de lit",
+
+        }
+        ))
+
+    numero = forms.ModelChoiceField(
+    queryset = Consultation.objects.all(),
+    widget=forms.Select(
+        attrs={
+            'id': 'exampleFormControlSelect3',
+            'class': 'form-control ',
+        }
+        ))
+
+    date = forms.DateField(
+    widget=forms.DateInput(
+        attrs={
+            'class': 'form-control ',
+            'type': 'date',
+        }
+        ))
+
+
+    TYPES = (
+    ('Urgente', 'Urgente'),
+    ('Réadmission', 'Réadmission'),
+    ('Précoce', 'Précoce'),
+    ('Réglée', 'Réglée'),
+    )
+
+    type = forms.ChoiceField(
+     choices=TYPES,
+    widget=forms.Select(
+        attrs={
+            'id': 'exampleFormControlSelect2',
+            'class': 'form-control ',
+        }
+    ))
+
+    dateSortie = forms.DateField(
+    widget=forms.DateInput(
+        attrs={
+            'class': 'form-control ',
+            'type': 'date',
+        }
+    ))
+
+    lieu = forms.CharField(widget=forms.TextInput(
+    attrs={
+        'class': 'form-control input-lg',
+        'placeholder': "Lieu d'hospitalisation'",
+
+    }
+))
