@@ -5,10 +5,11 @@ from django.views.generic import TemplateView
 from .views import ProfileUpdateView, ProfileView
 
 urlpatterns = [
-    path('', views.index, name='home'),
+    path('home', views.index, name='home'),
+    path('accueil',views.accueil,name='accueil'),
     re_path(r'^.*\.html', views.pages, name='pages'),
     path('register/', views.registerPage, name="register"),
-    path('login/', views.loginPage, name="login"),
+    path('', views.loginPage, name="login"),
     path('logout/', views.logoutView, name="logout"),
 
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="accounts/password_reset.html"), name="reset_password"),

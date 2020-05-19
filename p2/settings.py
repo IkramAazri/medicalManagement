@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'accounts',
     'medicalStaff',
     'appointment',
@@ -43,6 +42,10 @@ INSTALLED_APPS = [
     'bootstrap4',
     'django_cleanup',
     'multiselectfield',
+    'django.contrib.staticfiles',
+    'jquery',
+    'appointment',
+
 
 ]
 
@@ -83,12 +86,17 @@ WSGI_APPLICATION = 'p2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
+        'NAME': 'chu',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': 3306
     }
+}
+
+SOUTH_MIGRATION_MODULES = {
+    'taggit': 'taggit.south_migrations',
+    'happenings': 'happenings.south_migrations',
 }
 
 # Password validation
@@ -130,14 +138,14 @@ STATIC_URL = '/assets/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'p2/assets'),)
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'C:/Users/fujitsu/PycharmProjects/p2/p2/media'
+MEDIA_ROOT = '/p2/p2/media'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'aazri.ikram@gmail.com'
+EMAIL_HOST_PASSWORD = 'fkzis7183'
 
 from django.contrib.messages import constants as messages
 

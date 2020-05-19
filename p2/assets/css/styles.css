@@ -15,12 +15,14 @@ body {
 }
 
 .wrapper {
-    margin-left:190px;
+    margin-left:120px;
+
+
      margin-top:60px;
 
   background: #edf2f2;
   width: 800px;
-  height: 550px;
+  height: 580px;
   display: flex;
 
   box-shadow: 10px 0px 50px 0px rgba(0, 0, 0, 0.2);
@@ -91,7 +93,7 @@ body {
   background-image: url("/assets/images/op.png") ;
   border-radius:inherited !important;
 
-  background-size: 550px 550px;
+  background-size: 550px 580px;
 }
 
 .wrapper .wrapper_right .title {
