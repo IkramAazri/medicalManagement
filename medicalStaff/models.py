@@ -97,12 +97,12 @@ class GroupeSanguin(models.Model):
 
 
 class Consultation(models.Model):
-    antecedent = models.ForeignKey(Antecedent, on_delete=models.CASCADE)
+    antecedant = models.ForeignKey(Antecedent, on_delete=models.CASCADE)
     traitement = models.ForeignKey(Traitement, on_delete=models.CASCADE, null=True)
     alcool = models.BooleanField(default=False)
     drogue = models.BooleanField(default=False)
     tabac = models.BooleanField(default=False)
-    maladie = models.CharField(max_length=12, blank=True)
+    Maladie = models.CharField(max_length=12, blank=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
     numero = models.CharField(max_length=12, blank=True)
     groupeSanguin = models.ForeignKey(GroupeSanguin, on_delete=models.CASCADE, null=True)

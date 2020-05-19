@@ -1,27 +1,19 @@
-from django.contrib import messages
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.views import View
-
-from medicalStaff.filters import PatientFilter
-from medicalStaff.forms import PatientForm, InfirmierForm, MedecinForm, \
-<<<<<<< HEAD
-    ChirurgienForm, AnesthesisteForm, ConsultationForm, InterventionForm, HospitalisationForm
+from medicalStaff.forms import    ChirurgienForm, AnesthesisteForm, ConsultationForm, InterventionForm, HospitalisationForm,PatientForm,MedecinForm,InfirmierForm
 from medicalStaff.models import Patient, Infirmier, Chirurgien, Anesthesiste, Consultation
 # from medicalStaff.models import DossierMedical
 from medicalStaff.models import Medecin
 from django.utils import timezone
+from .filters import PatientFilter
+from django.http import HttpResponse
 
 from medicalStaff.utils import render_to_pdf
-=======
-    ChirurgienForm, AnesthesisteForm, ConsultationForm
 from medicalStaff.models import Patient, Infirmier, Chirurgien, Anesthesiste, Consultation
 # from medicalStaff.models import DossierMedical
 from medicalStaff.models import Medecin
 from django.views.generic import View
 from .utils import render_to_pdf
->>>>>>> origin/master
+from django.shortcuts import render
+
 
 
 def list_patients(request):
@@ -282,7 +274,6 @@ def detail_patient(request, id):
     return render(request, 'infos-perso/detailPatient.html', {'patient': patient})
 
 
-<<<<<<< HEAD
 def create_intervention(request):
     form = InterventionForm(request.POST, request.FILES)
     if form.is_valid():
@@ -304,15 +295,6 @@ def list_consultations(request):
     context = {'consultations': consultations}
     return render(request, 'dossier-medical/consultation.html', context)
 
-
-class GeneratePdf(View):
-    def get(self, request, id):
-        consultations = Consultation.objects.get(id=id)
-        today = timezone.now()
-        params = {
-            'today': today,
-            'consultations': consultations,
-=======
 from django.utils import timezone
 
 
@@ -323,7 +305,6 @@ class GeneratePdf(View):
         params = {
             'today': today,
             'consultations':consultations,
->>>>>>> origin/master
             'request': request,
         }
         pdf = render_to_pdf('pdf/fiche.html', params)
@@ -331,48 +312,26 @@ class GeneratePdf(View):
 
 
 class OrdonnancePdf(View):
-<<<<<<< HEAD
-    def get(self, request, id):
-        consultations = Consultation.objects.get(id=id)
-        today = timezone.now()
-        params = {
-            'today': today,
-            'consultations': consultations,
-=======
     def get(self, request,id):
         consultations=Consultation.objects.get(id=id)
         today = timezone.now()
         params = {
             'today': today,
             'consultations':consultations,
->>>>>>> origin/master
             'request': request,
         }
         pdf = render_to_pdf('pdf/ordonnance.html', params)
         return HttpResponse(pdf, content_type='application/pdf')
 
-
 class CertificatPdf(View):
-<<<<<<< HEAD
     def get(self, request, id):
         consultations = Consultation.objects.get(id=id)
         today = timezone.now()
         params = {
             'today': today,
             'consultations': consultations,
-=======
-    def get(self, request,id):
-        consultations=Consultation.objects.get(id=id)
-        today = timezone.now()
-        params = {
-            'today': today,
-            'consultations':consultations,
->>>>>>> origin/master
             'request': request,
         }
         pdf = render_to_pdf('pdf/certificat.html', params)
         return HttpResponse(pdf, content_type='application/pdf')
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master

@@ -279,9 +279,9 @@ display: block;
                 <td>{{consultation.patient.medecin}}</td>
                 <td>{{consultation.antecedent}}</td>
                 <td>{{consultation.maladie}}</td>
-                <td><button class="btn btn-danger"><a href="{% url 'pdfOrdonnance' consultation.id %}"></a>Télécharger</button>
+                <td><button class="btn btn-danger"><a href="{% url 'pdfOrdonnance' consultation.id %}" style="color:white;">Télécharger</a></button>
                 </td>
-                <td><button class="btn btn-danger"><a href="{% url 'pdfCertificat' consultation.id %}"></a>Télécharger</button>
+                <td><button class="btn btn-danger"><a href="{% url 'pdfCertificat' consultation.id %}" style="color:white;">Télécharger</a></button>
                 </td>
 
 
@@ -290,8 +290,8 @@ display: block;
                 <td>
                     <a href="#"><i class="material-icons edit" title="Modifier">edit</i></a>
                     <a href="#"><i class="material-icons delete" title="Supprimer">delete</i></a>
-                    <a href="#"><i class="material-icons visibility" title="Détail">visibility</i></a>
-                    <a href="{% url 'pdf' consultation.id %}"><i class="material-icons print" title="imprimer">print</i></a>
+                    <a href="#"><i class="material-icons search" title="Détail">visibility</i></a>
+                    <a href="{% url 'pdf' consultation.id %}"><i class="material-icons fa-print" title="print">print</i></a>
 
                 </td>
 

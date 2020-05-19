@@ -43,8 +43,7 @@ INSTALLED_APPS = [
     'django_cleanup',
     'multiselectfield',
     'django.contrib.staticfiles',
-    'jquery',
-    'appointment',
+
 
 
 ]
@@ -86,7 +85,7 @@ WSGI_APPLICATION = 'p2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'chu',
+        'NAME': 'test',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
