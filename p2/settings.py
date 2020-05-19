@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'accounts',
     'medicalStaff',
+    'appointment',
     'django_filters',
     'crispy_forms',
     'bootstrap4',

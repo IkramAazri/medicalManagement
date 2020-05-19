@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+{% block consultation %}
+{% include "navbar.html" %}
+
+<title>Consultation</title>
+<link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+{% load crispy_forms_tags %}
+	<form method="POST">
+        {% csrf_token %}
+
+<div class="wrapper">
+  <div class="wrapper_left">
+    <ul>
+      <li data-li="pd" class="active">
+        <p>Patient/Dossier</p>
+      </li>
+      <li data-li="terrain">
+        <p>Terrain</p>
+      </li>
+      <li data-li="exploration">
+        <p>Exploration</p>
+      </li>
+      <li data-li="elem"style="font-size:11.5px;">
+        <p>Eléments cliniques</p>
+      </li>
+      <li data-li="decision">
+        <p>Décision</p>
+      </li>
+      <div >
+        <button type="submit" class="myButton">Sauvegarder</button>
+      </div>
+    </ul>
+  </div>
+  <div class="wrapper_right">
+    <div class="title">
+     Consultation
+    </div>
+    <div class="container">
+      <div class="item pd">
+        <div class="item_info">
+
+          <p>Patient/Dossier</p>
+        </div>
+          <!--        form-->
+                            {% csrf_token %}
+                            <div class="row">
+                            <div class="col">
+                        <div class="form-group">
+                            <label for="sexe"> Numéro du Dossier</label>
+                            {{form.numero}}
+                        </div>
+                            </div>
+                               </div>
+                            <div class="row">
+                                  <div class="col">
+                        <div class="form-group">
+                            <label for="sexe"> Patient</label>
+                            {{form.patient}}
+                        </div>
+                          </div>
+                                <div class="col-md-2 icon" style="margin-top:38px;margin-left:-10px;">
+                            <a href="{% url 'create_patients' %}"><i class="material-icons"
+                                                                             title="Ajouter patient"style="color:red;">add_circle</i></a>
+
+                        </div>
+                            </div>
+      </div>
+        <div class="item terrain" style="display: none;">
+        <div class="item_info">
+
+          <p>Terrain</p>
+        </div>
+          <!--        form-->
+{% csrf_token %}
+                            <div class="row">
+                            <div class="col">
+                        <div class="form-group">
+                            <label for="sexe"> Antécédant*</label>
+                            {{form.antecedant}}
+                        </div>
+                            </div>
+                               </div>
+                         <div class="row">
+                            <div class="col">
+                        <div class="form-group">
+                            <label for="sexe"> Traitement*</label>
+                            {{form.traitement}}
+                        </div>
+                            </div>
+                               </div>
+                         <div class="row">
+                                  <div class="col">
+                        <div class="form-group">
+                            {{form.alcool}}
+                            <label for="sexe"> alcool</label>
+                        </div>
+                          </div>
+                            </div>
+            <div class="row">
+                                  <div class="col">
+                        <div class="form-group">
+                            {{form.drogue}}
+                            <label for="sexe"> drogue</label>
+                        </div>
+                          </div>
+                            </div>
+            <div class="row">
+                                  <div class="col">
+                        <div class="form-group">
+                            {{form.tabac}}
+                            <label for="sexe"> tabac</label>
+                        </div>
+                          </div>
+                            </div>
+            <div class="row">
+                                  <div class="col">
+                        <div class="form-group">
+                            <label for="sexe"> Maladie</label>
+                            {{form.Maladie}}
+                        </div>
+                          </div>
+                            </div>
+      </div>
+      <div class="item exploration" style="display: none;">
+        <div class="item_info">
+
+          <p>Exploration</p>
+        </div>
+          <!--        form-->
+           <div class="row">
+                            <div class="col">
+                        <div class="form-group">
+                            <label for="sexe"> Groupe Sanguin*</label>
+                            {{form.groupeSanguin}}
+                        </div>
+                            </div>
+                               </div>
+                         <div class="row">
+                                  <div class="col">
+                        <div class="form-group">
+                            {{form.TDM}}
+                            <label for="sexe"> TDM</label>
+                        </div>
+                          </div>
+                            </div>
+            <div class="row">
+                                  <div class="col">
+                        <div class="form-group">
+                            {{form.IRM}}
+                            <label for="sexe"> IRM</label>
+                        </div>
+                          </div>
+                            </div>
+            <div class="row">
+                                  <div class="col">
+                        <div class="form-group">
+                            {{form.RADIO}}
+                            <label for="sexe"> RADIO</label>
+                        </div>
+                          </div>
+                            </div>
+          <div class="row">
+                                  <div class="col">
+                        <div class="form-group">
+                            {{form.ECHO}}
+                            <label for="sexe"> ECHO</label>
+                        </div>
+                          </div>
+                            </div>
+      </div>
+      <div class="item elem" style="display: none;">
+        <div class="item_info">
+
+          <p>Eléments cliniques</p>
+        </div>
+          <!--        form-->
+          <div class="row">
+                                  <div class="col">
+                        <div class="form-group">
+                            <label for="sexe"> Elément Clinique*</label>
+                            {{form.espaceClinique}}
+                        </div>
+                          </div>
+                            </div>
+
+      </div>
+      <div class="item decision" style="display: none;">
+        <div class="item_info">
+          <p>Décision</p>
+        </div>
+        <!--        form-->
+          <ul id="links">
+    <li style="width: 130px;float: left;background-color: #f6c23e;padding-left: 25px"><a onclick="$('#profileDiv').hide();$('#hintsDiv').hide();$('#accountDiv').show();">Avis Médical</a></li>
+   <li style="width: 95px;float: right;background-color: #f6c23e;margin-left: 40px;padding-left: 5px;margin-right: 0px"><a onclick="$('#accountDiv').hide();$('#hintsDiv').hide();$('#profileDiv').show();">Certificats</a></li>
+   <li style="width: 109px;float: right;background-color: #f6c23e;padding-left: 14px;"><a onclick="$('#profileDiv').hide();$('#accountDiv').hide();$('#hintsDiv').show();">Ordonnance</a></li>
+    <!--<li><a onclick="$('#profileDiv').hide();$('#hintsDiv').hide();$('#accountDiv').hide();;$('#finishDiv').show();">Finish</a></li> !-->
+</ul>
+          <div id="container" style="margin-top: 50px">
+
+                  <div id="accountDiv">
+                      <div class="col">
+                        <div class="form-group">
+                            <label for="sexe"> Avis Médical*</label>
+                            {{form.avisMedical}}
+                        </div>
+                          </div>
+                            </div>
+                  </div>
+              <div id="profileDiv">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="sexe">Date début du certificat</label>
+                            {{form.dateDebutCertificat}}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="sexe">Date Fin du certificat</label>
+                            {{form.dateFinCertificat}}
+                        </div>
+                    </div>
+                </div>
+                  <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="sexe">Nombre du jour</label>
+                            {{form.nbrJour}}
+                        </div>
+                    </div>
+
+                  </div>
+              </div>
+              <div id="hintsDiv" >
+                  <div class="col">
+                        <div class="form-group">
+                            <label for="sexe"> Ordonnance*</label>
+                            {{form.ordonnance}}
+                        </div>
+                          </div>
+                            </div>
+              </div>
+
+
+   <!-- <div id="finishDiv">fin</div> !-->
+      </div>
+</div>
+  </div>
+</div>
+</form>
+	<script src="assets/js/scripts.js"></script>
+{% endblock consultation %}
