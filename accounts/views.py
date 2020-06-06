@@ -118,6 +118,8 @@ def registerPage(request):
 
 
 def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -136,7 +138,7 @@ def loginPage(request):
 
 @login_required(login_url='/')
 def registered_users(request):
-    users = User.objects.all()
+    users = User.objects.filter(is_superuser=0)
     context = {
         'users': users
     }
