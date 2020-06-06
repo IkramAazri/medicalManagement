@@ -1,4 +1,5 @@
 from MySQLdb.constants.FIELD_TYPE import NULL
+from django.contrib.auth.decorators import login_required
 
 from medicalStaff.forms import ChirurgienForm, AnesthesisteForm, ConsultationForm, InterventionForm, \
     HospitalisationForm, PatientForm, MedecinForm, InfirmierForm
@@ -20,6 +21,7 @@ from .utils import render_to_pdf
 from django.views.generic.edit import FormView
 
 
+@login_required(login_url='/')
 def list_patients(request):
     patients = Patient.objects.all()
     myFilter = PatientFilter(request.GET, queryset=patients)
@@ -33,22 +35,25 @@ def list_patients(request):
 #     context = {'consultations': consultations}
 #     return render(request, 'infos-perso/consultation.html', context)
 
-
+@login_required(login_url='/')
 def list_infirmiers(request):
     infirmiers = Infirmier.objects.all()
     return render(request, 'infos-perso/infirmiers.html', {'infirmiers': infirmiers})
 
 
+@login_required(login_url='/')
 def list_medecin(request):
     medecins = Medecin.objects.all()
     return render(request, 'infos-perso/medecins.html', {'medecins': medecins})
 
 
+@login_required(login_url='/')
 def list_chirurgien(request):
     chirurgiens = Chirurgien.objects.all()
     return render(request, 'infos-perso/chirurgiens.html', {'chirurgiens': chirurgiens})
 
 
+@login_required(login_url='/')
 def list_anesthesiste(request):
     anesthesistes = Anesthesiste.objects.all()
     return render(request, 'infos-perso/anesthesistes.html', {'anesthesistes': anesthesistes})
@@ -75,7 +80,7 @@ def list_anesthesiste(request):
 #     dossier_num.save()
 #     return render(request, 'dossier.html')
 
-
+@login_required(login_url='/')
 def create_infirmier(request):
     form = InfirmierForm(request.POST or None)
     if form.is_valid():
@@ -86,6 +91,7 @@ def create_infirmier(request):
     return render(request, 'infos-perso/infirmier-form.html', {'form': form})
 
 
+@login_required(login_url='/')
 def create_medecin(request):
     form = MedecinForm(request.POST or None)
     if form.is_valid():
@@ -98,6 +104,7 @@ def create_medecin(request):
     return render(request, 'infos-perso/medecin-form.html', {'form': form})
 
 
+@login_required(login_url='/')
 def create_anesthesiste(request):
     form = AnesthesisteForm(request.POST or None)
     if form.is_valid():
@@ -108,6 +115,7 @@ def create_anesthesiste(request):
     return render(request, 'infos-perso/anesthesiste-form.html', {'form': form})
 
 
+@login_required(login_url='/')
 def create_chirurgien(request):
     form = ChirurgienForm(request.POST or None)
     if form.is_valid():
@@ -117,6 +125,7 @@ def create_chirurgien(request):
     return render(request, 'infos-perso/chirurgien-form.html', {'form': form})
 
 
+@login_required(login_url='/')
 def create_consultation(request):
     form = ConsultationForm(request.POST or None, request.FILES or None)
     if form.is_valid():
@@ -138,6 +147,7 @@ def create_consultation(request):
     return render(request, 'dossier-medical/consultation-form.html', {'form': form})
 
 
+@login_required(login_url='/')
 def create_patient(request):
     # dossiers = DossierMedical.objects.all()
     # medecins = Medecin.objects.all()
@@ -191,7 +201,7 @@ def create_patient(request):
 #         return redirect('list_patients')
 #     return render(request, 'patient-form.html', )
 
-
+@login_required(login_url='/')
 def update_patient(request, id):
     patient = Patient.objects.get(id=id)
     form = PatientForm(request.POST or None, instance=patient)
@@ -204,6 +214,7 @@ def update_patient(request, id):
     return render(request, "infos-perso/patient-form.html", context)
 
 
+@login_required(login_url='/')
 def update_infirmier(request, id):
     infirmier = Infirmier.objects.get(id=id)
     form = InfirmierForm(request.POST or None, instance=infirmier)
@@ -213,6 +224,7 @@ def update_infirmier(request, id):
     return render(request, "infos-perso/infirmier-form.html", {'form': form, 'infirmier': infirmier})
 
 
+@login_required(login_url='/')
 def update_anesthesiste(request, id):
     anesthesiste = Anesthesiste.objects.get(id=id)
     form = AnesthesisteForm(request.POST or None, instance=anesthesiste)
@@ -222,6 +234,7 @@ def update_anesthesiste(request, id):
     return render(request, "infos-perso/anesthesiste-form.html", {'form': form, 'anesthesiste': anesthesiste})
 
 
+@login_required(login_url='/')
 def update_chirurgien(request, id):
     chirurgien = Chirurgien.objects.get(id=id)
     form = ChirurgienForm(request.POST or None, instance=chirurgien)
@@ -231,6 +244,7 @@ def update_chirurgien(request, id):
     return render(request, "infos-perso/chirurgien-form.html", {'form': form, 'chirurgien': chirurgien})
 
 
+@login_required(login_url='/')
 def update_medecin(request, id):
     medecin = Medecin.objects.get(id=id)
     form = MedecinForm(request.POST or None, instance=medecin)
@@ -240,6 +254,7 @@ def update_medecin(request, id):
     return render(request, "infos-perso/medecin-form.html", {'form': form, 'medecin': medecin})
 
 
+@login_required(login_url='/')
 def delete_medecin(request, id):
     medecin = Medecin.objects.get(id=id)
 
@@ -249,6 +264,7 @@ def delete_medecin(request, id):
     return render(request, 'confirm-delete.html', {'medecin': medecin})
 
 
+@login_required(login_url='/')
 def delete_patient(request, id):
     patient = Patient.objects.get(id=id)
 
@@ -258,6 +274,7 @@ def delete_patient(request, id):
     return render(request, 'confirm-delete.html', {'patient': patient})
 
 
+@login_required(login_url='/')
 def delete_infirmier(request, id):
     infirmier = Infirmier.objects.get(id=id)
 
@@ -267,6 +284,7 @@ def delete_infirmier(request, id):
     return render(request, 'confirm-delete.html', {'infirmier': infirmier})
 
 
+@login_required(login_url='/')
 def delete_anesthesiste(request, id):
     anesthesiste = Anesthesiste.objects.get(id=id)
 
@@ -275,6 +293,7 @@ def delete_anesthesiste(request, id):
     return render(request, 'confirm-delete.html', {'anesthesiste': anesthesiste})
 
 
+@login_required(login_url='/')
 def delete_chirurgien(request, id):
     chirurgien = Chirurgien.objects.get(id=id)
 
@@ -284,11 +303,13 @@ def delete_chirurgien(request, id):
     return render(request, 'confirm-delete.html', {'chirurgien': chirurgien})
 
 
+@login_required(login_url='/')
 def detail_patient(request, id):
     patient = Patient.objects.get(id=id)
     return render(request, 'infos-perso/detailPatient.html', {'patient': patient})
 
 
+@login_required(login_url='/')
 def create_intervention(request):
     form = InterventionForm(request.POST, request.FILES)
     if form.is_valid():
@@ -298,6 +319,7 @@ def create_intervention(request):
     return render(request, 'dossier-medical/intervention-form.html', {'form': form})
 
 
+@login_required(login_url='/')
 def create_hospitalisation(request):
     form = HospitalisationForm(request.POST, request.FILES)
     if form.is_valid():
@@ -315,6 +337,7 @@ def create_hospitalisation(request):
     return render(request, 'dossier-medical/hospitalisation-form.html', {'form': form})
 
 
+@login_required(login_url='/')
 def list_consultations(request):
     consultations = Consultation.objects.all()
     myFilter = ConsultationFilter(request.GET, queryset=consultations)
@@ -402,6 +425,7 @@ class CertificatPdf(View):
         return HttpResponse(pdf, content_type='application/pdf')
 
 
+@login_required(login_url='/')
 def detail_dossier(request, id):
     try:
         try:
@@ -435,6 +459,7 @@ def detail_dossier(request, id):
                       {'consultation': consultation, 'hospitalisation': hospitalisation})
 
 
+@login_required(login_url='/')
 def delete_dossier(request, id):
     consultation = Consultation.objects.get(id=id)
     try:
@@ -482,6 +507,7 @@ def delete_dossier(request, id):
                       {'consultation': consultation, 'hospitalisation': hospitalisation})
 
 
+@login_required(login_url='/')
 def update_dossier(request, id):
     consultation = get_object_or_404(Consultation, id=id)
     form = ConsultationForm(request.POST or None, instance=consultation)
@@ -493,6 +519,7 @@ def update_dossier(request, id):
     return render(request, "infos-perso/consultation-form.html", {'form': form, 'consultation': consultation})
 
 
+@login_required(login_url='/')
 def update_hospitalisation(request, id):
     try:
         hospitalisation = Hospitalisation.objects.get(numero=id)
@@ -506,6 +533,7 @@ def update_hospitalisation(request, id):
         return redirect('update_intervention', id=id)
 
 
+@login_required(login_url='/')
 def update_intervention(request, id):
     try:
         if Intervention.objects.filter(numero=id).count() > 1:
@@ -530,6 +558,7 @@ def update_intervention(request, id):
         return redirect('list_consultation')
 
 
+@login_required(login_url='/')
 def bilan(request, id):
     consultation = get_object_or_404(Consultation, id=id)
     form = ConsultationForm(request.POST or None, instance=consultation)

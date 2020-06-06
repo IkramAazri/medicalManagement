@@ -1,6 +1,7 @@
 import locale
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
@@ -62,6 +63,7 @@ def get_date(req_day):
     return datetime.today()
 
 
+@login_required(login_url='/')
 def event(request, event_id=None):
     instance = Event()
     if event_id:
@@ -99,6 +101,7 @@ def event(request, event_id=None):
 #     event = Event.objects.get(id=id)
 #     locale.setlocale(locale.LC_ALL, 'fr_FR')
 #     return render(request, 'cal/detailEvent.html', {'event': event})
+@login_required(login_url='/')
 def event_delete(request, id):
     event = Event.objects.get(id=id)
     if request.method == 'POST':
@@ -107,6 +110,7 @@ def event_delete(request, id):
     return render(request, 'confirm-delete.html', {'event': event})
 
 
+@login_required(login_url='/')
 def add_event(request):
     form = EventForm(request.POST or None)
     if request.POST and form.is_valid():

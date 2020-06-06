@@ -1,6 +1,8 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.cache import cache_control
+
 from .forms import CreateUserForm
 from django.template import loader
 from django.http import HttpResponse
@@ -27,7 +29,6 @@ from django.contrib.auth.forms import PasswordChangeForm
 #  messages.success(request, 'Your terrain is updated successfully!')
 #  redirect('terrain')
 # return render_to_response('accounts/terrain.html', {}, RequestContext(request))
-
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/profile.html'
@@ -73,11 +74,13 @@ class ProfileUpdateView(LoginRequiredMixin, TemplateView):
         return self.post(request, *args, **kwargs)
 
 
+@login_required(login_url='/')
 def index(request):
     context = {'segment': 'index'}
     return render(request, "home.html", context)
 
 
+@login_required(login_url='/')
 def accueil(request):
     return render(request, "services.html")
 
@@ -107,7 +110,7 @@ def registerPage(request):
         form = CreateUserForm(request.POST)
     if form.is_valid():
         form.save()
-        messages.success(request, 'Votre compte a été bien crée ! Veuillez se connecter!')
+        messages.success(request, 'Votre compte a bien été crée ! Veuillez se connecter!')
 
         return redirect("login")
     context = {'form': form}
@@ -125,13 +128,13 @@ def loginPage(request):
             login(request, user)
             return redirect('accueil')
         else:
-            messages.info(request, "Nom d'utilisateur ou mot de passe est incorrect")
+            messages.error(request, "Nom d'utilisateur ou mot de passe est incorrect!")
 
     context = {}
     return render(request, 'accounts/login.html', context)
 
 
-@login_required()
+@login_required(login_url='/')
 def registered_users(request):
     users = User.objects.all()
     context = {
@@ -140,7 +143,7 @@ def registered_users(request):
     return render(request, 'accounts/users.html', context)
 
 
-@login_required()
+@login_required(login_url='/')
 def user_deactivate(request, user_id):
     user = User.objects.get(pk=user_id)
     user.is_active = False
@@ -149,7 +152,7 @@ def user_deactivate(request, user_id):
     return redirect('system_users')
 
 
-@login_required()
+@login_required(login_url='/')
 def user_activate(request, user_id):
     user = User.objects.get(pk=user_id)
     user.is_active = True
@@ -158,6 +161,7 @@ def user_activate(request, user_id):
     return redirect('system_users')
 
 
+@login_required(login_url='/')
 def delete_profile(request, user_id):
     user = User.objects.get(pk=user_id)
     user.delete()
@@ -166,10 +170,12 @@ def delete_profile(request, user_id):
 
 
 def logoutView(request):
-    auth.logout(request)
-    return render(request, 'accounts/logout.html')
+    logout(request)
+    messages.info(request, "Vous êtes déconnecté!")
+    return HttpResponseRedirect("/")
 
 
+@login_required(login_url='/')
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)

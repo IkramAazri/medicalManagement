@@ -9,7 +9,7 @@
 		  integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
        <link rel="icon" href="/assets/icon.png" />
 
-	{% load i18n %}
+
 
 
 	<style>
@@ -88,10 +88,13 @@
 				<div class="d-flex justify-content-center mt-3 mb-3">
 					<h3 class="card-header">CREER UN COMPTE</h3>
 				</div>
+				<center><p style="color:orange;font-size:15px;margin-bottom:-11px;">Mot de passe doit contenir au moins 8 caractères!</p></center>
 				<div class="d-flex justify-content-center form_container">
 
 					<form method="POST" action="">
 						{% csrf_token %}
+
+
 						<div class="input-group mb-3">
 							<div class="input-group-append">
 								<span class="input-group-text" style="width"><i class="fas fa-user"></i></span>
@@ -109,7 +112,9 @@
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
 							{{form.password1}}
+
 						</div>
+
 						<div class="input-group mb-3">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
@@ -126,6 +131,7 @@
 					</form>
 				</div>
 				<div style="color:white;">
+					{% load i18n %}
                 {% language 'fr' %}
 				{{form.errors}}
 				{% endlanguage %}

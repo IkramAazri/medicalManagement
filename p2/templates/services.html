@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+{% if user.is_authenticated %}
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/assets/icon.png"/>
@@ -318,3 +318,4 @@
 <footer>
 </footer>
 </html>
+{% endif %}

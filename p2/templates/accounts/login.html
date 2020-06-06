@@ -99,7 +99,7 @@
 				</div>
 				{% if messages %}
                 {% for message in messages %}
-					<p id="messages">{{message}}</p>
+					<center><p class="{{message.tags}}">{{message}}</p></center>
 				{% endfor %}
 				{% endif %}
 				<div class="d-flex justify-content-center form_container">
