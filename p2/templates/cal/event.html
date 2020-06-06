@@ -1,19 +1,124 @@
-{% extends 'cal/base.html' %}
-
-{% block title %}
-Event
-{% endblock %}
-
+{% extends "base.html" %}
 {% block content %}
-<div class="clearfix">
-  <a class="btn btn-info left" href="{% url 'calendar' %}"> Calendar </a>
+{% load i18n %}
+<title>Patient</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+{% include "navbar.html" %}
+{% load crispy_forms_tags %}
+<div class="card" style="width: 600px;margin-left:200px;margin-bottom:-10px;">
+    <img src="/assets/images/patient.png" class="card-img-top" alt="..." style="height:250px;">
+    <div class="card-body">
+        <h2 class="text-center mb-3"></h2>
+        <fieldset>
+            <form method="POST">
+
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col" style="">
+                        {% if messages %}
+                        {% for message in messages %}
+
+                        <p id="messages" style="color:red; text-align:center;font-size:18px;">{{message}}</p>
+
+                        {% endfor %}
+                        {% endif %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group ">
+                                    <label for="uname1">Patient*</label>
+                                    {{ form.patient }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group ">
+                                    <label for="uname1">Motif*</label>
+                                    {{ form.motif }}
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group ">
+
+                                    {{ form.description|as_crispy_field }}
+                                </div>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col">
+                                <label for="uname1">Date*</label>
+                                <div class="form-group ">
+
+                                    {{ form.day }}
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group ">
+                                    <label for="uname1">De:</label>
+                                  {{ form.start_time }}
+
+                                </div>
+                            </div>
+                          <div class="col">
+                                <div class="form-group ">
+                                    <label for="uname1">A:</label>
+                                    {{ form.end_time }}
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                               <center><button type="submit" class="btn btn-info btn-lg btn-block mt-5">Valider
+                            </button></center>
+
+                                <center><button class="btn btn-danger btn-lg btn-block mt-2"> <a href="{% url 'event_delete' event.id %}" style="color:white;">Supprimer</a>
+                            </button></center>
+
+
+
+
+                    </div>
+                </div>
+
+            </form>
+        </fieldset>
+
+    </div>
 </div>
 
-<form method="post">
-  {% csrf_token %}
-  <table class="form form-table">
-    {{ form }}
-    <tr><td colspan="2"><button type="submit" class="btn btn-info right"> Submit </button></td></tr>
-  </table>
-</form>
-{% endblock %}
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

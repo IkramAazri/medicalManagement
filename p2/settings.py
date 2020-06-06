@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'django_cleanup',
     'multiselectfield',
     'django.contrib.staticfiles',
-
-
+    'chartjs',
+    'chart',
 
 ]
 
@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'p2.urls'
@@ -85,13 +86,17 @@ WSGI_APPLICATION = 'p2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
+        'NAME': 'medicalMangement',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
-        'PORT': 3306
+        'PORT': 3307,
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
+LOGIN_REDIRECT_URL = '',
 
 SOUTH_MIGRATION_MODULES = {
     'taggit': 'taggit.south_migrations',
@@ -129,6 +134,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
@@ -136,15 +145,15 @@ STATIC_URL = '/assets/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'p2/assets'),)
 
+MEDIA_ROOT = (os.path.join(BASE_DIR, 'media'))
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/p2/p2/media'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'aazri.ikram@gmail.com'
-EMAIL_HOST_PASSWORD = 'fkzis7183'
+EMAIL_HOST_USER = 'servicetraumatologie@gmail.com'
+EMAIL_HOST_PASSWORD = 'servicetraumato'
 
 from django.contrib.messages import constants as messages
 

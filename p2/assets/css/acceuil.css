@@ -1,7 +1,7 @@
 
 body {
 background-image:url(/assets/images/accueil.png);
-background-size: 1330px 500px;
+background-size: cover;
  font-family: "Poppins", sans-serif;
 
 	}

@@ -33,26 +33,10 @@
 
 </head>
 <body>
+{% if user.is_authenticated %}
 {% block content %}{% endblock content %}
-{% block patientBody %}{% endblock patientBody %}
-{% block patientFormBody %}{% endblock patientFormBody %}
-{% block detailPatient %} {% endblock detailPatient %}
-{% block infirmierFormBody %}{% endblock infirmierFormBody %}
-{% block list %}{% endblock list %}
-{% block infirmierBody %}{% endblock infirmierBody %}
-{% block medecinBody %}{% endblock medecinBody %}
-{% block medecinFormBody %}{% endblock medecinFormBody %}
-{% block chirurgienFormBody %}{% endblock chirurgienFormBody %}
-{% block chirurgienBody %}{% endblock chirurgienBody %}
-{% block anesthesisteFormBody %}{% endblock anesthesisteFormBody %}
-{% block anesthesisteBody %}{% endblock anesthesisteBody %}
-{% block consultation %}{% endblock consultation %}
-{% block usersBody %}{% endblock usersBody %}
-{% block profileBody %}{% endblock profileBody %}
-{% block profileUpdateBody %}{% endblock profileUpdateBody %}
-{% block intervention %}{% endblock intervention %}
-{% block consultationBody %}{% endblock consultationBody %}
-{% block hospitalisation %}{% endblock hospitalisation %}
+{% endif %}
+
  <script src="/assets/vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
     <script src="/assets/vendor/bootstrap-4.1/popper.min.js"></script>

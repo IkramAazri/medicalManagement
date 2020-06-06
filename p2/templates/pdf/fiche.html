@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Fiche</title>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <style type="text/css">
@@ -10,6 +11,14 @@
             margin: 1cm;
             border: #0b2e13, 2px;
             padding: 25px;
+        }
+        .right{
+           margin-left: 290px;
+           width: 20px;
+       }
+        .left{
+           width: 20px;
+            margin-top:0px;
         }
 
         .list-group {
@@ -24,62 +33,272 @@
             font-size: 1.3em;
             margin-top: 0px;
         }
+       th {
+        text-align:left;
+        margin-left:10px;
+
+       }
+
 
 
     </style>
 </head>
 {% load static %}
 <body>
+{% load i18n %}
 
 
-<div class="container">
+
+<div class="container" >
     <div class="card">
         <div class="card-header">
-            <h1 style="font-size: 0.5em;"><label for="" style="color: white">****************************************************************
-                ***********************************************************</label> Date du fiche
+            <img src="/Users/ikram/hopital/p2/assets/images/logo.png" width="310px" height="80px"/>
+                 <h1 style="font-size: 0.5em;text-align:right;">Date de la fiche
                 :{{ today | date:"d/m/Y" }}</h1>
             <img src="/assets/logo.png" alt="">
         </div>
+
         <div class="list-group">
-            <h1 style="font-size: 1em;background-color: #f6c23e;padding-left: 17px;padding-top:14px "><u>Patient </u>
+            <h1 style="font-size: 1em;background-color: #3295a8;padding-left: 17px;padding-top:14px; ">Patient
             </h1>
         </div>
     </div>
 </div>
+<div class="table-responsive">
+      <table class="table">
 
+         <tr>
+          <th scope="row" >N° du dossier:</th>
+          <td>{{ consultations.numero }}</td>
+          </tr>
+          <tr>
+          <th scope="row" >Nom:</th>
+          <td>{{ consultations.patient.nom }}</td>
+          </tr>
+          <tr>
+          <th scope="row" >Prénom:</th>
+          <td>{{ consultations.patient.prenom }}</td>
+          </tr>
+          <tr>
+          <th scope="row" >Sexe:</th>
+          <td>{{ consultations.patient.sexe }}</td>
+          </tr>
+           <tr>
+          <th  scope="row">Date du naissance:</th>
+               {% language 'fr' %}
+          <td>{{ consultations.patient.dateNaissance }}</td>
+               {% endlanguage %}
+            </tr>
+          <tr>
+          <th scope="row" >Adresse:</th>
+          <td>{{ consultations.patient.adresse }}</td>
+         </tr>
+          <tr>
+        <th scope="row" >Téléphone:</th>
+          <td>{{ consultations.patient.telephone }}</td>
+          </tr>
+          <tr>
+          <th  >Profession:</th>
+          <td>{{ consultations.patient.profession }}</td>
+          </tr>
+          <tr>
+         <th  >Ville:</th>
+          <td>{{ consultations.patient.ville }}</td>
+              </tr>
+          <tr>
+          <th  >Sécurité sociale:</th>
+          <td>{{ consultations.patient.securiteSocial }}</td>
+          </tr>
+          <tr>
+          <th  >Médecin traitant:</th>
+          <td>{{ consultations.patient.medecin }}</td>
+          </tr>
+           <tr>
+          <th  >Chirurgien traitant:</th>
+          <td>{{ consultations.patient.chirurgien }}</td>
+          </tr>
+      </table>
+      </div>
 
-<div><strong>numero du dossier : </strong>{{ consultations.numero }}<label for="" style="color: white">************************************************************
-</label><strong>nom : </strong>{{ consultations.patient.nom }}</div>
-<div><strong>prenom: </strong>{{ consultations.patient.prenom }}<label for="" style="color: white">********************************************************************
-</label><strong>sexe: </strong>{{ consultations.patient.sexe }}</div>
-<div><strong>date du naissance : </strong>{{ consultations.patient.dateNaissance }}<label for="" style="color: white">*************************************************
-</label><strong>adresse : </strong>{{ consultations.patient.adresse }}</div>
-<div><strong>telephone: </strong>{{ consultations.patient.telephone }}<label for="" style="color: white">*************************************************************
-</label><strong>profession: </strong>{{ consultations.patient.profession }}</div>
-<div><strong>ville: </strong>{{ consultations.patient.ville }}<label for="" style="color: white">***************************************************************************
-</label><strong>securite social: </strong>{{ consultations.patient.securiteSocial }}</div>
-<div><strong>medecin traitant: </strong>{{ consultations.patient.medecin }}<label for="" style="color: white">************************************************************
-</label><strong>chirurgien traitant: </strong>{{ consultations.patient.chirurgien }}</div>
+<!--<div><strong>numero du dossier : </strong><label for="" style="color: white">************************************************************-->
+<!--</label><strong>nom : </strong>{{ consultations.patient.nom }}</div>-->
+<!--<div><strong>prenom: </strong>{{ consultations.patient.prenom }}<label for="" style="color: white">********************************************************************-->
+<!--</label><strong>sexe: </strong>{{ consultations.patient.sexe }}</div>-->
+<!--<div><strong>date du naissance : </strong>{{ consultations.patient.dateNaissance }}<label for="" style="color: white">*************************************************-->
+<!--</label><strong>adresse : </strong>{{ consultations.patient.adresse }}</div>-->
+<!--<div><strong>telephone: </strong>{{ consultations.patient.telephone }}<label for="" style="color: white">*************************************************************-->
+<!--</label><strong>profession: </strong>{{ consultations.patient.profession }}</div>-->
+<!--<div><strong>ville: </strong>{{ consultations.patient.ville }}<label for="" style="color: white">***************************************************************************-->
+<!--</label><strong>securite social: </strong>{{ consultations.patient.securiteSocial }}</div>-->
+<!--<div><strong>medecin traitant: </strong>{{ consultations.patient.medecin }}<label for="" style="color: white">************************************************************-->
+<!--</label><strong>chirurgien traitant: </strong>{{ consultations.patient.chirurgien }}</div>-->
 
 <div class="list-group">
-    <h1 style="font-size: 1.6em;background-color: #f6c23e;padding-left: 17px;padding-top:14px "><u>Consultation </u>
+    <h1 style="font-size: 1.6em;background-color:#3295a8;padding-left: 17px;padding-top:14px ">Consultation
     </h1>
 </div>
-<div><strong>antecedant: </strong>{{ consultations.antecedant }}<label for="" style="color: white">*****************************************************************
-</label><strong>traitement: </strong>{{ consultations.traitement }}</div>
-<div><strong>habitude toxique: </strong>{% if consultations.alcool %}
-    alcool
+<div class="table-responsive" >
+      <table class="table">
+
+         <tr>
+          <th scope="col" >Antécédent:</th>
+          <td>{{ consultations.antecedent }}</td>
+          </tr>
+          <tr>
+          <th scope="col" >Traitement:</th>
+          <td>{{ consultations.traitement }}</td>
+          </tr>
+          <tr>
+          <th scope="col" >Habitde toxique:</th>
+          {% if consultations.alcool %}
+          <td>Alcool</td>
+          {% endif %}
+          {% if consultations.drogue %}
+          <td>Drogue</td>
+              {% endif %}
+          {% if consultations.tabac %}
+          <td>Tabac</td>
+          {% endif %}
+         </tr>
+            <tr>
+          <th scope="col" >Elément du dossier clinique: </th>
+          <td>{{ consultations.espaceClinique }}</td>
+          </tr>
+            <tr>
+          <th scope="col" >Avis médical: </th>
+          <td>{{ consultations.avisMedical }}</td>
+          </tr>
+      </table>
+</div>
+
+
+
+
+
+<!--<div><strong>antecedant: </strong>{{ consultations.antecedant }}<label for="" style="color: white">*****************************************************************-->
+<!--</label><strong>traitement: </strong>{{ consultations.traitement }}</div>-->
+<!--<div><strong>habitude toxique: </strong>{% if consultations.alcool %}-->
+<!--    alcool-->
+<!--{% endif %}-->
+<!--    {% if consultations.drogue %}-->
+<!--        drogue-->
+<!--    {% endif %}-->
+<!--    {% if consultations.tabac %}-->
+<!--        tabac.-->
+<!--    {% endif %}-->
+<!--    <label for="" style="color: white">**********************************************************-->
+<!--    </label><strong>element du dossier Clinique: </strong>{{ consultations.espaceClinique }}</div>-->
+<!--<div><strong>avis medical: </strong>{{ consultations.avisMedical }}</div>-->
+
+
+<div class="list-group">
+    <h1 style="background-color: #3295a8;padding-left: 17px;padding-top:14px ">Hospitalisation </u>
+    </h1>
+</div>
+
+
+<div class="table-responsive">
+      <table class="table">
+
+         <tr>
+          <th scope="col" >Date d'hospitalisation : </th>
+             {% language 'fr' %}
+          <td>{{ hospitalisations.date }}</td>
+             {% endlanguage %}
+          </tr>
+          <tr>
+          <th scope="col" >Lieu : </th>
+          <td>{{ hospitalisations.lieu }}</td>
+          </tr>
+          <tr>
+          <th scope="col" >Type : </th>
+          <td>{{ hospitalisations.type }}</td>
+          </tr>
+          <tr>
+          <th scope="col" >Numéro de lit: </th>
+          <td>{{ hospitalisations.lit }}</td>
+          </tr>
+      </table>
+</div>
+<!--<div><strong>date d'hospitalisation : </strong>{{ hospitalisations.date }}<label for="" style="color: white">*********************************************-->
+<!--</label><strong>lieu : </strong>{{ hospitalisations.lieu }}</div>-->
+<!--<div><strong>type: </strong>{{ hospitalisations.type }}<label for="" style="color: white">************************************************************************-->
+<!--</label><strong>numero de lit: </strong>{{ hospitalisations.lit }}</div>-->
+{% if  interventions.count > 1 %}
+{% for intervention in interventions %}
+<div class="list-group">
+    <h1 style="font-size: 1.5em;background-color:#2baac2;padding-left: 17px;padding-top:14px;">{% language 'fr' %}Intervention:&nbsp;{{ intervention.dateIntervention }}{% endlanguage  %}
+    </h1>
+</div>
+
+        <div class="table-responsive">
+      <table class="table">
+
+         <tr>
+          <th scope="col" >Mode d'intervention : </th>
+          <td>{{ intervention.modeIntervention }}</td>
+          </tr>
+          <tr>
+          <th scope="col" >Type d'intervention :  </th>
+          <td>{{ intervention.typeIntervention }}</td>
+          </tr>
+<!--          <tr>-->
+<!--          <th scope="col" >Date d'intervention: </th>-->
+<!--          <td>{{ intervention.dateIntervention }}</td>-->
+<!--          </tr>-->
+          <tr>
+           <th scope="col" >Résultat: </th>
+          <td>{{ intervention.resultat }}</td>
+          </tr>
+          <tr>
+           <th scope="col" >Lieu: </th>
+          <td>{{ intervention.lieuIntervention }}</td>
+          </tr>
+<!--        <div><strong>Mode d'intervention : </strong>{{ intervention.modeIntervention }}<label for=""-->
+<!--                                                                                              style="color: white">****************************************************-->
+<!--        </label><strong>Type d'intervention : </strong>{{ intervention.typeIntervention }}</div>-->
+<!--        <div><strong>Date d'intervention: </strong>{{ intervention.dateIntervention }}<label for=""-->
+<!--                                                                                             style="color: white">*************************************************-->
+<!--        </label><strong>résultat: </strong>{{ intervention.resultat }}</div>-->
+<!--        <div></label><strong>lieu: </strong>{{ intervention.lieuIntervention }}</div>-->
+
+      </table>
+        </div>
+{% endfor %}
+
+{% else %}
+<div class="list-group">
+    <h1 style="font-size: 1.5em;background-color:#2baac2;padding-left: 17px;padding-top:14px; ">{% language 'fr' %}Intervention:{{ interventions.dateIntervention }}{% endlanguage %}
+    </h1>
+</div>
+   <div class="table-responsive">
+      <table class="table">
+          <tr>
+          <th scope="col" >Mode d'intervention : </th>
+          <td>{{ interventions.modeIntervention }}</td>
+          </tr>
+          <tr>
+          <th scope="col" >Type d'intervention :  </th>
+          <td>{{ interventions.typeIntervention }}</td>
+          </tr>
+<!--          <tr>-->
+<!--          <th scope="col" >Date d'intervention: </th>-->
+<!--          <td>{{ interventions.dateIntervention }}</td>-->
+<!--          </tr>-->
+          <tr>
+           <th scope="col" >Résultat: </th>
+          <td>{{ interventions.resultat }}</td>
+          </tr>
+          <tr>
+           <th scope="col" >Lieu: </th>
+          <td>{{ interventions.lieuIntervention }}</td>
+          </tr>
+
+      </table>
+   </div>
+
+
 {% endif %}
-    {% if consultations.drogue %}
-        drogue
-    {% endif %}
-    {% if consultations.tabac %}
-        tabac.
-    {% endif %}
-    <label for="" style="color: white">**********************************************************
-    </label>
-    <div ><strong>element du dossier Clinique: </strong>{{ consultations.espaceClinique }}</div>
-    <div><strong>avis medical: </strong>{{ consultations.avisMedical }}</div>
 
 </body>
 </html>

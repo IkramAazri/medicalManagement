@@ -41,4 +41,20 @@ urlpatterns = [
 
     path('create_hospitalisation', views.create_hospitalisation, name='create_hospitalisation'),
 
+    path('detailDossier/<int:id>/', views.detail_dossier, name='detail_dossier'),
+    path('deleteDossier/<int:id>/', views.delete_dossier, name='delete_dossier'),
+    path('updateDossier/<int:id>/', views.update_dossier, name='update_dossier'),
+
+    path('update_hospitalisation/<int:id>/', views.update_hospitalisation, name='update_hospitalisation'),
+
+    path('create_intervention', views.create_intervention, name='create_intervention'),
+    path('update_intervention/<int:id>/', views.update_intervention, name='update_intervention'),
+
+    path('images_bilan/<int:id>/', views.bilan, name='bilan'),
+
 ]
+
+
+
+
+

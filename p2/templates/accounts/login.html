@@ -15,6 +15,7 @@
 
 			background-image:url(/assets/images/accueil1.png);
 			background-size:1500px 700px;
+			background-repeat:no-repeat;
 			}
 		.input-group-text {
 			background: #428774 !important;
@@ -96,9 +97,11 @@
 				<div class="d-flex justify-content-center  mb-3">
 					<h3 class="card-header">SE CONNECTER</h3>
 				</div>
+				{% if messages %}
                 {% for message in messages %}
 					<p id="messages">{{message}}</p>
 				{% endfor %}
+				{% endif %}
 				<div class="d-flex justify-content-center form_container">
 					<form method="POST" action="">
 						{% csrf_token %}

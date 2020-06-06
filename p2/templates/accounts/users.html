@@ -1,50 +1,62 @@
 {% extends "base.html" %}
 {% block list %}
-    <style type="text/css">
-    </style>
+<style type="text/css">
+</style>
 {% endblock list %}
-{% block usersBody %}
+{% block content %}
+{% load i18n %}
+
 {% include "navbar.html" %}
- <div class="container-fluid" style="margin-left: 10px">
-        <div class="row">
-                    <h1 class="h2" style="margin-top: 60px;padding-bottom: 20px;">Registered Users</h1>
-                </div>
-            {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                        <p class="bg-success" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-                <table class="table">
-                  <thead class="thead-dark">
-                    <tr><th scope="col">picture</th>
-                      <th scope="col">Username</th>
-                      <th scope="col">Last login</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Date joined</th>
-                        <th scope="col">delete</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for user in users %}
-                        <tr>
-                            <td><img src="{{user.profile.profile_image.url}}" class="rounded float-left" height="50px" width="70px"></td>
-                            <td>{{ user.username }}</td>
-                            <td>{{ user.last_login }}</td>
-                            <td>
-                                {% if user.is_active %}
-                                    <a   href="{% url 'deactivate_user' user_id=user.id %}" class="btn btn-sm btn-danger">Deactivate</a>
-                                    {% else %}
-                                    <a href="{% url 'activate_user' user_id=user.id %}" class="btn btn-sm btn-success">Activate</a>
-                                {% endif %}
-                            </td>
-                            <td>{{ user.date_joined }}</td>
-                         <td> <a  href="{% url 'delete_user' user_id=user.id %}" class="btn btn-sm btn-danger">Delete</a></td>
-                        </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-        </div>
-    </div>
-{% endblock usersBody %}
+<div class="container-fluid" style="margin-left: 10px;margin-bottom:100%;margin-top:100px;">
+
+       <center> <h2 class="mb-3">Gestion des comptes</h2></center>
+    {% if user.is_superuser %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <p class="bg-success" {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <table class="table" style="background-color:white;">
+        <thead class="thead-dark">
+        <tr>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Nom d'utilisateur</th>
+            <th scope="col">Dernière connexion</th>
+            <th scope="col">Statuts</th>
+            <th scope="col">Date d'inscription</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <td><img src="{{user.profile.profile_image.url}}" class="rounded float-left" height="50px" width="70px">
+            </td>
+            <td>{{ user.username }}</td>
+            {% language 'fr' %}
+            <td>{{ user.last_login }}</td>
+            {% endlanguage %}
+            <td>
+                {% if user.is_active %}
+                <a href="{% url 'deactivate_user' user_id=user.id %}" class="btn btn-sm btn-danger">Désactiver</a>
+                {% else %}
+                <a href="{% url 'activate_user' user_id=user.id %}" class="btn btn-sm btn-success">Activer</a>
+                {% endif %}
+            </td>
+            {% language 'fr' %}
+            <td>{{ user.date_joined }}</td>
+            {% endlanguage %}
+            <td><a href="{% url 'delete_user' user_id=user.id %}" class="btn btn-sm btn-danger">Supprimer</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<h3 class="font-weight-bold"> Vous n'êtes pas admin .Vous ne pouvez pas accéder à cette page</h3>
+{% endif %}
+</div>
+{% endblock content %}

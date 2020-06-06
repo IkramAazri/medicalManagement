@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/assets/icon.png"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <link href="/assets/css/acceuil.css" rel="stylesheet" media="all">
     <link href="https://fonts.googleapis.com/css2?family=Asap:wght@500&display=swap" rel="stylesheet">
@@ -25,7 +25,11 @@
 
 {% load static %}
 <center><img src="{% static 'logo.png' %}" class="img-responsive mb-3"></center>
-<div class="profil"><img src="{{user.profile.profile_image.url}}" /></div>
+<div class="profil"><img {% if user.profile %}
+                         src="{{user.profile.profile_image.url}}" {% else %}
+
+                         src="{% static 'images/defaut.png' %}" {% endif %} class="rounded float-right" height="300px"
+                         width="300px"></div>
 <div class="username"> {{user.username}}</div>
 <div class="logout">
     <a href="{% url 'logout' %}"><i class="material-icons icon" title="Se déconnecter">settings_power</i></a>
@@ -191,7 +195,11 @@
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body mb-0 text-center">
-                <p>loresel dhfvjfdhvhdsvsdjvnjsdk</p>
+                <p>Depuis 1995, la dermatologie est définie comme la spécialité de la la médecine comprenant : «le
+                    diagnostic, le traitement (à la fois médical et chirurgical) et la prévention des maladies de la
+                    peau, du tissu cellulaire sous-cutané, des muqueuses et des annexes de la peau (poils, cheveux,
+                    ongles) de même que des manifestations cutanées des maladies systémiques. Elle comporte aussi la
+                    promotion de la bonne santé de la peau».</p>
             </div>
         </div>
     </div>
@@ -211,7 +219,11 @@
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body mb-0 text-center">
-                <p>loresel dhfvjfdhvhdsvsdjvnjsdk</p>
+                <p>Spécialité médicale qui étudie le fonctionnement, les maladies et les moyens de traiter les glandes
+                    endocrines (celles qui produisent des hormones) et le métabolisme (ensemble des fonctions du corps
+                    indispensables à la vie comme, par exemple, la fabrication et l’utilisation du glucose). Les
+                    hormones sont des substances qui sont transportées par le sang et agissent sur différents organes :
+                    ainsi la testostérone produite par les testicules agit sur l’os, la peau, les tissus graisseux.</p>
             </div>
         </div>
     </div>
@@ -228,7 +240,9 @@
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body mb-0 text-center">
-                <p>loresel dhfvjfdhvhdsvsdjvnjsdk</p>
+                <p>La rhumatologie est la spécialité médicale qui prend en charge les douleurs et dysfonctionnements de
+                    l'appareil locomoteur et des tissus conjonctifs ainsi que des affections touchant la région péri
+                    articulaire.</p>
             </div>
         </div>
     </div>
@@ -245,7 +259,13 @@
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body mb-0 text-center">
-                <p>loresel dhfvjfdhvhdsvsdjvnjsdk</p>
+                <p>La pneumologie est une spécialité médicale qui s’intéresse principalement aux maladies d’origine
+                    pulmonaire. Les pathologies majeures traitées sont l’insuffisance respiratoire, l’asthme et
+                    l’emphysème, ainsi que les maladies infectieuses telles que la pneumonie, la tuberculose, la
+                    pleurésie et les abcès pulmonaires, ou encore les syndromes tumoraux comme le cancer du poumon ou de
+                    la plèvre.
+
+                </p>
             </div>
         </div>
     </div>
@@ -262,7 +282,10 @@
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body mb-0 text-center">
-                <p>loresel dhfvjfdhvhdsvsdjvnjsdk</p>
+                <p>L'ophtalmologie est la spécialité qui se consacre à l'étude de la structure et du fonctionnement des
+                    yeux et de ses annexes, mais également au traitement médical ou chirurgical des maladies qui les
+                    concernent. L’ophtalmologie est une spécialité chirurgicale mais, en France, certains médecins
+                    ophtalmologistes n'opèrent pas, leur spécialité se nomme alors ophtalmologie médicale.</p>
             </div>
         </div>
     </div>
@@ -279,7 +302,9 @@
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body mb-0 text-center">
-                <p>loresel dhfvjfdhvhdsvsdjvnjsdk</p>
+                <p>La néphrologie est la spécialité médicale visant à prévenir, diagnostiquer et soigner les maladies
+                    des reins. Elle est différente de l'urologie, spécialité chirurgicale s'intéressant à l'appareil
+                    génital masculin et à l'ensemble du système urinaire</p>
             </div>
         </div>
     </div>

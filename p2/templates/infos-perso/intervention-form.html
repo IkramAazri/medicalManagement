@@ -1,0 +1,401 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "navbar.html" %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
+      rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/intervention.css">
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="card">
+        <div class="card-header">
+            Détails de l'intervention
+        </div>
+        <div class="card-body ">
+           <center><h5 class="card-title mt-2">Informations de l'intervention</h5>
+            <hr></center>
+
+            {% csrf_token %}
+            <div class="row mt-5">
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname1">N° Dossier médical</label>
+                        {{ form.numero }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname2">Date d'intervention</label>
+                        {{ form.dateIntervention }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname3">Heure D'intervention</label>
+                        {{ form.heureIntervention }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname3">Durée D'intervention</label>
+                        {{ form.dureeIntervention }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname1">Lieu D'intervention</label>
+                        {{ form.lieuIntervention }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname2">Type d'intervention</label>
+                        {{ form.typeIntervention }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname3">Mode D'intervention</label>
+                        {{ form.modeIntervention }}
+                    </div>
+                </div>
+
+            </div>
+          <center><h5 class="card-title mt-3">Equipe</h5>
+            <hr>
+          </center>
+            <div class="row">
+                      <div class="col-md-9">
+                    <div class="form-group">
+                        <label for="dossier">Chirurgien </label>
+                        {{form.chirurgien}}
+                    </div>
+                </div>
+                <div class="col-md-3 icon" style="margin-top:38px;margin-left:-10px;">
+                    <a href="{% url 'create_chirurgien' %}"><i class="material-icons"
+                                                            title="Ajouter chirurgien"
+                                                            style="color:red;">add_circle</i></a>
+
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label for="dossier">Médecin </label>
+                        {{form.medecin}}
+                    </div>
+                </div>
+                <div class="col-md-3 icon" style="margin-top:38px;margin-left:-10px;">
+                    <a href="{% url 'create_medecin' %}"><i class="material-icons"
+                                                            title="Ajouter médecin"
+                                                            style="color:red;">add_circle</i></a>
+
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label for="dossier">Infirmier</label>
+                        {{form.infirmier}}
+                    </div>
+                </div>
+                <div class="col-md-3 icon" style="margin-top:38px;margin-left:-10px;">
+                    <a href="{% url 'create_infirmier' %}"><i class="material-icons"
+                                                              title="Ajouter infirmer" style="color:red;">add_circle</i></a>
+
+                </div>
+
+
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label for="dossier">Anésthésiste</label>
+                        {{form.anesthesiste}}
+                    </div>
+                </div>
+                <div class="col-md-3 icon" style="margin-top:38px;margin-left:-10px;">
+                    <a href="{% url 'create_anesthesiste' %}"><i class="material-icons"
+                                                                 title="Ajouter infirmer"
+                                                                 style="color:red;">add_circle</i></a>
+
+                </div>
+
+
+                <div class="row">
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname1">Anésthésie</label>
+                        {{ form.anesthesie }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname2">Technique opératoire</label>
+                        {{ form.technique }}
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="card card1"style="width:850px;">
+        <div class="card-header">
+            Compte-rendu et Suite opératoire
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname1">Compte-rendu opératoire : </label>
+                        {{ form.compteRendu }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="uname2">Résultat</label>
+                        {{ form.resultat }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname2">Complications</label>
+                        {{ form.complication }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+{% if interventions %}
+
+    <div class="card">
+        <div class="card-header">
+            Détails de l'intervention
+        </div>
+        <div class="card-body ">
+           <center><h5 class="card-title mt-2">Informations de l'intervention</h5>
+            <hr></center>
+
+            {% csrf_token %}
+            <div class="row mt-5">
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname1">N° Dossier médical</label>
+                        {{ form1.numero }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname2">Date d'intervention</label>
+                        {{ form1.dateIntervention }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname3">Heure D'intervention</label>
+                        {{ form1.heureIntervention }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname3">Durée D'intervention</label>
+                        {{ form1.dureeIntervention }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname1">Lieu D'intervention</label>
+                        {{ form1.lieuIntervention }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname2">Type d'intervention</label>
+                        {{ form1.typeIntervention }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname3">Mode D'intervention</label>
+                        {{ form1.modeIntervention }}
+                    </div>
+                </div>
+
+            </div>
+          <center><h5 class="card-title mt-3">Equipe</h5>
+            <hr>
+          </center>
+            <div class="row">
+                      <div class="col-md-9">
+                    <div class="form-group">
+                        <label for="dossier">Chirurgiens </label>
+                        {{form1.chirurgien}}
+                    </div>
+                </div>
+                {% if user.is_superuser %}
+                <div class="col-md-3 icon" style="margin-top:38px;margin-left:-10px;">
+                    <a href="{% url 'create_chirurgien' %}"><i class="material-icons"
+                                                            title="Ajouter chirurgien"
+                                                            style="color:red;">add_circle</i></a>
+
+                </div>
+                {% endif %}
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label for="dossier">Médecin </label>
+                        {{form1.medecin}}
+                    </div>
+                </div>
+                {% if user.is_superuser %}
+                <div class="col-md-3 icon" style="margin-top:38px;margin-left:-10px;">
+                    <a href="{% url 'create_medecin' %}"><i class="material-icons"
+                                                            title="Ajouter médecin"
+                                                            style="color:red;">add_circle</i></a>
+
+                </div>
+                {% endif %}
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label for="dossier">Infirmier</label>
+                        {{form1.infirmier}}
+                    </div>
+                </div>
+                {% if user.is_superuser %}
+                <div class="col-md-3 icon" style="margin-top:38px;margin-left:-10px;">
+                    <a href="{% url 'create_infirmier' %}"><i class="material-icons"
+                                                              title="Ajouter infirmer" style="color:red;">add_circle</i></a>
+
+                </div>
+                {% endif %}
+
+
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label for="dossier">Anésthésiste</label>
+                        {{form1.anesthesiste}}
+                    </div>
+                </div>
+                {% if user.is_superuser %}
+                <div class="col-md-3 icon" style="margin-top:38px;margin-left:-10px;">
+                    <a href="{% url 'create_anesthesiste' %}"><i class="material-icons"
+                                                                 title="Ajouter infirmer"
+                                                                 style="color:red;">add_circle</i></a>
+
+                </div>
+                {% endif %}
+
+
+                <div class="row">
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname1">Anésthésie</label>
+                        {{ form1.anesthesie }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname2">Technique opératoire</label>
+                        {{ form1.technique }}
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="card card1"style="width:850px;">
+        <div class="card-header">
+            Compte-rendu et Suite opératoire
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname1">Compte-rendu opératoire : </label>
+                        {{ form1.compteRendu }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="uname2">Résultat</label>
+                        {{ form1.resultat }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="uname2">Complications</label>
+                        {{ form1.complication }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+            </div>
+
+
+        </div>
+{% endif %}
+
+    </div>
+    <button type="submit" class="btn btn-info btn-lg">Sauvegarder</button>
+
+
+
+</form>
+    <div>
+    </div>
+
+
+
+
+{% endblock content %}

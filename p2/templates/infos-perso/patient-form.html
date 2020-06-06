@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block patientForm %}
+{% block content %}
 <title>Patient</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -8,13 +8,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-{% endblock patientForm %}
 
-{% block patientFormBody %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 {% include "navbar.html" %}
-<div class="card" style="width: 600px;margin-left:200px;margin-bottom:-10px;">
+<div class="card" style="width: 600px;margin-bottom:100%;margin-left:20% ;">
     <img src="/assets/images/patient.png" class="card-img-top" alt="..." style="height:250px;">
     <div class="card-body">
         <h2 class="text-center mb-5">Coordonnées patient</h2>
@@ -24,6 +22,7 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col">
+                        {% if messages %}
                     {% for message in messages %}
                         {% if message.tags == "success" %}
                     <p id="messages" style="color:green;">{{message}}</p>
@@ -31,9 +30,8 @@
                         {% if message.tags == "warning" %}
                     <p id="message" style="color:red;">{{message}}</p>
                         {% endif %}
-
-
                     {% endfor %}
+                    {% endif %}
                     </div>
                 </div>
             </form><hr align="center"  color="#cbcdd1" size="3">
@@ -182,7 +180,7 @@
 
                 <div class="row">
                     <div class="col">
-                        <button type="submit" class="btn btn-outline-info btn-lg btn-block mt-5">Ajouter</button>
+                        <button type="submit" class="btn btn-outline-info btn-lg btn-block mt-5">Enregistrer</button>
 
                     </div>
                 </div>
@@ -195,7 +193,7 @@
 </div>
 
 
-{% endblock patientFormBody %}
+{% endblock content %}
 
 
 

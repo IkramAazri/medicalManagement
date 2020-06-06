@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block list %}
+{% block content %}
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -23,7 +23,7 @@
 
 .tableBodyScroll  {
   display: block;
-  max-height: 300px;
+  max-height: 600px;
   overflow-y: scroll;
 }
 
@@ -218,19 +218,25 @@ display: block;
 	margin-top:100px;
 	margin-bottom:-100px;
 	}
+	  .filter .btn{
+   height:27px;
+   }
+   i.search{
+     margin-top:-4px;
+
+    }
+
 
 
 </style>
-{% endblock list %}
 
-{% block patientBody %}
 {% include "navbar.html" %}
 <div class="container">
     <div class="row filter">
         <div class="col-sm-12">
             <form method="GET">
                 {{myFilter.form}}
-                <button type="submit" class="btn btn-info material-icons ">search</button>
+                <button type="submit" class="btn btn-danger "><i class="material-icons search">search</i></button>
             </form>
         </div>
     </div>
@@ -243,12 +249,15 @@ display: block;
                     <h2 style="color:white;">Liste des patients</h2>
                     {% load static %}
                 </div>
-
+                {% if user.is_superuser %}
                 <div class="col-sm-6">
+                    {% if user.is_superuser %}
 
                     <a href="{%url 'create_patients' %}" class="btn btn-success"><i class="material-icons">&#xE147;</i>
                         <span>Ajouter un patient</span></a>
+                    {% endif %}
                 </div>
+                {% endif %}
 
             </div>
         </div>
@@ -273,15 +282,18 @@ display: block;
             <tr>
                 <td>{{patient.nom}}</td>
                 <td>{{patient.prenom}}</td>
-                <td><img src="/assets/images/{{patient.image}}"></td>
+                <td><img src="{{patient.image.url}}"></td>
                 <td>{{patient.medecin}}</td>
                 <td>{{patient.chirurgien}}</td>
 
 
                 <td>
-                    <a href="{% url 'update_patients' patient.id %}"><i class="material-icons edit" title="Modifier">edit</i></a>
-                    <a href="{% url 'delete_patients' patient.id %}"><i class="material-icons delete" title="Supprimer">delete</i></a>
                     <a href="{% url 'detail_patient' patient.id %}"><i class="material-icons search" title="Détail">visibility</i></a>
+                    {% if user.is_superuser %}
+                    <a href="{% url 'update_patients' patient.id %}"><i class="material-icons edit" title="Modifier">edit</i></a>
+
+                    <a href="{% url 'delete_patients' patient.id %}"><i class="material-icons delete" title="Supprimer">delete</i></a>
+                    {% endif %}
 
                 </td>
 
@@ -294,4 +306,4 @@ display: block;
 
     </div>
 </div>
-{% endblock patientBody %}
+{% endblock content %}

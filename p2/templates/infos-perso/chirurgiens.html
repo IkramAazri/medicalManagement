@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block list %}
+{% block content %}
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -23,7 +23,7 @@
 
 .tableBodyScroll  {
   display: block;
-  max-height: 300px;
+  max-height: 600px;
   overflow-y: scroll;
 }
 
@@ -222,9 +222,7 @@ display: block;
 
 
 </style>
-{% endblock list %}
 
-{% block chirurgienBody %}
 {% include "navbar.html" %}
 <div class="container">
 
@@ -237,13 +235,13 @@ display: block;
                     <h2 style="color:white;">Liste des chirurgiens</h2>
                     {% load static %}
                 </div>
-
+                  {% if user.is_superuser %}
                 <div class="col-sm-6">
 
                     <a href="{%url 'create_chirurgien' %}" class="btn btn-success"><i
                             class="material-icons">&#xE147;</i> <span>Ajouter un chirurgien</span></a>
                 </div>
-
+                {% endif %}
             </div>
         </div>
 
@@ -253,7 +251,9 @@ display: block;
 
                 <th id="c1">Nom</th>
                 <th id="c2">Prénom</th>
+                {% if user.is_superuser %}
                 <th id="c7">Actions</th>
+            {% endif %}
 
             </thead>
             <tbody>
@@ -263,7 +263,7 @@ display: block;
                 <td>{{chirurgien.nom}}</td>
                 <td>{{chirurgien.prenom}}</td>
 
-
+               {% if user.is_superuser %}
                 <td>
                     <a href="{% url 'update_chirurgien' chirurgien.id %}"><i class="material-icons edit"
                                                                              title="Modifier">edit</i></a>
@@ -271,7 +271,7 @@ display: block;
                                                                              title="Supprimer">delete</i></a>
 
                 </td>
-
+               {% endif %}
             </tr>
 
             {% endfor %}
@@ -281,4 +281,4 @@ display: block;
 
     </div>
 </div>
-{% endblock chirurgienBody %}
+{% endblock content %}

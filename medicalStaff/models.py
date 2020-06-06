@@ -1,11 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class DossierMedical(models.Model):
-    numero = models.CharField(max_length=50,null=True)
-
-    def __str__(self):
-        return self.nom
 
 class Infirmier(models.Model):
     nom = models.CharField(max_length=50, null=True)
@@ -22,7 +17,7 @@ class Medecin(models.Model):
     specialite = models.CharField(max_length=50, null=True)
 
     def __str__(self):
-        return 'Dr.' + self.nom
+        return 'Dr.' + self.nom + " " + self.prenom
 
 
 class Chirurgien(models.Model):
@@ -30,7 +25,7 @@ class Chirurgien(models.Model):
     prenom = models.CharField(max_length=50, null=True)
 
     def __str__(self):
-        return 'Dr.' + self.nom
+        return 'Dr.' + self.nom + " " + self.prenom
 
 
 class Anesthesiste(models.Model):
@@ -61,7 +56,7 @@ class Patient(models.Model):
     dateNaissance = models.DateField(auto_now=False, null=True, blank=True)
     adresse = models.CharField(max_length=50)
     telephone = models.CharField(max_length=50)
-    profession = models.CharField(max_length=50, null=True)
+    profession = models.CharField(max_length=50, null=True,default='sans profession')
     securiteSocial = models.ForeignKey(SecuriteSocial, on_delete=models.CASCADE, db_constraint=True, null=True,
                                        related_name='SR')
     medecin = models.ForeignKey(Medecin, on_delete=models.CASCADE, db_constraint=True, null=True,
@@ -69,7 +64,7 @@ class Patient(models.Model):
     chirurgien = models.ForeignKey(Chirurgien, on_delete=models.CASCADE, db_constraint=True, null=True,
                                    related_name='chirurgien')
     ville = models.CharField(max_length=50)
-    image = models.ImageField(null=True, blank=True, default='default.png')
+    image = models.ImageField(null=True, blank=True, default='default-profile.png')
 
     def __str__(self):
         return u'{0} {1}'.format(self.nom, self.prenom)
@@ -97,12 +92,12 @@ class GroupeSanguin(models.Model):
 
 
 class Consultation(models.Model):
-    antecedant = models.ForeignKey(Antecedent, on_delete=models.CASCADE)
+    antecedent = models.ForeignKey(Antecedent, on_delete=models.CASCADE,null=True)
     traitement = models.ForeignKey(Traitement, on_delete=models.CASCADE, null=True)
     alcool = models.BooleanField(default=False)
     drogue = models.BooleanField(default=False)
     tabac = models.BooleanField(default=False)
-    Maladie = models.CharField(max_length=12, blank=True)
+    maladie = models.CharField(max_length=12, blank=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
     numero = models.CharField(max_length=12, blank=True)
     groupeSanguin = models.ForeignKey(GroupeSanguin, on_delete=models.CASCADE, null=True)
@@ -112,13 +107,20 @@ class Consultation(models.Model):
     ECHO = models.BooleanField(default=False)
     espaceClinique = models.CharField(max_length=300, blank=True)
     avisMedical = models.CharField(max_length=300, blank=True)
+
     ordonnance = models.CharField(max_length=300, blank=True)
     dateDebutCertificat = models.DateField(auto_now=False, null=True, blank=True)
+    descriptionCertificat = models.CharField(max_length=300, blank=True)
     dateFinCertificat = models.DateField(auto_now=False, null=True, blank=True)
     nbrJour = models.IntegerField(blank=True, null=True)
+    tdms = models.ImageField(default='s.jpg', upload_to='tdm/', null=True, blank=True)
+    irms = models.ImageField(default='s.jpg', upload_to='irm/', null=True, blank=True)
+    radios = models.ImageField(default='s.jpg', upload_to='radio/', null=True, blank=True)
+    echos = models.ImageField(default='s.jpg', upload_to='echo/', null=True, blank=True)
 
     def __str__(self):
         return u'{0}'.format(self.numero)
+
 
 TYPES = (
     ('Première', 'Première'),
@@ -189,6 +191,7 @@ class Intervention(models.Model):
     technique = models.CharField(max_length=50, null=True)
     complication = models.CharField(max_length=500, null=True)
 
+
 TYPES = (
     ('Urgente', 'Urgente'),
     ('Réadmission', 'Réadmission'),
@@ -198,7 +201,7 @@ TYPES = (
 
 
 class Hospitalisation(models.Model):
-    numero = models.ForeignKey(Consultation,on_delete=models.CASCADE, null=True)
+    numero = models.ForeignKey(Consultation, on_delete=models.CASCADE, null=True)
     date = models.DateField(auto_now=False, null=True, blank=True)
     lieu = models.CharField(max_length=500, null=True)
     type = models.CharField(choices=TYPES, max_length=50, null=True)

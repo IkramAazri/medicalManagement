@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block hospitalisation %}
+{% block content %}
 {% include "navbar.html" %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -12,8 +12,14 @@
         <div class="card-header">
             Détails de l'hospitalistion
         </div>
+
         <div class="card-body ">
             {% csrf_token %}
+             {% if messages %}
+        {% for message in messages %}
+        <center><div class="{{ message.tags }}">{{ message }}</div></center>
+        {% endfor %}
+        {% endif %}
             <div class="row ">
                 <div class="col">
                 <div class="form-group ">
@@ -70,4 +76,4 @@
 
 </form>
 
-{% endblock hospitalisation %}
+{% endblock content %}

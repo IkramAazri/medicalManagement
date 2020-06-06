@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block intervention %}
+{% block content %}
 {% include "navbar.html" %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -8,11 +8,17 @@
 <link rel="stylesheet" href="/assets/css/intervention.css">
 
 <form method="POST" enctype="multipart/form-data">
+
     <div class="card">
         <div class="card-header">
             Détails de l'intervention
         </div>
         <div class="card-body ">
+            {% if messages %}
+        {% for message in messages %}
+        <center><div class="{{ message.tags }}">{{ message }}</div></center>
+        {% endfor %}
+        {% endif %}
            <center><h5 class="card-title mt-2">Informations de l'intervention</h5>
             <hr></center>
 
@@ -75,35 +81,41 @@
                         {{form.chirurgien}}
                     </div>
                 </div>
+                {% if user.is_superuser %}
                 <div class="col-md-3 icon" style="margin-top:38px;margin-left:-10px;">
                     <a href="{% url 'create_chirurgien' %}"><i class="material-icons"
                                                             title="Ajouter chirurgien"
                                                             style="color:red;">add_circle</i></a>
 
                 </div>
+                {% endif %}
                 <div class="col-md-9">
                     <div class="form-group">
                         <label for="dossier">Médecin </label>
                         {{form.medecin}}
                     </div>
                 </div>
+                {% if user.is_superuser %}
                 <div class="col-md-3 icon" style="margin-top:38px;margin-left:-10px;">
                     <a href="{% url 'create_medecin' %}"><i class="material-icons"
                                                             title="Ajouter médecin"
                                                             style="color:red;">add_circle</i></a>
 
                 </div>
+                {% endif %}
                 <div class="col-md-9">
                     <div class="form-group">
                         <label for="dossier">Infirmier</label>
                         {{form.infirmier}}
                     </div>
                 </div>
+                {% if user.is_superuser %}
                 <div class="col-md-3 icon" style="margin-top:38px;margin-left:-10px;">
                     <a href="{% url 'create_infirmier' %}"><i class="material-icons"
                                                               title="Ajouter infirmer" style="color:red;">add_circle</i></a>
 
                 </div>
+                {% endif %}
 
 
                 <div class="col-md-9">
@@ -112,12 +124,14 @@
                         {{form.anesthesiste}}
                     </div>
                 </div>
+                {% if user.is_superuser %}
                 <div class="col-md-3 icon" style="margin-top:38px;margin-left:-10px;">
                     <a href="{% url 'create_anesthesiste' %}"><i class="material-icons"
                                                                  title="Ajouter infirmer"
                                                                  style="color:red;">add_circle</i></a>
 
                 </div>
+                {% endif %}
 
 
                 <div class="row">
@@ -196,4 +210,4 @@
 
 </form>
 
-{% endblock intervention %}
+{% endblock content %}

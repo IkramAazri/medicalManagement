@@ -1,20 +1,50 @@
-.calendar {
-    width: 98%;
+
+
+.table {
+    width: 70%;
+    height:30%;
     margin: auto;
     font-size: 13px;
+   font-family: "Poppins", sans-serif;
+
+
+}
+.table th.month{
+
+border-top-left-radius:80px 80px;
+border-top-right-radius:80px 80px;
+padding:40px !important;
+background-image:url('/assets/images/rdv.jpeg');
+background-size:cover;
+font-size:40px;
+
+
+
+
+}
+.table tr{
+
+
+  text-align:center;
+
+}
+.table tr:first-child{
+   text-transform: uppercase;
+   color: #f55d42;
+   background-color: transparent !important;
+}
+.table tr:nth-child(2){
+text-transform: uppercase;
+   color: red;
 }
 
-.calendar tr, .calendar td {
-    border: 1px solid black;
-}
-
-.calendar th {
-    padding: 10px;
+.table th {
+    padding: 6px;
     text-align: center;
-    font-size: 18px;
+    font-size: 14px;
 }
 
-.calendar td {
+.table td {
     width: 200px;
     height: 150px;
     padding: 20px 0px 0px 5px;
@@ -33,23 +63,58 @@ ul {
     padding: 0px 5px 0px 20px;
 }
 
-a {
-    color: #17a2b8;
+h6 a {
+    color: white;
+    font-size:15px;
+    background-color :#c2bc4f;
+    border-radius: 25% 10%;
+    padding:6px;
+    margin-bottom:4px;
 }
-.left {
-    float: left;
+h6 a:hover {
+    color: white;
+    font-size:15px;
+    background-color :#458f80;
+    padding:6px;
+    margin-bottom:4px;
 }
 
-.right {
-    float: right;
+
+
+
+
+.fa-arrow-left , .fa{
+margin-right:9px;
 }
+.fa-arrow-right{
+margin-left:9px;
+}
+
 
 .btn {
-    outline: none;
-    color: black;
-    background-color: transparent;
+   position:relative;
+
+   margin-top:70px;
+    background:#458f80;
+    border:#458f80;
+    padding:10px;
+    width:215px;
+    border-radius:80px 80px;
     box-shadow: 0 0 0 0;
+    margin-bottom:20px;
+
 }
+
+
+button a{
+color: white !important;
+}
+
+.btn:hover{
+background-color:#f55d42;
+
+}
+
 
 .clearfix {
     margin: 15px;

@@ -7,11 +7,15 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
 		  integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+       <link rel="icon" href="/assets/icon.png" />
+
+	{% load i18n %}
+
 
 	<style>
 	   body
 		 {background-image:url(/assets/images/accueil1.png);
-			background-size:1500px 700px;
+			background-size:cover;
 			margin-bottom:40px;
 			}
 		.input-group-text {
@@ -74,10 +78,10 @@
 	</style>
 
 </head>
+
 <div class="container mt-3">
 		{% load static %}
 <center><img src="{% static 'logo.png' %}" class="img-responsive mb-3"  style=" height:140px;margin-left:150px;"></center>
-
 		<div class="d-flex justify-content-center h-100">
 			<div class="user_card">
 
@@ -121,9 +125,11 @@
 
 					</form>
 				</div>
-
+				<div style="color:white;">
+                {% language 'fr' %}
 				{{form.errors}}
-
+				{% endlanguage %}
+                </div>
 				<div class="mb-1">
 					<div class="d-flex justify-content-center links" style="color:white;">
 						Avez-vous déjà un compte? <a href="{% url 'login' %}" class="ml-2"style="color:#ceebe8";>Se connecter</a>

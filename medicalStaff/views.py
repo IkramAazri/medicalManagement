@@ -1,19 +1,23 @@
-from medicalStaff.forms import    ChirurgienForm, AnesthesisteForm, ConsultationForm, InterventionForm, HospitalisationForm,PatientForm,MedecinForm,InfirmierForm
-from medicalStaff.models import Patient, Infirmier, Chirurgien, Anesthesiste, Consultation
+from MySQLdb.constants.FIELD_TYPE import NULL
+
+from medicalStaff.forms import ChirurgienForm, AnesthesisteForm, ConsultationForm, InterventionForm, \
+    HospitalisationForm, PatientForm, MedecinForm, InfirmierForm
+from medicalStaff.models import Patient, Infirmier, Chirurgien, Anesthesiste, Consultation, Hospitalisation, \
+    Intervention
 # from medicalStaff.models import DossierMedical
 from medicalStaff.models import Medecin
 from django.utils import timezone
-from .filters import PatientFilter
+from .filters import PatientFilter, ConsultationFilter
 from django.http import HttpResponse
+from django.contrib import messages
+from django.shortcuts import redirect, get_object_or_404, render
 
-from medicalStaff.utils import render_to_pdf
 from medicalStaff.models import Patient, Infirmier, Chirurgien, Anesthesiste, Consultation
 # from medicalStaff.models import DossierMedical
 from medicalStaff.models import Medecin
 from django.views.generic import View
 from .utils import render_to_pdf
-from django.shortcuts import render
-
+from django.views.generic.edit import FormView
 
 
 def list_patients(request):
@@ -24,10 +28,10 @@ def list_patients(request):
     return render(request, 'infos-perso/patients.html', context)
 
 
-def list_consultations(request):
-    consultations = Consultation.objects.all()
-    context = {'consultations': consultations}
-    return render(request, 'infos-perso/consultation.html', context)
+# def list_consultations(request):
+#     consultations = Consultation.objects.all()
+#     context = {'consultations': consultations}
+#     return render(request, 'infos-perso/consultation.html', context)
 
 
 def list_infirmiers(request):
@@ -76,9 +80,8 @@ def create_infirmier(request):
     form = InfirmierForm(request.POST or None)
     if form.is_valid():
         form.save()
-        form = InfirmierForm()
+        return redirect('list_infirmiers')
         messages.success(request, 'Infirmier ajouté!')
-    # return redirect('list_infirmier')
 
     return render(request, 'infos-perso/infirmier-form.html', {'form': form})
 
@@ -88,6 +91,7 @@ def create_medecin(request):
     if form.is_valid():
         form.save()
         form = MedecinForm()
+        return redirect('list_medecin')
         messages.warning(request, 'Medecin ajouté!')
         messages.warning(request, '')
 
@@ -98,7 +102,7 @@ def create_anesthesiste(request):
     form = AnesthesisteForm(request.POST or None)
     if form.is_valid():
         form.save()
-        form = AnesthesisteForm()
+        return redirect('list_anesthesiste')
         messages.success(request, 'Anesthesiste ajouté!')
 
     return render(request, 'infos-perso/anesthesiste-form.html', {'form': form})
@@ -108,18 +112,29 @@ def create_chirurgien(request):
     form = ChirurgienForm(request.POST or None)
     if form.is_valid():
         form.save()
-        form = ChirurgienForm()
-        messages.success(request, 'Chirurgien ajouté!')
         return redirect('list_chirurgien')
 
     return render(request, 'infos-perso/chirurgien-form.html', {'form': form})
 
 
 def create_consultation(request):
-    form = ConsultationForm(request.POST or None)
+    form = ConsultationForm(request.POST or None, request.FILES or None)
     if form.is_valid():
-        form.save()
-        form = ConsultationForm()
+        numero = request.POST.get('numero')
+        qs = Consultation.objects.filter(numero=numero)
+        dateDebutCertificat = request.POST.get('dateDebutCertificat')
+        dateFinCertificat = request.POST.get('dateFinCertificat')
+        if dateDebutCertificat > dateFinCertificat:
+            messages.error(request,
+                           "Date de fin de certificat ne peut pas être inférieure à la date de début de certificat!")
+        elif dateDebutCertificat == dateFinCertificat and dateDebutCertificat != "NULL" and dateFinCertificat != "NULL":
+            messages.error(request,
+                           "Date de fin de certificat ne peut pas être égale à la date de début de certificat!")
+        elif qs.exists():
+            messages.warning(request, 'Numéro du dossier existe déjà!')
+        else:
+            form.save()
+            return redirect('list_consultation')
     return render(request, 'dossier-medical/consultation-form.html', {'form': form})
 
 
@@ -150,13 +165,13 @@ def create_patient(request):
              return redirect('create_patients')
          else:
              form.save()
-
          return redirect('list_patients')
      return render(request, 'infos-perso/patient-form.html', context)
  """
-    form = PatientForm(request.POST or None)
+    form = PatientForm(request.POST, request.FILES)
     if form.is_valid():
         form.save()
+        return redirect('list_patients')
     return render(request, 'infos-perso/patient-form.html', {'form': form})
 
 
@@ -279,49 +294,100 @@ def create_intervention(request):
     if form.is_valid():
         form.save()
         form = InterventionForm()
+        messages.success(request, ("Les informations de l'intervention sont bien enregistrées!"))
     return render(request, 'dossier-medical/intervention-form.html', {'form': form})
 
 
 def create_hospitalisation(request):
     form = HospitalisationForm(request.POST, request.FILES)
     if form.is_valid():
-        form.save()
-        form = HospitalisationForm()
+        date = request.POST.get('date')
+        dateSortie = request.POST.get('dateSortie')
+        if date > dateSortie:
+            messages.error(request, ("Date de sortie ne peut pas être inférieure à la date d'entrée!"))
+        elif date == dateSortie:
+            messages.error(request, ("Date de sortie ne peut pas être égale à la date d'entrée!"))
+        else:
+            form.save()
+            form = HospitalisationForm()
+            messages.success(request, ("Les informations de l'hospitalisation sont bien enregistrées!"))
+
     return render(request, 'dossier-medical/hospitalisation-form.html', {'form': form})
 
 
 def list_consultations(request):
     consultations = Consultation.objects.all()
-    context = {'consultations': consultations}
+    myFilter = ConsultationFilter(request.GET, queryset=consultations)
+    consultations = myFilter.qs
+    context = {'consultations': consultations, 'myFilter': myFilter}
     return render(request, 'dossier-medical/consultation.html', context)
+
 
 from django.utils import timezone
 
 
 class GeneratePdf(View):
-    def get(self, request,id):
-        consultations=Consultation.objects.get(id=id)
+    def get(self, request, id):
+        consultations = Consultation.objects.get(id=id)
         today = timezone.now()
-        params = {
-            'today': today,
-            'consultations':consultations,
-            'request': request,
-        }
-        pdf = render_to_pdf('pdf/fiche.html', params)
-        return HttpResponse(pdf, content_type='application/pdf')
+        try:
+            try:
+                hospitalisations = Hospitalisation.objects.get(numero=id)
+                if Intervention.objects.filter(numero=id).count() > 1:
+                    interventions = Intervention.objects.filter(numero=id)
+                else:
+                    interventions = Intervention.objects.get(numero=id)
+                pdf = render_to_pdf('pdf/fiche.html', {
+                    'today': today,
+                    'consultations': consultations,
+                    'hospitalisations': hospitalisations,
+                    'interventions': interventions,
+                    'request': request,
+                })
+                return HttpResponse(pdf, content_type='application/pdf')
+
+            except Hospitalisation.DoesNotExist:
+                try:
+                    if Intervention.objects.filter(numero=id).count() > 1:
+                        interventions = Intervention.objects.filter(numero=id)
+                    else:
+                        interventions = Intervention.objects.get(numero=id)
+                    pdf = render_to_pdf('pdf/fiche.html', {
+                        'today': today,
+                        'consultations': consultations,
+                        'interventions': interventions,
+                        'request': request,
+                    })
+                    return HttpResponse(pdf, content_type='application/pdf')
+                except Intervention.DoesNotExist:
+                    pdf = render_to_pdf('pdf/fiche.html', {
+                        'today': today,
+                        'consultations': consultations,
+                        'request': request,
+                    })
+                    return HttpResponse(pdf, content_type='application/pdf')
+        except Intervention.DoesNotExist:
+            pdf = render_to_pdf('pdf/fiche.html', {
+                'today': today,
+                'consultations': consultations,
+                'hospitalisations': hospitalisations,
+                'request': request,
+            })
+            return HttpResponse(pdf, content_type='application/pdf')
 
 
 class OrdonnancePdf(View):
-    def get(self, request,id):
-        consultations=Consultation.objects.get(id=id)
+    def get(self, request, id):
+        consultations = Consultation.objects.get(id=id)
         today = timezone.now()
         params = {
             'today': today,
-            'consultations':consultations,
+            'consultations': consultations,
             'request': request,
         }
         pdf = render_to_pdf('pdf/ordonnance.html', params)
         return HttpResponse(pdf, content_type='application/pdf')
+
 
 class CertificatPdf(View):
     def get(self, request, id):
@@ -335,3 +401,138 @@ class CertificatPdf(View):
         pdf = render_to_pdf('pdf/certificat.html', params)
         return HttpResponse(pdf, content_type='application/pdf')
 
+
+def detail_dossier(request, id):
+    try:
+        try:
+            consultation = Consultation.objects.get(id=id)
+            hospitalisation = Hospitalisation.objects.get(numero=id)
+            if Intervention.objects.filter(numero=id).count() > 1:
+                intervention = Intervention.objects.filter(numero=id)
+            else:
+                intervention = Intervention.objects.get(numero=id)
+
+            return render(request, 'dossier-medical/detailDossier.html',
+                          {'consultation': consultation, 'intervention': intervention,
+                           'hospitalisation': hospitalisation})
+        except Hospitalisation.DoesNotExist:
+            try:
+                consultation = Consultation.objects.get(id=id)
+                if Intervention.objects.filter(numero=id).count() > 1:
+                    intervention = Intervention.objects.filter(numero=id)
+                else:
+                    intervention = Intervention.objects.get(numero=id)
+                return render(request, 'dossier-medical/detailDossier.html',
+                              {'consultation': consultation, 'intervention': intervention})
+            except Intervention.DoesNotExist:
+                consultation = Consultation.objects.get(id=id)
+                return render(request, 'dossier-medical/detailDossier.html',
+                              {'consultation': consultation})
+    except Intervention.DoesNotExist:
+        consultation = Consultation.objects.get(id=id)
+        hospitalisation = Hospitalisation.objects.get(numero=id)
+        return render(request, 'dossier-medical/detailDossier.html',
+                      {'consultation': consultation, 'hospitalisation': hospitalisation})
+
+
+def delete_dossier(request, id):
+    consultation = Consultation.objects.get(id=id)
+    try:
+        try:
+            hospitalisation = Hospitalisation.objects.get(numero=id)
+            if Intervention.objects.filter(numero=id).count() > 1:
+                intervention = Intervention.objects.filter(numero=id)
+            else:
+                intervention = Intervention.objects.get(numero=id)
+
+            if request.method == 'POST':
+                consultation.delete()
+                hospitalisation.delete()
+                intervention.delete()
+                return redirect('list_consultation')
+            return render(request, 'confirm-delete.html',
+                          {'consultation': consultation, 'hospitalisation': hospitalisation,
+                           'intervention': intervention})
+        except Hospitalisation.DoesNotExist:
+            try:
+                if Intervention.objects.filter(numero=id).count() > 1:
+                    intervention = Intervention.objects.filter(numero=id)
+                else:
+                    intervention = Intervention.objects.get(numero=id)
+
+                if request.method == 'POST':
+                    consultation.delete()
+                    intervention.delete()
+                    return redirect('list_consultation')
+                return render(request, 'confirm-delete.html',
+                              {'consultation': consultation, 'intervention': intervention})
+            except Intervention.DoesNotExist:
+                if request.method == 'POST':
+                    consultation.delete()
+                    return redirect('list_consultation')
+                return render(request, 'confirm-delete.html',
+                              {'consultation': consultation, })
+    except Intervention.DoesNotExist:
+        hospitalisation = Hospitalisation.objects.get(numero=id)
+        if request.method == 'POST':
+            consultation.delete()
+            hospitalisation.delete()
+            return redirect('list_consultation')
+        return render(request, 'confirm-delete.html',
+                      {'consultation': consultation, 'hospitalisation': hospitalisation})
+
+
+def update_dossier(request, id):
+    consultation = get_object_or_404(Consultation, id=id)
+    form = ConsultationForm(request.POST or None, instance=consultation)
+    if request.method == 'POST':
+        form = ConsultationForm(request.POST or None, request.FILES or None, instance=consultation)
+        if form.is_valid():
+            form.save()
+            return redirect('update_hospitalisation', id=id)
+    return render(request, "infos-perso/consultation-form.html", {'form': form, 'consultation': consultation})
+
+
+def update_hospitalisation(request, id):
+    try:
+        hospitalisation = Hospitalisation.objects.get(numero=id)
+        form = HospitalisationForm(request.POST or None, instance=hospitalisation)
+        if form.is_valid():
+            form.save()
+            return redirect('update_intervention', id=id)
+        return render(request, "infos-perso/hospitalisation-form.html",
+                      {'form': form, 'hospitalisation': hospitalisation})
+    except Hospitalisation.DoesNotExist:
+        return redirect('update_intervention', id=id)
+
+
+def update_intervention(request, id):
+    try:
+        if Intervention.objects.filter(numero=id).count() > 1:
+            intervention = Intervention.objects.filter(numero=id).first()
+            interventions = Intervention.objects.filter(numero=id).last()
+            form = InterventionForm(request.POST or None, request.FILES or None, instance=intervention)
+            form1 = InterventionForm(request.POST or None, request.FILES or None, instance=interventions)
+            if form.is_valid() and form1.is_valid():
+                form.save() and form1.save()
+                return redirect('list_consultation')
+            return render(request, "infos-perso/intervention-form.html",
+                          {'form': form, 'form1': form1, 'intervention': intervention, 'interventions': interventions})
+        else:
+            intervention = Intervention.objects.get(numero=id)
+            form = InterventionForm(request.POST or None, request.FILES or None, instance=intervention)
+            if form.is_valid():
+                form.save()
+                return redirect('list_consultation')
+            return render(request, "dossier-medical/intervention-form.html",
+                          {'form': form, 'intervention': intervention})
+    except Intervention.DoesNotExist:
+        return redirect('list_consultation')
+
+
+def bilan(request, id):
+    consultation = get_object_or_404(Consultation, id=id)
+    form = ConsultationForm(request.POST or None, instance=consultation)
+    if form.is_valid():
+        form.save()
+    return render(request, "dossier-medical/bilan.html", {'form': form, 'consultation': consultation})

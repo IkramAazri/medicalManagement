@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+<script src="assets/js/scripts.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Nombre de patients par sexe </title>
+
+{% block content %}
+    {% include "navbar.html" %}
+
+    <div class="container" style="margin-top: 40px;margin-bottom:100%;">
+        <canvas id="pie_chart"></canvas>
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+      <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('pie_chart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',// bar, horizontalBar, pie, line, doughnut, radar, polarArea
+
+            data: {
+                labels: {{labels|safe}},
+                datasets: [{
+                    data: {{data|safe}},
+                    backgroundColor: {{colors|safe}}
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text:'Nombre de patients par sexe',
+                    fontWeight:'bold',
+
+                },
+                legend: {
+                    disblay: true,
+                    position: 'bottom',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                }
+
+            }
+
+
+        });
+
+    </script>
+{% endblock content %}

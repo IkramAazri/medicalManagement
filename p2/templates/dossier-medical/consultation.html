@@ -1,33 +1,31 @@
 {% extends "base.html" %}
-{% block list %}
-
+{% block content %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
 <style type="text/css">
-
-    body {
-
-		background: #e6e6e6;
-		font-size: 13px;
-	}
-	th{
-	color:#780a08;
-	}
-	a.btn.btn-success
-	{
-	background-color:#77bdbb;
-
-	}
+  body {
+      background: #e6e6e6;
+      font-size: 13px;
+   }
+   th{
+   color:#780a08;
+   }
+   a.btn.btn-success
+   {
+   background-color:#77bdbb;
+   }
+    a.btn.btn-success:focus
+   {
+   background-color:#77bdbb !important;
+   }
 
 .tableBodyScroll  {
   display: block;
-  max-height: 300px;
+  max-height: 500px;
   overflow-y: scroll;
 }
-
-	.my-custom-scrollbar {
+   .my-custom-scrollbar {
 position: relative;
 height: 200px;
 overflow-x: auto;
@@ -35,84 +33,83 @@ overflow-x: auto;
 .table-wrapper-scroll-y {
 display: block;
 }
-	.table-wrapper {
+   .table-wrapper {
         background: #fff;
         padding: 20px 25px;
         margin: 30px 0;
-		border-radius: 3px;
+      border-radius: 3px;
         box-shadow: 0 1px 1px rgba(0,0,0,.05);
     }
-	.table-title {
-		padding-bottom: 15px;
-		background:#538b8f;
-		color: #fff;
-		padding: 16px 30px;
-		margin: -20px -25px 10px;
-		border-radius: 3px 3px 0 0;
+   .table-title {
+      padding-bottom: 15px;
+      background:#538b8f;
+      color: #fff;
+      padding: 16px 30px;
+      margin: -20px -25px 10px;
+      border-radius: 3px 3px 0 0;
     }
     .table-title h2 {
-		margin: 5px 0 0;
-		font-size: 24px;
-	}
-	.table-title .btn-group {
-		float: right;
-	}
-	.table-title .btn {
-		color: #fff;
-		float: right;
-		font-size: 13px;
-		border: none;
-		min-width: 50px;
-		border-radius: 2px;
-		border: none;
-		outline: none !important;
-		margin-left: 10px;
-	}
-	.table-title .btn i {
-		float: left;
-		font-size: 21px;
-		margin-right: 5px;
-	}
-	.table-title .btn span {
-		float: left;
-		margin-top: 2px;
-	}
+      margin: 5px 0 0;
+      font-size: 24px;
+   }
+   .table-title .btn-group {
+      float: right;
+   }
+   .table-title .btn {
+      color: #fff;
+      float: right;
+      font-size: 13px;
+      border: none;
+      min-width: 50px;
+      border-radius: 2px;
+      border: none;
+      outline: none !important;
+      margin-left: 10px;
+   }
+   .table-title .btn i {
+      float: left;
+      font-size: 21px;
+      margin-right: 5px;
+   }
+   .table-title .btn span {
+      float: left;
+      margin-top: 2px;
+   }
     table.table tr th, table.table tr td {
         border-color: #e9e9e9;
-		padding: 12px 15px;
-		vertical-align: middle;
+      padding: 12px 15px;
+      vertical-align: middle;
     }
-	table.table tr th:first-child {
-		width: 30px;
-	}
-
+   table.table tr th:first-child {
+      width: 30px;
+   }
     table.table-striped tbody tr:nth-of-type(odd) {
-    	background-color: #fcfcfc;
-	}
-	table.table-striped.table-hover tbody tr:hover {
-		background: #f5f5f5;
-	}
+       background-color: #fcfcfc;
+   }
+   table.table-striped.table-hover tbody tr:hover {
+      background: #f5f5f5;
+   }
     table.table th i {
         font-size: 13px;
         margin: 0 5px;
         cursor: pointer;
     }
     table.table td:last-child i {
-		opacity: 0.9;
-		font-size: 22px;
+      opacity: 0.9;
+      font-size: 22px;
         margin: 0 5px;
     }
-	table.table td a {
-		font-weight: bold;
-		color: #566787;
-		display: inline-block;
-		text-decoration: none;
-		outline: none !important;
-	}
-	table.table td a:hover {
-		color: #2196F3;
-	}
-	table.table td a.edit {
+   table.table td a {
+      font-weight: bold;
+      color: #566787;
+      display: inline-block;
+      text-decoration: none;
+      outline: none !important;
+   }
+   table.table td a:hover {
+      color: #2196F3;
+   }
+   table.table td a.edit {
         color: #FFC107;
     }
     table.table td a.delete {
@@ -121,16 +118,14 @@ display: block;
      table.table td a.print {
         color: #F44336;
     }
-
-
     table.table td i {
         font-size: 19px;
     }
-	table.table .avatar {
-		border-radius: 50%;
-		vertical-align: middle;
-		margin-right: 10px;
-	}
+   table.table .avatar {
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 10px;
+   }
     .pagination {
         float: right;
         margin: 0 0 5px;
@@ -156,7 +151,7 @@ display: block;
     .pagination li.active a:hover {
         background: #0397d6;
     }
-	.pagination li.disabled i {
+   .pagination li.disabled i {
         color: #ccc;
     }
     .pagination li i {
@@ -170,6 +165,10 @@ display: block;
     }
     i.edit{
     color : orange;
+    }
+    i.search{
+     margin-top:-4px;
+
     }
     i.delete{
     color : red;
@@ -186,60 +185,74 @@ display: block;
     #c1 #c2{
     width:10px;
     }
-
-	#c5{
-	width:10px;
-	}
-
-	#c4{
-	width:15px;
-
-	}
-	#c6{
-	width:228px;
-	}
-	#c7{
-	width:200px;
-	}
-	#c8{
-	width:150px;
-	}
-	td,th{
-	text-align:center;
-	 width:200px;
-	}
+   #c5{
+   width:10px;
+   }
+   #c4{
+   width:15px;
+   }
+   #c6{
+   width:228px;
+   }
+   #c7{
+   width:200px;
+   }
+   #c8{
+   width:150px;
+   }
+   td,th{
+   text-align:center;
+    width:200px;
+   }
+   tbody .btn{
+   background-color:#538b8f;
+   border-color:#538b8f;
+   width:100px;
+   font-size:13px;
+   }
+   tbody .btn:hover{
+   background-color:#77bdbb;
+   border-color:#77bdbb;
+   width:100px;
+   font-size:13px;
+   }
 .modal textarea.form-control {
-		resize: vertical;
-	}
-	.modal .btn {
-		border-radius: 2px;
-		min-width: 100px;
-	}
-	.modal form label {
-		font-weight: normal;
-	}
-	.filter{
+      resize: vertical;
+   }
+   .modal .btn {
+      border-radius: 2px;
+      min-width: 100px;
+   }
+   .modal form label {
+      font-weight: normal;
+   }
+   .filter{
+   margin-top:100px;
+   }
+   .filter .btn{
+   height:27px;
+   }
 
-	margin-top:100px;
-
-	}
-	.container {
-	margin-top:100px;
-	margin-bottom:-100px;
-	}
-
-
+   .container {
+   margin-top:100px;
+   margin-bottom:-100px;
+   }
 </style>
-{% endblock list %}
 
-{% block consultationBody %}
 {% include "navbar.html" %}
 <div class="container">
-
+    <div class="row filter">
+        <div class="col-sm-12">
+            <form method="GET">
+                <label>N° Dossier</label>
+                {{myFilter.form.numero}}
+                <button type="submit" class="btn btn-danger "><i class="material-icons search" >search</i></button>
+            </form>
+        </div>
+    </div>
     <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
-
                 <div class="col-sm-6">
                     <h2 style="color:white;">Liste des consulations</h2>
                     {% load static %}
@@ -247,27 +260,27 @@ display: block;
 
                 <div class="col-sm-6">
 
+
+
                     <a href="{%url 'create_consultation' %}" class="btn btn-success"><i class="material-icons">&#xE147;</i>
                         <span>Ajouter une consultation</span></a>
+                   
                 </div>
 
             </div>
         </div>
-
         <table class="table table-striped table-hover tableBodyScroll">
             <thead>
             <tr>
-
                 <th id="c1">N° dossier</th>
                 <th id="c2">Prénom</th>
                 <th id="c3">Nom</th>
                 <th id="c4">Médecin consultant</th>
-                <th id="c5">Antécédent</th>
-                <th id="c6">Maladie</th>
+                <th id="c5">Antécédant</th>
+                <th id="c6">Bilans radiologiques</th>
                 <th id="c7">Ordonnance</th>
                 <th id="c8">Certificat</th>
                 <th id="c9">Actions</th>
-
             </thead>
             <tbody>
             {% csrf_token %}
@@ -278,30 +291,22 @@ display: block;
                 <td>{{consultation.patient.nom}}</td>
                 <td>{{consultation.patient.medecin}}</td>
                 <td>{{consultation.antecedent}}</td>
-                <td>{{consultation.maladie}}</td>
-                <td><button class="btn btn-danger"><a href="{% url 'pdfOrdonnance' consultation.id %}" style="color:white;">Télécharger</a></button>
+                 <td><button class="btn "><a href="{% url 'bilan' consultation.id %}" style="color:white;">voir image</a></button></td>
+                <td><button class="btn "><a href="{% url 'pdfOrdonnance' consultation.id %}" style="color:white;">Télécharger</a></button>
                 </td>
-                <td><button class="btn btn-danger"><a href="{% url 'pdfCertificat' consultation.id %}" style="color:white;">Télécharger</a></button>
+                <td><button class="btn "><a href="{% url 'pdfCertificat' consultation.id %}" style="color:white;">Télécharger</a></button>
                 </td>
-
-
-
-
                 <td>
-                    <a href="#"><i class="material-icons edit" title="Modifier">edit</i></a>
-                    <a href="#"><i class="material-icons delete" title="Supprimer">delete</i></a>
-                    <a href="#"><i class="material-icons search" title="Détail">visibility</i></a>
-                    <a href="{% url 'pdf' consultation.id %}"><i class="material-icons fa-print" title="print">print</i></a>
+                    <a href="{% url 'update_dossier' consultation.id %}"><i class="material-icons edit" title="Modifier consultation">edit</i></a>
+                    <a href="{% url 'delete_dossier' consultation.id %}"><i class="material-icons delete" title="Supprimer">delete</i></a>
 
+                    <a href="{% url 'detail_dossier' consultation.id %}"><i class="material-icons search" title="Détail">visibility</i></a>
+                    <a href="{% url 'pdf' consultation.id %}"><i class="material-icons print" title="imprimer">print</i></a>
                 </td>
-
             </tr>
-
             {% endfor %}
             </tbody>
-
         </table>
-
     </div>
 </div>
-{% endblock consultationBody %}
+{% endblock content %}

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block list %}
+{% block content %}
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -221,9 +221,7 @@ display: block;
 	}
 
 </style>
-{% endblock list %}
 
-   {% block infirmierBody %}
    {% include "navbar.html" %}
     <div class="container">
 
@@ -236,11 +234,12 @@ display: block;
 						<h2 style="color:white;">Liste des infirmiers</h2>
                         {% load static %}
 					</div>
-
+                       {% if user.is_superuser %}
 					<div class="col-sm-6">
 
 						<a href="{%url 'create_infirmier' %}" class="btn btn-success"><i class="material-icons" >&#xE147;</i> <span>Ajouter un infirmier</span></a>
 					</div>
+                    {% endif %}
 
                 </div>
             </div>
@@ -252,7 +251,9 @@ display: block;
                         <th id="c1">Nom</th>
                         <th id="c2">Prénom</th>
                         <th id="c6">Grade</th>
-                        <th id="c7">Actions</th>
+                         {% if user.is_superuser %}
+                         <th id="c7">Actions</th>
+                        {% endif %}
 
 
 <!--						<th id="c7">Profession</th>-->
@@ -267,12 +268,13 @@ display: block;
                         <td>{{infirmier.prenom}}</td>
 						  <td>{{infirmier.grade}}</td>
 
-
+                        {% if user.is_superuser %}
                         <td>
                             <a href="{% url 'update_infirmier' infirmier.id %}" ><i class="material-icons edit" title="Modifier">edit</i></a>
 							<a href="{% url 'delete_infirmiers' infirmier.id %}"><i class="material-icons delete"  title="Supprimer">delete</i></a>
 
                         </td>
+                        {% endif %}
 
                     </tr>
 
@@ -283,4 +285,4 @@ display: block;
 
 		</div>
 	</div>
-{% endblock infirmierBody %}
+{% endblock content %}

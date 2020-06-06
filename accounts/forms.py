@@ -4,6 +4,7 @@ from django import forms
 from .models import Profile
 from django.forms import ModelChoiceField
 
+
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
@@ -19,4 +20,19 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['bio', 'phone_number', 'birth_date', 'profile_image']
+        fields = ['phone_number', 'birth_date', 'profile_image']
+
+    phone_number = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control input-lg',
+            'placeholder': 'numéro de téléphone',
+
+        }
+    ))
+    birth_date = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control ',
+                'type': 'date',
+            }
+        ))

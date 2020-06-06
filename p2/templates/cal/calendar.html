@@ -1,16 +1,31 @@
 {% extends 'base.html' %}
 
-{% block calendar %}
+{% block content %}
 {% include "navbar.html" %}
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
-
+<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+<div class="container" style="margin-bottom:100%;">
 <div class="clearfix">
-    <button class="btn  left"  ><a href="{% url 'calendar' %}?{{ prev_month }}"> <i class="fas fa-arrow-left"></i>Mois Précedent</a></button>
-    {% if request.user.is_superuser %}
-    <button class="btn  center"  ><a href="{% url 'add_event' %}"> <i class="fa fa-plus" ></i>Ajouter un créneau</a></button>
-    {% endif %}
-    <button class="btn  right" ><a href="{% url 'calendar' %}?{{ next_month }}"> Mois suivant <i class="fas fa-arrow-right"></i> </a></button>
+    <center>
+    <div class="row">
+        <div class="col-md-4">
+            <button class="btn  left"><a href="{% url 'calendar' %}?{{ prev_month }}"> <i class="fas fa-arrow-left"></i>Mois
+                Précedent</a></button>
+        </div>
+      <div class="col-md-4">
+        {% if request.user.is_superuser %}
+            <button class="btn  center"><a href="{% url 'add_event' %}"> <i class="fa fa-plus"></i>Ajouter un
+                créneau</a></button>
+        {% endif %}
+      </div>
+        <div class="col-md-4">
+            <button class="btn  right"><a href="{% url 'calendar' %}?{{ next_month }}"> Mois suivant <i
+                    class="fas fa-arrow-right"></i> </a></button>
+        </div>
+    </div>
+    </center>
 </div>
-
+<center>
 {{ calendar }}
-{% endblock calendar %}
+</center>
+</div>
+{% endblock content %}

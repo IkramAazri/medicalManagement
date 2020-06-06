@@ -1,0 +1,406 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+{% load i18n %}
+{% include "navbar.html" %}
+<style>
+   .mb-3{
+        color:#35a191;
+    }
+</style>
+<div class="container" >
+    <center><div class="card  " style="width:880px; margin-top:50px;background-image:url('/assets/images/dossier-02.jpeg');background-size:cover;">
+
+        <div>
+            <center><img src="{{ consultation.patient.image.url }}" alt="" width="150px" height="50px"
+                         style="border-radius: 50%;margin-top:24px;"/></center>
+            <center><h4 class="card-title font-weight-bolder"
+                style="font-size:20px;margin-top:20px;">N°Dossier :{{ consultation.numero }}
+            </h4></center>
+
+        </div>
+
+        <div class="card-body">
+           <div><h2 class="mb-3">Patient</h2></div>
+            <div class="row">
+
+                <div class="col">
+                    <table class="table">
+
+                        <tr>
+                            <th scope="col">Nom:</th>
+                            <td>{{ consultation.patient.nom }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Date de naissance:</th>
+                            <td>{% language 'fr' %} {{ consultation.patient.dateNaissance}}{% endlanguage %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="col">Adresse:</th>
+                            <td>{{ consultation.patient.adresse }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Profession:</th>
+                            <td>{{ consultation.patient.profession }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col">
+                    <table class="table">
+
+                        <tr>
+                            <th scope="col">Prénom:</th>
+                            <td>{{ consultation.patient.prenom }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Sexe:</th>
+                            <td>{{ consultation.patient.sexe }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Securité social:</th>
+                            <td>{{ consultation.patient.securiteSocial }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Téléphone:</th>
+                            <td>{{ consultation.patient.telephone }}</td>
+                        </tr>
+
+                    </table>
+                </div>
+
+
+            </div>
+             <div><h2 class="mt-3 mb-3">Consultation</h2></div>
+            <div class="row">
+
+                <div class="col">
+                    <table class="table">
+
+                        <tr>
+                            <th scope="col">Médecin consultant</th>
+                            <td>{{ consultation.patient.medecin }}</td>
+                        </tr>
+
+                         <tr>
+                            <th scope="col">Habitudes toxiques</th>
+
+                                 {% if consultation.alcool %}
+                            <td> alcool</td>
+                        {% endif %}
+                        {% if consultation.drogue %}
+                            <td>drogue</td>
+                        {% endif %}
+                        {% if consultation.tabac %}
+                            <td>tabac</td>
+                        {% endif %}
+                        </tr>
+                          <tr>
+                            <th scope="col">Elément clinique</th>
+                            <td>{{ consultation.espaceClinique }}</td>
+                        </tr>
+                             <tr>
+                            <th scope="col">Avis médical</th>
+                            <td>{{ consultation.avisMedical }}</td>
+                        </tr>
+
+
+                    </table>
+                </div>
+
+                <div class="col">
+                    <table class="table">
+
+                        <tr>
+                            <th scope="col">Maladie</th>
+                            <td>{{ consultation.maladie }}</td>
+                        </tr>
+
+                           <tr>
+                            <th scope="col">Antécédent</th>
+                            <td>{{ consultation.antecedent }}</td>
+                        </tr>
+                             <tr>
+                            <th scope="col">Groupe sanguin</th>
+                            <td>{{ consultation.groupeSanguin }}</td>
+                             </tr>
+                          <tr>
+                            <th scope="col">Traitement</th>
+                            <td>{{ consultation.traitement }}</td>
+                             </tr>
+
+
+
+
+                    </table>
+                </div>
+
+
+            </div>
+                            {% if  intervention.count > 1 %}
+                        {% for interventions in intervention %}
+             <div><h2 class="mt-3 mb-3">Intervention :  {% language 'fr' %} {{ interventions.dateIntervention }} {% endlanguage %}</h2></div>
+                <div class="row">
+
+                <div class="col">
+                    <table class="table">
+
+                        <tr>
+                            <th scope="col">Heure d'intervention</th>
+                            <td>{% language 'fr' %}{{ interventions.heureIntervention }}{% endlanguage %}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Durée d'intervention</th>
+                            <td>{{ interventions.dureeIntervention }}</td>
+                        </tr>
+                         <tr>
+
+                         <tr>
+                            <th scope="col">Lieu d'intervention</th>
+
+                         <td>{{ interventions.lieuIntervention }}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="col">Technique</th>
+
+                         <td>{{ interventions.technique }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Anésthesiste</th>
+
+                         <td>{{ interventions.anesthesiste }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Infirmier</th>
+
+                         <td>{{ interventions.infirmier }}</td>
+                        </tr>  <tr>
+                            <th scope="col">Chirurgien</th>
+
+                         <td>{{ interventions.chirurgien }}</td>
+                        </tr>
+
+
+
+                    </table>
+                </div>
+
+                <div class="col">
+                    <table class="table">
+
+                        <tr>
+                            <th scope="col">Mode d'intervention</th>
+                            <td>{{ interventions.modeIntervention }}</td>
+                        </tr>
+                          <tr>
+                            <th scope="col">Type d'intervention</th>
+
+                         <td>{{ interventions.typeIntervention }}</td>
+                        </tr>
+                           <tr>
+                            <th scope="col">Anésthesie</th>
+                            <td>{{ interventions.anesthesie }}</td>
+                        </tr>
+                             <tr>
+                            <th scope="col">Compte rendu</th>
+                            <td><a href=" {{ interventions.compteRendu.url }}">Télecharger</a></td>
+                             </tr>
+
+                             <tr>
+                            <th scope="col">Résultat</th>
+                            <td>{{ interventions.resultat }}</td>
+                             </tr>
+                          <tr>
+                            <th scope="col">Complication</th>
+                            <td>{{ interventions.complication }}</td>
+                             </tr>
+
+
+
+                    </table>
+                </div>
+            </div>
+            {% endfor %}
+             {% if hospitalisation != null %}
+            <div><h2 class="mt-3 mb-3">Hospitalisation</h2></div>
+               <div class="row">
+
+                <div class="col">
+                    <table class="table">
+
+                        <tr>
+                            <th scope="col">Date d'entrée</th>
+                            <td>{% language 'fr' %} {{ hospitalisation.date }}{% endlanguage %}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Type d'hospitalisation</th>
+                            <td>{{ hospitalisation.type }}</td>
+                        </tr>
+                         <tr>
+
+
+
+
+                    </table>
+                </div>
+
+                <div class="col">
+                    <table class="table">
+
+                        <tr>
+                            <th scope="col">lieu d'hospitalisation</th>
+                            <td>{{ hospitalisation.lieu }}</td>
+                        </tr>
+
+                           <tr>
+                            <th scope="col">Date de sortie</th>
+                            <td>{% language 'fr' %}{{ hospitalisation.dateSortie }}{% endlanguage %}</td>
+                        </tr>
+
+
+
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+            {% else %}
+
+                    <div><h2 class="mt-3 mb-3">Intervention :  {% language 'fr' %} {{ intervention.dateIntervention }} {% endlanguage %}</h2></div>
+                <div class="row">
+
+                <div class="col">
+                    <table class="table">
+
+                        <tr>
+                            <th scope="col">Heure d'intervention</th>
+                            <td>{{ intervention.heureIntervention }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Durée d'intervention</th>
+                            <td>{{ intervention.dureeIntervention }}</td>
+                        </tr>
+                         <tr>
+
+                         <tr>
+                            <th scope="col">Lieu d'intervention</th>
+
+                         <td>{{ intervention.lieuIntervention }}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="col">Technique</th>
+
+                         <td>{{ intervention.technique }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Anésthesiste</th>
+
+                         <td>{{ intervention.anesthesiste }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Infirmier</th>
+
+                         <td>{{ intervention.infirmier }}</td>
+                        </tr>
+
+
+
+                    </table>
+                </div>
+
+                <div class="col">
+                    <table class="table">
+
+                        <tr>
+                            <th scope="col">Mode d'intervention</th>
+                            <td>{{ intervention.modeIntervention }}</td>
+                        </tr>
+                         <tr>
+                            <th scope="col">Type d'intervention</th>
+
+                         <td>{{ intervention.typeIntervention }}</td>
+                        </tr>
+
+                           <tr>
+                            <th scope="col">Anésthesie</th>
+                            <td>{{ intervention.anesthesie }}</td>
+                        </tr>
+                             <tr>
+                            <th scope="col">Compte rendu</th>
+                            <td><a href=" {{ intervention.compteRendu.url }}">Télecharger</a></td>
+                             </tr>
+
+                             <tr>
+                            <th scope="col">Résultat</th>
+                            <td>{{ intervention.resultat }}</td>
+                             </tr>
+                          <tr>
+                            <th scope="col">Complication</th>
+                            <td>{{ intervention.complication }}</td>
+                             </tr>
+                    </table>
+                </div>
+            </div>
+                  {% if hospitalisation != null %}
+            <div><h2 class="mt-3 mb-3">Hospitalisation</h2></div>
+               <div class="row">
+
+                <div class="col">
+                    <table class="table">
+
+                        <tr>
+                            <th scope="col">Date d'entrée</th>
+                            <td>{% language 'fr' %} {{ hospitalisation.date }}{% endlanguage %}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Type d'hospitalisation</th>
+                            <td>{{ hospitalisation.type }}</td>
+                        </tr>
+                         <tr>
+
+
+
+
+                    </table>
+                </div>
+
+                <div class="col">
+                    <table class="table">
+
+                        <tr>
+                            <th scope="col">lieu d'hospitalisation</th>
+                            <td>{{ hospitalisation.lieu }}</td>
+                        </tr>
+
+                           <tr>
+                            <th scope="col">Date de sortie</th>
+                            <td>{% language 'fr' %}{{ hospitalisation.dateSortie }}{% endlanguage %}</td>
+                        </tr>
+
+
+
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+
+
+
+
+
+
+
+
+    </div>
+
+
+</div></center>
+
+</div>
+</div>
+
+{% endblock content %}

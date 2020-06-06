@@ -12,7 +12,9 @@
             border: #0b2e13,1px;
             padding: 25px;
         }
-
+         .logo{
+         margin-bottom:30px;
+         }
 
         body{
             font-size: 2.1em;
@@ -21,9 +23,10 @@
     </style>
 </head>
 <body>
-<logo styl class="logo bg-white">
-        <img src='assets/logo.png' />
-        </logo>
+<div  class="logo bg-white " id="img">
+        <img src="/Users/ikram/hopital/p2/assets/images/logo.png" width="310px" height="80px"/>
+        </div>
+
 <div><strong>Docteur: </strong>{{ consultations.patient.medecin }}</div>
 <label for=""><strong>Spécialité:</strong>{{ consultations.patient.medecin.specialite }}</label><br>
 <label for="">Adresse:Hopital Chu</label><br>
