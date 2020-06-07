@@ -56,7 +56,7 @@ class PatientForm(forms.ModelForm):
             'placeholder': 'Profession',
 
         }
-    ),  required=False
+    ), required=False
     )
 
     medecin = forms.ModelChoiceField(
@@ -110,6 +110,11 @@ class PatientForm(forms.ModelForm):
                 'class': 'form-control ',
             }
         ), required=False
+    )
+    image = forms.ImageField(
+        required=False,
+        widget=forms.FileInput
+
     )
 
 
@@ -223,7 +228,8 @@ class ConsultationForm(forms.ModelForm):
         fields = [
             "numero", "patient", "antecedent", "traitement", "alcool", "drogue", "tabac", "maladie",
             "groupeSanguin", "TDM", "IRM", "RADIO", "ECHO", "espaceClinique", "avisMedical", "ordonnance",
-             "dateDebutCertificat", "dateFinCertificat", "nbrJour", "tdms", "irms", "radios", "echos","descriptionCertificat"
+            "dateDebutCertificat", "dateFinCertificat", "nbrJour", "tdms", "irms", "radios", "echos",
+            "descriptionCertificat"
 
         ]
 
@@ -267,7 +273,7 @@ class ConsultationForm(forms.ModelForm):
             'placeholder': 'autre maladie ...',
 
         }
-    ),required=False
+    ), required=False
     )
     groupeSanguin = forms.ModelChoiceField(
         queryset=GroupeSanguin.objects.all(),
@@ -295,7 +301,7 @@ class ConsultationForm(forms.ModelForm):
             attrs={
                 'rows': 3, 'cols': 58,
             }
-        ),required=False
+        ), required=False
     )
     ordonnance = forms.CharField(
         widget=forms.Textarea(
@@ -320,15 +326,35 @@ class ConsultationForm(forms.ModelForm):
                 'class': 'form-control ',
                 'type': 'date',
             }
-        ),required=False
+        ), required=False
     )
     nbrJour = forms.IntegerField(
-        required=False,min_value=0,
+        required=False, min_value=0,
         widget=forms.NumberInput(
             attrs={'id': 'form_homework',
                    'class': 'form-control '
                    }
         ))
+    irms = forms.ImageField(
+        required=False,
+        widget=forms.FileInput
+
+    )
+    echos = forms.ImageField(
+        required=False,
+        widget=forms.FileInput
+
+    )
+    tdms = forms.ImageField(
+        required=False,
+        widget=forms.FileInput
+
+    )
+    radios = forms.ImageField(
+        required=False,
+        widget=forms.FileInput
+
+    )
 
 
 class InterventionForm(forms.ModelForm):
@@ -483,12 +509,17 @@ class InterventionForm(forms.ModelForm):
 
         }
     ))
+    compteRendu = forms.FileField(
+        required=False,
+        widget=forms.FileInput
+
+    )
 
 
 class HospitalisationForm(forms.ModelForm):
     class Meta:
         model = Hospitalisation
-        fields = ['numero', 'date', 'type', 'dateSortie', 'lieu','lit']
+        fields = ['numero', 'date', 'type', 'dateSortie', 'lieu', 'lit']
 
     lit = forms.IntegerField(widget=forms.TextInput(
         attrs={
@@ -496,54 +527,53 @@ class HospitalisationForm(forms.ModelForm):
             'placeholder': "numéro de lit",
 
         }
-        ))
+    ))
 
     numero = forms.ModelChoiceField(
-    queryset = Consultation.objects.all(),
-    widget=forms.Select(
-        attrs={
-            'id': 'exampleFormControlSelect3',
-            'class': 'form-control ',
-        }
+        queryset=Consultation.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'id': 'exampleFormControlSelect3',
+                'class': 'form-control ',
+            }
         ))
 
     date = forms.DateField(
-    widget=forms.DateInput(
-        attrs={
-            'class': 'form-control ',
-            'type': 'date',
-        }
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control ',
+                'type': 'date',
+            }
         ))
 
-
     TYPES = (
-    ('Urgente', 'Urgente'),
-    ('Réadmission', 'Réadmission'),
-    ('Précoce', 'Précoce'),
-    ('Réglée', 'Réglée'),
+        ('Urgente', 'Urgente'),
+        ('Réadmission', 'Réadmission'),
+        ('Précoce', 'Précoce'),
+        ('Réglée', 'Réglée'),
     )
 
     type = forms.ChoiceField(
-     choices=TYPES,
-    widget=forms.Select(
-        attrs={
-            'id': 'exampleFormControlSelect2',
-            'class': 'form-control ',
-        }
-    ))
+        choices=TYPES,
+        widget=forms.Select(
+            attrs={
+                'id': 'exampleFormControlSelect2',
+                'class': 'form-control ',
+            }
+        ))
 
     dateSortie = forms.DateField(
-    widget=forms.DateInput(
-        attrs={
-            'class': 'form-control ',
-            'type': 'date',
-        }
-    ))
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control ',
+                'type': 'date',
+            }
+        ))
 
     lieu = forms.CharField(widget=forms.TextInput(
-    attrs={
-        'class': 'form-control input-lg',
-        'placeholder': "Lieu d'hospitalisation",
+        attrs={
+            'class': 'form-control input-lg',
+            'placeholder': "Lieu d'hospitalisation",
 
-    }
-))
+        }
+    ))

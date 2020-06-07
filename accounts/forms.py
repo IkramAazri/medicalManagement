@@ -36,3 +36,8 @@ class ProfileForm(forms.ModelForm):
                 'type': 'date',
             }
         ))
+    profile_image = forms.ImageField(
+        required=False,
+        widget=forms.FileInput
+
+    )
