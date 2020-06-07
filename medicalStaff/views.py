@@ -133,14 +133,14 @@ def create_consultation(request):
         qs = Consultation.objects.filter(numero=numero)
         dateDebutCertificat = request.POST.get('dateDebutCertificat')
         dateFinCertificat = request.POST.get('dateFinCertificat')
-        if dateDebutCertificat > dateFinCertificat:
+        if qs.exists():
+            messages.warning(request, 'Numéro du dossier existe déjà!')
+        elif dateDebutCertificat > dateFinCertificat:
             messages.error(request,
                            "Date de fin de certificat ne peut pas être inférieure à la date de début de certificat!")
-        elif dateDebutCertificat == dateFinCertificat and dateDebutCertificat != "NULL" and dateFinCertificat != "NULL":
+        elif dateDebutCertificat != "" and dateFinCertificat != "" and dateDebutCertificat == dateFinCertificat:
             messages.error(request,
                            "Date de fin de certificat ne peut pas être égale à la date de début de certificat!")
-        elif qs.exists():
-            messages.warning(request, 'Numéro du dossier existe déjà!')
         else:
             form.save()
             return redirect('list_consultation')
@@ -533,7 +533,6 @@ def update_hospitalisation(request, id):
         return redirect('update_intervention', id=id)
 
 
-@login_required(login_url='/')
 def update_intervention(request, id):
     try:
         if Intervention.objects.filter(numero=id).count() > 1:
@@ -558,7 +557,6 @@ def update_intervention(request, id):
         return redirect('list_consultation')
 
 
-@login_required(login_url='/')
 def bilan(request, id):
     consultation = get_object_or_404(Consultation, id=id)
     form = ConsultationForm(request.POST or None, instance=consultation)
