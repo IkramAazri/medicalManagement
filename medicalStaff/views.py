@@ -328,7 +328,7 @@ def create_hospitalisation(request):
         qs = Hospitalisation.objects.filter(numero_id=numero)
         dateSortie = request.POST.get('dateSortie')
         if qs.exists():
-            messages.warning(request, "Une hospitalisation est déjà associée à ce dossier !")
+            messages.warning(request, "Une hospitalisation est deja associée à ce dossier !")
         elif date > dateSortie:
             messages.error(request, ("Date de sortie ne peut pas être inférieure à la date d'entrée!"))
         elif date == dateSortie:
@@ -518,8 +518,17 @@ def update_dossier(request, id):
     if request.method == 'POST':
         form = ConsultationForm(request.POST or None, request.FILES or None, instance=consultation)
         if form.is_valid():
-            form.save()
-            return redirect('update_hospitalisation', id=id)
+            dateDebutCertificat = request.POST.get('dateDebutCertificat')
+            dateFinCertificat = request.POST.get('dateFinCertificat')
+            if dateDebutCertificat > dateFinCertificat:
+                messages.error(request,
+                               "Date de fin de certificat ne peut pas être inférieure à la date de début de certificat!")
+            elif dateDebutCertificat != "" and dateFinCertificat != "" and dateDebutCertificat == dateFinCertificat:
+                messages.error(request,
+                               "Date de fin de certificat ne peut pas être égale à la date de début de certificat!")
+            else:
+                form.save()
+                return redirect('update_hospitalisation', id=id)
     return render(request, "infos-perso/consultation-form.html", {'form': form, 'consultation': consultation})
 
 
@@ -529,8 +538,15 @@ def update_hospitalisation(request, id):
         hospitalisation = Hospitalisation.objects.get(numero=id)
         form = HospitalisationForm(request.POST or None, instance=hospitalisation)
         if form.is_valid():
-            form.save()
-            return redirect('update_intervention', id=id)
+            date = request.POST.get('date')
+            dateSortie = request.POST.get('dateSortie')
+            if date > dateSortie:
+                messages.error(request, ("Date de sortie ne peut pas être inférieure à la date d'entrée!"))
+            elif date == dateSortie:
+                messages.error(request, ("Date de sortie ne peut pas être égale à la date d'entrée!"))
+            else:
+                form.save()
+                return redirect('update_intervention', id=id)
         return render(request, "infos-perso/hospitalisation-form.html",
                       {'form': form, 'hospitalisation': hospitalisation})
     except Hospitalisation.DoesNotExist:

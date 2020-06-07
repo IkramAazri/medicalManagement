@@ -9,7 +9,7 @@
 {% include "navbar.html" %}
 <div class="container-fluid" style="margin-left: 10px;margin-bottom:100%;margin-top:100px;">
 
-       <center> <h2 class="mb-3">Gestion des comptes</h2></center>
+    <center><h2 class="mb-3">Gestion des comptes</h2></center>
     {% if user.is_superuser %}
     {% if messages %}
     <ul class="messages">
@@ -33,7 +33,15 @@
         <tbody>
         {% for user in users %}
         <tr>
-            <td><img src="{{user.profile.profile_image.url}}" class="rounded float-left" height="50px" width="70px">
+            <td>
+                {% load static %}
+                <img {% if user.profile %}
+                     src="{{user.profile.profile_image.url}}" {% else %}
+
+                     src="{% static 'images/defaut.png' %}" {% endif %} class="rounded float-right" height="50px"
+                     width="70px">
+
+
             </td>
             <td>{{ user.username }}</td>
             {% language 'fr' %}

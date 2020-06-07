@@ -13,11 +13,20 @@
 
 {% load crispy_forms_tags %}
 
-              <button type="submit" class="btn next btn-warning" style="margin-top: 54px;float:right; margin-right:90px;">
+              <button type="submit" class="btn next btn-warning" style="margin-top: 50px;float:right; margin-right:90px;">
                   <a href="{% url 'update_hospitalisation' consultation.id %}" style="color: white">Suivant<i class="fas fa-arrow-right"style="margin-left:10px;"></i></a></button>
 
 	<form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
+          {% if messages %}
+        {% for message in messages %}
+          {% if message.tags == 'warning' %}
+        <center><div style="margin-top:100px;margin-bottom:-70px;color:red;background-color:#e8d8db;"><p>{{ message }}</p></div></center>
+           {% else %}
+        <center><div style="margin-top:90px;margin-bottom:-70px;color:red;background-color:#e8d8db;"><p>{{ message }}</p></div></center>
+           {% endif %}
+        {% endfor %}
+        {% endif %}
 
      <div class="wrapper">
             <div class="wrapper_left">
