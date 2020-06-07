@@ -324,8 +324,12 @@ def create_hospitalisation(request):
     form = HospitalisationForm(request.POST, request.FILES)
     if form.is_valid():
         date = request.POST.get('date')
+        numero=request.POST.get('numero')
+        qs = Hospitalisation.objects.filter(numero_id=numero)
         dateSortie = request.POST.get('dateSortie')
-        if date > dateSortie:
+        if qs.exists():
+            messages.warning(request, "Une hospitalisation est déjà associée à ce dossier !")
+        elif date > dateSortie:
             messages.error(request, ("Date de sortie ne peut pas être inférieure à la date d'entrée!"))
         elif date == dateSortie:
             messages.error(request, ("Date de sortie ne peut pas être égale à la date d'entrée!"))
