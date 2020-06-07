@@ -13,7 +13,7 @@
 
 
                     <center> <h1 class="h2" style="padding-bottom: 20px;">Gestion des comptes</h1></center>
-
+   {% if user.is_superuser %}
  <div class="row filter">
         <div class="col-sm-12 mb-3">
             <form method="GET">
@@ -23,11 +23,11 @@
             </form>
         </div>
     </div>
-    {% if user.is_superuser %}
+
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
-        <p {% if message.tags %} class="{{ message.tags }}" {% endif %} style="margin-bottom:10px;">{{ message }}</p>
+        <center><p {% if message.tags %} class="{{ message.tags }}" {% endif %} style="margin-bottom:10px;">{{ message }}</p></center>
         {% endfor %}
     </ul>
     {% endif %}
