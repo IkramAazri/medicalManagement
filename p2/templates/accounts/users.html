@@ -1,20 +1,33 @@
 {% extends "base.html" %}
 {% block list %}
-<style type="text/css">
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+
+
 {% endblock list %}
 {% block content %}
 {% load i18n %}
 
 {% include "navbar.html" %}
-<div class="container-fluid" style="margin-left: 10px;margin-bottom:100%;margin-top:100px;">
+<div class="container-fluid" style="margin-left: 10px;margin-bottom:100%;margin-top:80px;">
 
-    <center><h2 class="mb-3">Gestion des comptes</h2></center>
+
+                    <center> <h1 class="h2" style="padding-bottom: 20px;">Gestion des comptes</h1></center>
+
+ <div class="row filter">
+        <div class="col-sm-12 mb-3">
+            <form method="GET">
+                 <label for="name">nom d'utilsateur:</label>
+            <input type="text" placeholder="nom d'utilsateur" name="username">
+                <button type="submit" class="btn btn-info material-icons " style="color: white;" >Chercher</button>
+            </form>
+        </div>
+    </div>
     {% if user.is_superuser %}
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
-        <p class="bg-success" {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+        <p {% if message.tags %} class="{{ message.tags }}" {% endif %} style="margin-bottom:10px;">{{ message }}</p>
         {% endfor %}
     </ul>
     {% endif %}

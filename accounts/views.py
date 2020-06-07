@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.cache import cache_control
 
+from .filters import UsersFilter
 from .forms import CreateUserForm
 from django.template import loader
 from django.http import HttpResponse
@@ -73,7 +74,6 @@ class ProfileUpdateView(LoginRequiredMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
 
-
 @login_required(login_url='/')
 def index(request):
     context = {'segment': 'index'}
@@ -139,9 +139,12 @@ def loginPage(request):
 @login_required(login_url='/')
 def registered_users(request):
     users = User.objects.filter(is_superuser=0)
+    myFilter = UsersFilter(request.GET, queryset=users)
+    users = myFilter.qs
     context = {
-        'users': users
-    }
+            'users': users,
+            'myFilter': myFilter
+     }
     return render(request, 'accounts/users.html', context)
 
 
@@ -150,7 +153,7 @@ def user_deactivate(request, user_id):
     user = User.objects.get(pk=user_id)
     user.is_active = False
     user.save()
-    messages.success(request, "Le compte a été desactivé !")
+    messages.error(request, "Le compte a été desactivé !")
     return redirect('system_users')
 
 
@@ -167,7 +170,7 @@ def user_activate(request, user_id):
 def delete_profile(request, user_id):
     user = User.objects.get(pk=user_id)
     user.delete()
-    messages.success(request, "Le compte est supprimé!")
+    messages.error(request, "Le compte est supprimé!")
     return redirect('system_users')
 
 
@@ -198,3 +201,5 @@ def change_password(request):
     return render(request, 'accounts/change_password.html', {
         'form': form
     })
+
+
