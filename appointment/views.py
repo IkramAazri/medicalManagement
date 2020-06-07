@@ -1,7 +1,6 @@
 import locale
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
@@ -63,7 +62,6 @@ def get_date(req_day):
     return datetime.today()
 
 
-@login_required(login_url='/')
 def event(request, event_id=None):
     instance = Event()
     if event_id:
@@ -78,13 +76,13 @@ def event(request, event_id=None):
         qs = Event.objects.filter(start_time=start_time, end_time=end_time)
         if qs.exists():
             messages.warning(request, 'Veuillez entrer un créneau libre!')
-            return redirect(request.META['HTTP_REFERER'])
-        elif end_time <= start_time:
-            messages.warning(request, "Heure de fin est supérieur à l'heure de début!")
-            return redirect(request.META['HTTP_REFERER'])
+        elif end_time < start_time:
+            messages.warning(request, "Heure de fin est inférieure à l'heure de début!")
+        elif end_time == start_time:
+            messages.warning(request, "Heure de fin ne pas être égale à l'heure de début!")
         else:
             form.save()
-        return HttpResponseRedirect(reverse('calendar'))
+            return redirect('calendar')
     if request.user.is_superuser:
         event = Event.objects.get(id=event_id)
         context = {'form': form, 'event': event}
@@ -101,7 +99,6 @@ def event(request, event_id=None):
 #     event = Event.objects.get(id=id)
 #     locale.setlocale(locale.LC_ALL, 'fr_FR')
 #     return render(request, 'cal/detailEvent.html', {'event': event})
-@login_required(login_url='/')
 def event_delete(request, id):
     event = Event.objects.get(id=id)
     if request.method == 'POST':
@@ -110,7 +107,6 @@ def event_delete(request, id):
     return render(request, 'confirm-delete.html', {'event': event})
 
 
-@login_required(login_url='/')
 def add_event(request):
     form = EventForm(request.POST or None)
     if request.POST and form.is_valid():
@@ -119,11 +115,11 @@ def add_event(request):
         qs = Event.objects.filter(start_time=start_time, end_time=end_time)
         if qs.exists():
             messages.warning(request, 'Veuillez entrer un créneau libre!')
-            return redirect('add_event')
-        elif end_time <= start_time:
-            messages.warning(request, "Heure de fin est supérieur à l'heure de début!")
-            return redirect('add_event')
+        elif end_time < start_time:
+            messages.warning(request, "Heure de fin est inférieure à l'heure de début!")
+        elif end_time == start_time:
+            messages.warning(request, "Heure de fin ne pas être égale à l'heure de début!")
         else:
             form.save()
-        return redirect('calendar')
+            return redirect('calendar')
     return render(request, 'cal/event_form.html', {'form': form})
