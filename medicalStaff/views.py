@@ -533,6 +533,7 @@ def update_hospitalisation(request, id):
         return redirect('update_intervention', id=id)
 
 
+@login_required(login_url='/')
 def update_intervention(request, id):
     try:
         if Intervention.objects.filter(numero=id).count() > 1:
@@ -557,6 +558,7 @@ def update_intervention(request, id):
         return redirect('list_consultation')
 
 
+@login_required(login_url='/')
 def bilan(request, id):
     consultation = get_object_or_404(Consultation, id=id)
     form = ConsultationForm(request.POST or None, instance=consultation)
